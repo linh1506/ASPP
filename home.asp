@@ -28,7 +28,7 @@
                 if (Trim(Session("Role")) = "ADMIN") then
               %>
               <li class="nav-item">
-                <a class="nav-link" href="">Management</a>
+                <a class="nav-link" href="management.asp">Management</a>
               </li>
               <%
               end if
@@ -53,5 +53,4 @@
         </div>
       </nav>
     </div>
-
   </body>
