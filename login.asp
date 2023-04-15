@@ -5,7 +5,6 @@ If (Request.ServerVariables("REQUEST_METHOD") = "POST") THEN
   email = Request.Form("email")
   password = Request.Form("password")
   If (NOT isnull(email) AND NOT isnull(password) AND TRIM(email)<>"" AND TRIM(password)<>"" ) Then
-      connDB.Open
       Dim sql
       sql = "SELECT * FROM USERS WHERE EMAIL = '" & email & "' AND PASSWORD = '" & password & "'"
       Dim cmdPrep
@@ -57,7 +56,7 @@ End if
       rel="stylesheet"
       href="./stylelogin.css"
     />
-    <script src="./jquery-3.6.1.min.js"></script>
+    <script src="./Jquery/jquery-3.6.1.min.js"></script>
   </head>
   <body>
     <!--#include file="header.asp"-->

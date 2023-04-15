@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./bootstrap-5.2.0-dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="./stylelogin.css" />
-    <script src="./jquery-3.6.1.min.js"></script>
+    <script src="./Jquery/jquery-3.6.1.min.js"></script>
   </head>
   <body>
     <div class="tab">
@@ -17,7 +17,7 @@
     <div class="container">
         <div id="products" class="tabcontent">
             <h1>Manage Products</h1>
-            <a href="addproduct.asp" class="btn btn-primary">ADD PRODUCT</a>
+            <a href="./ManagmentFeatures/addproduct.asp" class="btn btn-primary">ADD PRODUCT</a>
             <table class="table table-dark">
                 <thead>
                     <tr>
@@ -29,7 +29,7 @@
                     </tr>
                 </thead>
                 <tbody>
-
+                
                 </tbody>
             </table>
         </div>
