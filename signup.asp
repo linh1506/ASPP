@@ -18,7 +18,6 @@
             Session("Error") = "Password is not match"
         else 
             ' kiem tra email da ton tai hay khong
-            connDB.open
             Dim sql
             sql = "SELECT COUNT(EMAIL) AS DEM FROM USERS WHERE EMAIL='" & email & "'"
             Dim cmdPrep
@@ -69,7 +68,7 @@
             rel="stylesheet"
             href="./stylelogin.css"
             />
-        <script src="./jquery-3.6.1.min.js"></script>
+        <script src="./Jquery/jquery-3.6.1.min.js"></script>
         <script src="./bootstrap-5.2.0-dist/js/bootstrap.bundle.min.js"></script>
     </head>
     <body>

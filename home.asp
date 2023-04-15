@@ -12,7 +12,7 @@
       rel="stylesheet"
       href="./stylelogin.css"
     />
-    <script src="./jquery-3.6.1.min.js"></script>
+    <script src="./Jquery/jquery-3.6.1.min.js"></script>
   </head>
   <body>
     <div class="container">
