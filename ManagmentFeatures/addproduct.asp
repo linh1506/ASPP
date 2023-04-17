@@ -170,30 +170,31 @@
                     Else
                     checkbox = False
                 End If
-                Response.Write TypeName(checkbox) & " "
-                JSONstring = ArrayToJson()
-                Response.Write  JSONstring & " "
-                Response.Write TypeName(JSONstring) & " "
-                price = Request.Form("price")
-                price =CLng(price)
-                Response.Write TypeName(price) & " "
-                description = Request.Form("description")
-                Response.Write TypeName(description) & " "
-                shoeName = Request.Form("name")
-                Response.Write TypeName(shoeName) & " "
-                shoeCategory = Request.Form("category")
-                shoeCategory = Cint(shoeCategory)
-                Response.Write TypeName(shoeCategory) & " "
-                shoeBrand = Request.Form("brand")
-                shoeBrand = Cint(shoeBrand)
-                Response.Write TypeName(shoeBrand) & " "
-                cmdPrep.CommandText = "insert into PRODUCT(DESCRIPTION,IS_AVAILABLE,NAME,PRODUCT_IMAGE,PRICE,BRAND_ID) values(?,?,?,?,?,?)"
+                ' Response.Write TypeName(checkbox) & " "
+                ' JSONstring = ArrayToJson()
+                ' Response.Write  JSONstring & " "
+                ' Response.Write TypeName(JSONstring) & " "
+                ' price = Request.Form("price")
+                ' price =CLng(price)
+                ' Response.Write TypeName(price) & " "
+                ' description = Request.Form("description")
+                ' Response.Write TypeName(description) & " "
+                ' shoeName = Request.Form("name")
+                ' Response.Write TypeName(shoeName) & " "
+                ' shoeCategory = Request.Form("category")
+                ' shoeCategory = Cint(shoeCategory)
+                ' Response.Write TypeName(shoeCategory) & " "
+                ' shoeBrand = Request.Form("brand")
+                ' shoeBrand = Cint(shoeBrand)
+                ' Response.Write TypeName(shoeBrand) & " "
+                cmdPrep.CommandText = "insert into PRODUCT(DESCRIPTION,IS_AVAILABLE,NAME,PRODUCT_IMAGE,PRICE,BRAND_ID,CATEGORY_ID) values(?,?,?,?,?,?,?)"
                 cmdPrep.parameters.Append cmdPrep.createParameter("description",202,1,-1,description)
                 cmdPrep.parameters.Append cmdPrep.createParameter("isAvailable",11,1, ,checkbox)
                 cmdPrep.parameters.Append cmdPrep.createParameter("ShoeName",202,1,-1,shoeName)
                 cmdPrep.parameters.Append cmdPrep.createParameter("productImage",202,1,-1,JSONstring)
                 cmdPrep.parameters.Append cmdPrep.createParameter("price",3,1, ,price)
                 cmdPrep.parameters.Append cmdPrep.createParameter("brandID",3,1, ,shoeBrand)
+                cmdPrep.parameters.Append cmdPrep.createParameter("brandID",3,1, ,shoeCategory)
                 cmdPrep.Execute
 
                 Dim shoeSizes, shoeQuantities
@@ -208,9 +209,6 @@
                     cmdPrep.commandText="insert into PRODUCT_SIZE values(" & IDforSize & "," & Cint(shoeSizes(i)) & "," & Cint(shoeQuantities(i)) & ")"
                     cmdPrep.execute
                 Next
-                sqlQuery = "Insert into PRODUCT_CATEGORY VALUES (" & IDforSize & "," & shoeCategory & ")"
-                cmdPrep.CommandText = sqlQuery
-                cmdPrep.execute 
                 If Err.Number = 0 Then  
                     connDB.CommitTrans
                 Else
