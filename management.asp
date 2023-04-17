@@ -52,7 +52,6 @@
                 </thead>
                 <tbody>
                     <%
-                        connDB.open
                         dim cmdPrep
                         Set cmdPrep = Server.CreateObject("ADODB.Command")
                         cmdPrep.ActiveConnection = connDB

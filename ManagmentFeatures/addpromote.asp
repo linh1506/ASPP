@@ -7,7 +7,6 @@
     
     if(Not isnull(name) and not isnull(code) and not isnull(discount) and not isnull(expired) and trim(name)<>"" and trim(code)<>"") then
         Set cmdPrep = Server.CreateObject("ADODB.Command")
-        connDB.Open()                
         cmdPrep.ActiveConnection = connDB
         cmdPrep.CommandType = 1
         cmdPrep.Prepared = True
@@ -22,7 +21,7 @@
                 cmdPrep.ActiveConnection = connDB
                 cmdPrep.CommandType = 1
                 cmdPrep.Prepared = True
-                cmdPrep.CommandText = "Insert into PROMOTION(COUPON_CODE,EXPIRED_AT,DISCOUNT_VALUE,NAME) values(?,?,?,?)"
+                cmdPrep.CommandText = "Insert into PROMOTION(COUPON_CODE,EXPIRED_AT,DISCOUNT_VALUE,NAME,IS_ACTIVE) values(?,?,?,?,1)"
                 cmdPrep.Parameters(0) = code
                 cmdPrep.Parameters(1) = expired
                 cmdPrep.Parameters(2) = discount
@@ -30,7 +29,7 @@
                 cmdPrep.execute
                 
                 Session("Success") = "Thêm khyến mãi thành công"
-                Response.Redirect("management.asp")
+                Response.Redirect("../management.asp")
         end if
         Result.Close()
         connDB.Close()
