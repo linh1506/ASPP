@@ -37,7 +37,8 @@
             Manage Customers
         </div>
         <div id="promotions" class="tabcontent">
-            Manage Promotions
+            <h1>Manage Promotions</h1>
+            <a href="./ManagmentFeatures/addpromote.asp" class="btn btn-success">Add Promotion</a>
         </div>
     </div>
     <script>
