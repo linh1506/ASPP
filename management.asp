@@ -1,3 +1,4 @@
+<!--#include file="connect.asp"-->
 <!DOCTYPE html>
 <html>
   <head>
@@ -9,6 +10,7 @@
     <script src="./Jquery/jquery-3.6.1.min.js"></script>
   </head>
   <body>
+  <!--#include file="header.asp"-->
     <div class="tab">
         <button class="tablinks" onclick="openCity(event, 'products')" id="defaultOpen">Manage Products</button>
         <button class="tablinks" onclick="openCity(event, 'customers')">Manage Customers</button>
@@ -34,7 +36,59 @@
             </table>
         </div>
         <div id="customers" class="tabcontent">
-            Manage Customers
+            <h1>Manage Customers</h1>
+            <table class="table table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">NAME</th>
+                        <th scope="col">EMAIL</th>
+                        <th scope="col">PASSWORD</th>
+                        <th scope="col">ADDRESS</th>
+                        <th scope="col">PHONE</th>
+                        <th scope="col">ROLE</th>
+                        <th scope="col">STATUS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                        connDB.open
+                        dim cmdPrep
+                        Set cmdPrep = Server.CreateObject("ADODB.Command")
+                        cmdPrep.ActiveConnection = connDB
+                        cmdPrep.CommandType = 1
+                        cmdPrep.Prepared = True
+                        cmdPrep.commandText = "select * from users"
+                        
+                        set Result = cmdPrep.execute
+                        do while not Result.EOF
+                    %>
+                    <tr>
+                            <td><%=Result("Id")%></td>
+                            <td><%=Result("Name")%></td>
+                            <td><%=Result("Email")%></td>
+                            <td><%=Result("Password")%></td>
+                            <td><%=Result("Address")%></td>
+                            <td><%=Result("Phone")%></td>
+                            <td><%=Result("Role")%></td>
+                            <td>
+                                <a href="./ManagmentFeatures/editstatususer.asp?id=<%=Result("Id")%>" class="btn 
+                                <%if(Result("Status") = true) then%>
+                                    btn-success">active
+                                     <%else%>
+                                    btn-danger">block
+                                    <%end if%>
+                                </a>
+                            </td>
+                    </tr>
+                    <%
+                        Result.MoveNext
+                        loop
+                        Result.Close
+                        connDB.Close()
+                    %>
+                </tbody>
+            </table>
         </div>
         <div id="promotions" class="tabcontent">
             Manage Promotions
