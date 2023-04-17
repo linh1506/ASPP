@@ -5,7 +5,6 @@ If (Request.ServerVariables("REQUEST_METHOD") = "POST") THEN
   email = Request.Form("email")
   password = Request.Form("password")
   If (NOT isnull(email) AND NOT isnull(password) AND TRIM(email)<>"" AND TRIM(password)<>"" ) Then
-      connDB.Open
       Dim sql
       sql = "SELECT * FROM USERS WHERE EMAIL = '" & email & "' AND PASSWORD = '" & password & "'"
       Dim cmdPrep
