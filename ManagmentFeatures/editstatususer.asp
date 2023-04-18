@@ -18,7 +18,6 @@ End Sub
 
     If (cint(id)<>0) Then
     Set cmdPrep = Server.CreateObject("ADODB.Command")
-    connDB.Open()
     cmdPrep.ActiveConnection = connDB
     cmdPrep.CommandType = 1
     cmdPrep.CommandText = "SELECT * FROM USERS WHERE ID=?"
