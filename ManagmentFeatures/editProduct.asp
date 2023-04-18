@@ -3,7 +3,7 @@
     If (isnull(Session("email")) OR TRIM(Session("email")) = "") Then
         response.redirect("../login.asp")
     else
-
+        'SELECT j.[key], j.[value] FROM PRODUCT t CROSS APPLY OPENJSON(t.PRODUCT_IMAGE) j where ID = 1
         dim id
         id = Request.QueryString("id")
 
