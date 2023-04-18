@@ -9,6 +9,7 @@ If (Request.ServerVariables("REQUEST_METHOD") = "POST") THEN
       sql = "SELECT * FROM USERS WHERE EMAIL = '" & email & "' AND PASSWORD = '" & password & "'"
       Dim cmdPrep
       set cmdPrep = Server.CreateObject("ADODB.Command")
+      connDB.Open()
       cmdPrep.ActiveConnection = connDB
       cmdPrep.CommandType=1
       cmdPrep.Prepared=true
