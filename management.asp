@@ -16,12 +16,6 @@
         end if
     end function
 
-    ' get type of page
-    typeOfPage = Request.QueryString("type")
-    if (trim(typeOfPage) = "") or (isnull(typeOfPage)) then
-        ' type of page de trong thi set 1
-        typeOfPage = 4
-    end if
     limit = 1
 
     strSQL = "SELECT COUNT(ID) AS count FROM PRODUCT"
@@ -42,40 +36,55 @@
     Set CountResult = Nothing
     pagesUsers = Ceil(totalRowsUsers/limit)
 
-    pageProducts = Request.QueryString("page")
-    if (trim(pageProducts) = "") or (isnull(pageProducts)) then
-        pageProducts = 1
+    typeOfPage = Request.QueryString("type")
+    if (trim(typeOfPage) = "") or (isnull(typeOfPage)) then
+        ' type of page de trong thi set 1
+        typeOfPage = 4
     end if
-    ' if page hien tai > pages toi da thi de hien tai la toi da
-    if (CInt(pageProducts) > pagesProducts) then
-        pageProducts = pagesProducts
+    typeOfPage = CInt(typeOfPage)
+    page = Request.QueryString("page")
+    if (trim(page) = "") or (isnull(page)) then
+        page = 1
     end if
+    page = CInt(page)
+    Select Case typeOfPage
+        Case 1
+            pageProducts = page
+            pageUsers = 1
+            pagePromotions = 1
 
+            if (CInt(pageProducts) > pagesProducts) then
+                pageProducts = pagesProducts
+            end if
 
-    pageUsers = Request.QueryString("page")
-    if (trim(pageUsers) = "") or (isnull(pageUsers)) then
-        pageUsers = 1
-    end if
-    ' if page hien tai > pages toi da thi de hien tai la toi da
-    if (CInt(pageUsers) > pagesUsers) then
-        pageUsers = pagesUsers
-    end if
+        Case 2
+            pageProducts = 1
+            pageUsers = page
+            pagePromotions = 1
 
+            if (CInt(pageUsers) > pagesUsers) then
+                pageUsers = pagesUsers
+            end if
 
-    pagePromotions = Request.QueryString("page")
-    if (trim(pagePromotions) = "") or (isnull(pagePromotions)) then
-        pagePromotions = 1
-    end if
-    ' if page hien tai > pages toi da thi de hien tai la toi da
-    if (CInt(pagePromotions) > pagesPromotions) then
-        pagePromotions = pagesPromotions
-    end if
+        Case 3
+            pageProducts = 1
+            pageUsers = 1
+            pagePromotions = page
+
+            if (CInt(pagePromotions) > pagesPromotions) then
+                pagePromotions = pagesPromotions
+            end if
+
+        Case Else
+            pageProducts = 1
+            pageUsers = 1
+            pagePromotions = 1
+    End Select
 
     offsetProducts = (Clng(pageProducts) * Clng(limit)) - Clng(limit)
     offsetPromotions = (Clng(pagePromotions) * Clng(limit)) - Clng(limit)
     offsetUsers = (Clng(pageUsers) * Clng(limit)) - Clng(limit)
-
-
+    
 %>
 <!DOCTYPE html>
 <html>
