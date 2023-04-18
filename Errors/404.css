@@ -1,0 +1,18 @@
+.page{
+    width: 100vw;
+    height: 80vh;
+    padding-left: 5vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#pageheader{
+    font-size:4em;
+    font-weight: bold;
+    color: rgb(165, 88, 238);
+}
+#pagesub{
+    font-size: 2em;
+}
