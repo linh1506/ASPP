@@ -194,9 +194,8 @@
                 cmdPrep.parameters.Append cmdPrep.createParameter("productImage",202,1,-1,JSONstring)
                 cmdPrep.parameters.Append cmdPrep.createParameter("price",3,1, ,price)
                 cmdPrep.parameters.Append cmdPrep.createParameter("brandID",3,1, ,shoeBrand)
-                cmdPrep.parameters.Append cmdPrep.createParameter("brandID",3,1, ,shoeCategory)
+                cmdPrep.parameters.Append cmdPrep.createParameter("categoryID",3,1, ,shoeCategory)
                 cmdPrep.Execute
-
                 Dim shoeSizes, shoeQuantities
                 shoeSizes = Split(Request.Form("shoe-size[]"), ", ")
                 shoeQuantities = Split(Request.Form("shoe-quantity[]"), ", ")
