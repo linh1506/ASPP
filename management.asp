@@ -52,13 +52,13 @@
                 </thead>
                 <tbody>
                     <%
-                        dim cmdPrep
+
                         Set cmdPrep = Server.CreateObject("ADODB.Command")
+                        connDB.Open
                         cmdPrep.ActiveConnection = connDB
                         cmdPrep.CommandType = 1
                         cmdPrep.Prepared = True
                         cmdPrep.commandText = "select * from users"
-                        
                         set Result = cmdPrep.execute
                         do while not Result.EOF
                     %>
@@ -71,13 +71,13 @@
                             <td><%=Result("Phone")%></td>
                             <td><%=Result("Role")%></td>
                             <td>
-                                <a href="./ManagmentFeatures/editstatususer.asp?id=<%=Result("Id")%>" class="btn 
-                                <%if(Result("Status") = true) then%>
-                                    btn-success">active
-                                     <%else%>
-                                    btn-danger">block
-                                    <%end if%>
-                                </a>
+                                ' <a href="./ManagmentFeatures/editstatususer.asp?id=<%=Result("Id")%>" class="btn 
+                                ' <%if(Result("Status") = true) then%>
+                                '    btn-success">active
+                                '      <%else%>
+                                '     btn-danger">block
+                                '     <%end if%> 
+                                ' </a>
                             </td>
                     </tr>
                     <%
@@ -91,7 +91,53 @@
         </div>
         <div id="promotions" class="tabcontent">
             <h1>Manage Promotions</h1>
-            <a href="./ManagmentFeatures/addpromote.asp" class="btn btn-success">Add Promotion</a>
+            <a href="./ManagmentFeatures/addpromote.asp" class="btn btn-outline-primary">Add Promotion</a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Coupon Code</th>
+                        <th scope="col">Discount Value</th>
+                        <th scope="col">Expired</th>
+                        <th scope="col">Active</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                        Set cmdPrep = Server.CreateObject("ADODB.Command")
+                        connDB.Open()
+                        cmdPrep.ActiveConnection = connDB
+                        cmdPrep.CommandType = 1
+                        cmdPrep.Prepared = True
+                        cmdPrep.commandText = "select * from PROMOTION"
+                        set Result = cmdPrep.execute
+                        do while not Result.EOF
+                    %>
+                    <tr>
+                        <td><%=Result("ID")%></td>
+                        <td><%=Result("NAME")%></td>
+                        <td><%=Result("COUPON_CODE")%></td>
+                        <td><%=Result("DISCOUNT_VALUE")%></td>
+                        <td><%=Result("EXPIRED_AT")%></td>
+                        <td>
+                            <a href="./ManagmentFeatures/editstatuspromotion.asp?id=<%=Result("ID")%>" class="btn 
+                            <% if (Result("IS_ACTIVE") = True ) then %>
+                                btn-success "> Disable
+                            <% else %> 
+                                btn-danger "> Enable
+                            <% end if %>
+                            </a>
+                        </td>
+                    </tr>
+                    <%
+                        Result.MoveNext
+                        loop
+                        Result.Close
+                        connDB.Close()
+                    %>
+                </tbody>
+            </table>
         </div>
     </div>
     <script>
