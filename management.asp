@@ -16,6 +16,26 @@
         end if
     end function
 
+    sorttype = Request.QueryString("sorttype")
+    if (trim(sorttype) = "" or IsNull(sorttype)) then
+        sorttype = 1
+    end if
+
+    if ( not IsNumeric(sorttype) ) then
+        sorttype = 1
+    end if
+    sorttype = CInt(sorttype)
+
+    
+    Select Case sorttype 
+        Case 1
+            sortProducts = "ID"
+        Case 2
+            sortProducts = "NAME"
+        Case 3
+            sortProducts = "PRICE"
+    End Select
+
     limit = 2
 
     strSQL = "SELECT COUNT(ID) AS count FROM PRODUCT"
@@ -49,6 +69,7 @@
     page = CInt(page)
     Select Case typeOfPage
         Case 1
+        ' Products
             pageProducts = page
             pageUsers = 1
             pagePromotions = 1
@@ -56,7 +77,6 @@
             if (CInt(pageProducts) > pagesProducts) then
                 pageProducts = pagesProducts
             end if
-
         Case 2
             pageProducts = 1
             pageUsers = page
@@ -108,6 +128,9 @@
         <div id="products" class="tabcontent table-responsive">
             <h1>Manage Products</h1>
             <a href="./ManagmentFeatures/addproduct.asp" class="btn btn-primary">ADD PRODUCT</a>
+            <% if not (sorttype=1) then %><a href="../management.asp?sorttype=1" class="btn btn-warning">Sort id</a><% end if %>
+            <% if not (sorttype=2) then %><a href="../management.asp?sorttype=2" class="btn btn-warning">Sort name A-Z</a><% end if %>
+            <% if not (sorttype=3) then %><a href="../management.asp?sorttype=3" class="btn btn-warning">Sort price cheap - expensive</a><% end if %>
             <table class="table table-dark table-hover table-responsive">
                 <thead>
                     <tr>
@@ -126,7 +149,7 @@
                         cmdPrep.ActiveConnection = connDB
                         cmdPrep.CommandType = 1
                         cmdPrep.Prepared = True
-                        cmdPrep.commandText = "select * from PRODUCT"
+                        cmdPrep.commandText = "select * from PRODUCT order by "& sortProducts &" offset "& CLng(offsetProducts) &" rows fetch next "& CLng(limit) &" row only"
                         set Result = cmdPrep.execute
                         do while not Result.EOF
                     %>
@@ -162,6 +185,19 @@
                     %>
                 </tbody>
             </table>
+
+            <nav aria-label="Page Navigation">
+                <ul class="pagination pagination-sm">
+                    <% if (pagesProducts > 1) then 
+                        for i= 1 to pagesProducts
+                    %>
+                        <li class="page-item <%=checkPage(Clng(i)=Clng(pageProducts),"active")%>"><a class="page-link" href="management.asp?type=1&page=<%=i%><% if (CInt(sorttype) <> 1) then Response.Write "&sorttype=" & sorttype%>"><%=i%></a></li>
+                    <%
+                        next
+                        end if
+                    %>
+                </ul>
+            </nav>
         </div>
         <div id="customers" class="tabcontent">
             <h1>Manage Customers</h1>
@@ -197,7 +233,7 @@
                         <td><%=Result("Phone")%></td>
                         <td><%=Result("Role")%></td>
                         <td>
-                            <a href="./ManagmentFeatures/editstatususer.asp?id=<%=Result("Id")%>" class="btn 
+                            <a href="./ManagmentFeatures/editstatususer.asp?id=<%=Result("Id")%>&page=<%=Page%>&type=<%=typeOfPage%>" class="btn 
                             <%if(Result("Status") = true) then%>
                                 btn-success">active
                                 <%else%>
@@ -258,7 +294,7 @@
                         <td><%=Result("DISCOUNT_VALUE")%></td>
                         <td><%=Result("EXPIRED_AT")%></td>
                         <td>
-                            <a href="./ManagmentFeatures/editstatuspromotion.asp?id=<%=Result("ID")%>" class="btn 
+                            <a href="./ManagmentFeatures/editstatuspromotion.asp?id=<%=Result("ID")%>&page=<%=page%>" class="btn 
                             <% if (Result("IS_ACTIVE") = True ) then %>
                                 btn-success "> Enable
                             <% else %> 
