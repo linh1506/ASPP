@@ -158,7 +158,7 @@
                             <td><%=Result("NAME")%></td>
                             <td><%=Result("PRICE")%></td>
                             <td>
-                                <a href="./ManagmentFeatures/ToggleProductAvailabilty.asp?id=<%=Result("ID")%>" class="btn 
+                                <a href="./ManagmentFeatures/ToggleProductAvailabilty.asp?id=<%=Result("ID")%>&page=<%=Page%>&type=<%=typeOfPage%>&sorttype=<%=sorttype%>" class="btn 
                                 <%if(Result("IS_AVAILABLE") = true) then%>
                                     btn-success">Open For Sale
                                     <%else%>
@@ -167,7 +167,7 @@
                                 </a>
                             </td>
                             <td>
-                                <a class="edit-product-button" href="./ManagmentFeatures/editProduct.asp?id=<%=Result("ID")%>">
+                                <a class="edit-product-button" href="./ManagmentFeatures/editProduct.asp?id=<%=Result("ID")%>&page=<%=page%>&sorttype=<%=sorttype%>">
                                     <i class = "lni lni-pencil-alt" style="margin:0;padding:0;color:#f3f3f3;font-size:1.5em"></i>
                                 </a>
                             </td>

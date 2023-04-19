@@ -6,6 +6,10 @@
         'SELECT j.[key], j.[value] FROM PRODUCT t CROSS APPLY OPENJSON(t.PRODUCT_IMAGE) j where ID = 1
         dim id
         id = Request.QueryString("id")
+        dim sorttype
+        sorttype = Request.QueryString("sorttype")
+        dim page
+        page = Request.QueryString("page")
 
         If (isnull(id) OR trim(id) = "") then 
             id=0
@@ -255,8 +259,8 @@
                 end if
                 set Result = nothing
                 connDB.close
-                set conDB = nothing
-                Response.redirect("/management.asp")
+                set connDB = nothing
+                Response.redirect("../management.asp?page="&page&"&type=1&sorttype="&sorttype)
             End If 
         %>
     </div>
