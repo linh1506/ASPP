@@ -115,6 +115,7 @@
                         <th scope="col">NAME</th>
                         <th scope="col">PRICE</th>
                         <th scope="col">STATUS</th>
+                        <th scope="col">Edit</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -143,8 +144,13 @@
                                 </a>
                             </td>
                             <td>
-                                <a href="./ManagmentFeatures/editProduct.asp?id=<%=Result("ID")%>">
+                                <a class="edit-product-button" href="./ManagmentFeatures/editProduct.asp?id=<%=Result("ID")%>">
                                     <i class = "lni lni-pencil-alt" style="margin:0;padding:0;color:#f3f3f3;font-size:1.5em"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="./Errors/404.asp" class="redirect-product-page">
+                                    <i class = "lni lni-chevron-right-circle" style="margin:0;padding:0;color:#f3f3f3;font-size:1.5em"></i>
                                 </a>
                             </td>
                     </tr>

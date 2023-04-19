@@ -10,7 +10,6 @@
         If (isnull(id) OR trim(id) = "") then 
             id=0
         End if
-
         If (cint(id)<>0) Then
             Set cmdPrep = Server.CreateObject("ADODB.Command")
             cmdPrep.ActiveConnection = connDB
@@ -137,12 +136,22 @@
                 <button type="button" class="btn btn-primary" id="add-button">Add Size</button>
             </div>
             <!-- Add image -->
+            <label for="input1">Images:</label>
             <div id="inputContainer">
-                <label for="input1">Images:</label>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="input1" name="input[]" required>
-                    <button type="button" class="btn btn-danger removeButton">Remove</button>
-                </div>
+                <%
+                    cmdPrep.CommandText = "SELECT j.[key], j.[value] FROM PRODUCT t CROSS APPLY OPENJSON(t.PRODUCT_IMAGE) j where ID = "&id
+                    set Result = cmdPrep.execute
+                    do while not Result.EOF   
+                %>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="input1" name="input[]" value="<%=Result("value")%>" required>
+                        <button type="button" class="btn btn-danger removeButton">Remove</button>
+                    </div>
+                <%
+                    Result.MoveNext
+                    loop
+                    Result.close
+                %>
             </div>
              <button type="button" class="btn btn-primary addButton">Add</button>
             <!-- SUBMIT -->
@@ -164,7 +173,7 @@
         <script>
             // Add button click handler
             $(".addButton").click(function() {
-            var index = $("#inputContainer").children().length + 1;
+            var index = $("#inputContainer").children().length + 1
             if (index<=4) {
                 var inputHTML = '<div class="form-group"><input type="text" class="form-control" id="input' + index + '" name="input[]" required><button type="button" class="btn btn-danger removeButton">Remove</button></div>';
                 $("#inputContainer").append(inputHTML);
@@ -172,7 +181,7 @@
             });
             // Remove button click handler
             $(document).on("click", ".removeButton", function() {
-            $(this).closest(".form-group").remove();
+                $(this).closest(".form-group").remove();
             });
         </script>
         <%  
@@ -216,7 +225,7 @@
                 shoeBrand = Request.Form("brand")
                 shoeBrand = Cint(shoeBrand)
                 ' Response.Write TypeName(shoeBrand) & " "
-                cmdPrep.CommandText = "insert into PRODUCT(DESCRIPTION,IS_AVAILABLE,NAME,PRODUCT_IMAGE,PRICE,BRAND_ID,CATEGORY_ID) values(?,?,?,?,?,?,?)"
+                cmdPrep.CommandText = "update PRODUCT set DESCRIPTION = ?, IS_AVAILABLE = ?, NAME = ?, PRODUCT_IMAGE = ?, PRICE = ?, BRAND_ID = ?, CATEGORY_ID = ?  WHERE ID ="&id
                 cmdPrep.parameters.Append cmdPrep.createParameter("description",202,1,-1,description)
                 cmdPrep.parameters.Append cmdPrep.createParameter("isAvailable",11,1, ,checkbox)
                 cmdPrep.parameters.Append cmdPrep.createParameter("ShoeName",202,1,-1,shoeName)
@@ -229,19 +238,23 @@
                 shoeSizes = Split(Request.Form("shoe-size[]"), ", ")
                 shoeQuantities = Split(Request.Form("shoe-quantity[]"), ", ")
                 Dim i
-                sqlQuery = "Select Top 1 ID from PRODUCT ORDER BY ID DESC"
+                sqlQuery = "delete from PRODUCT_SIZE where PRODUCT_ID ="&id
                 cmdPrep.CommandText = sqlQuery
-                Set Result = cmdPrep.execute 
-                Set IDforSize = Result("ID")
+                cmdPrep.execute 
                 For i = 0 To UBound(shoeSizes)
-                    cmdPrep.commandText="insert into PRODUCT_SIZE values(" & IDforSize & "," & Cint(shoeSizes(i)) & "," & Cint(shoeQuantities(i)) & ")"
+                    cmdPrep.commandText="insert into PRODUCT_SIZE values(" & id & "," & Cint(shoeSizes(i)) & "," & Cint(shoeQuantities(i)) & ")"
                     cmdPrep.execute
                 Next
                 If Err.Number = 0 Then  
                     connDB.CommitTrans
                 Else
                     ConnDB.RollbackTrans
+                    Response.redirect("/management.asp")
+                    Session("Error") = "Operation did not complete successfully"
                 end if
+                set Result = nothing
+                connDB.close
+                set conDB = nothing
                 Response.redirect("/management.asp")
             End If 
         %>

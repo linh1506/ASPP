@@ -50,3 +50,15 @@
     border-left: none;
     height: 300px;
 }
+.redirect-product-page i{
+    transition: all .2s ease;
+    }
+    .redirect-product-page:hover i{
+        transform: translateX(5px);
+    }
+.edit-product-button i{
+    transition: all .2s ease;
+    }
+    .edit-product-button:hover i{
+        transform: scale(1.1)
+    }
