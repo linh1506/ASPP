@@ -16,7 +16,7 @@
         end if
     end function
 
-    limit = 1
+    limit = 2
 
     strSQL = "SELECT COUNT(ID) AS count FROM PRODUCT"
     Set CountResult = connDB.execute(strSQL)
