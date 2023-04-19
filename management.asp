@@ -43,6 +43,7 @@
     end if
     typeOfPage = CInt(typeOfPage)
     page = Request.QueryString("page")
+
     if (trim(page) = "") or (isnull(page)) then
         page = 1
     end if
@@ -148,7 +149,7 @@
                         set Result = cmdPrep.execute
                         do while not Result.EOF
                     %>
-                    <tr>
+                    <tr >
                         <td><%=Result("Id")%></td>
                         <td><%=Result("Name")%></td>
                         <td><%=Result("Email")%></td>
@@ -157,7 +158,7 @@
                         <td><%=Result("Phone")%></td>
                         <td><%=Result("Role")%></td>
                         <td>
-                            <a href="./ManagmentFeatures/editstatususer.asp?id=<%=Result("Id")%>" class="btn 
+                            <a href="./ManagmentFeatures/editstatususer.asp?id=<%=Result("Id")%>&page=<%=Page%>&type=<%=typeOfPage%>" class="btn 
                             <%if(Result("Status") = true) then%>
                                 btn-success">active
                                 <%else%>
@@ -218,7 +219,7 @@
                         <td><%=Result("DISCOUNT_VALUE")%></td>
                         <td><%=Result("EXPIRED_AT")%></td>
                         <td>
-                            <a href="./ManagmentFeatures/editstatuspromotion.asp?id=<%=Result("ID")%>" class="btn 
+                            <a href="./ManagmentFeatures/editstatuspromotion.asp?id=<%=Result("ID")%>&page=<%=page%>" class="btn 
                             <% if (Result("IS_ACTIVE") = True ) then %>
                                 btn-success "> Enable
                             <% else %> 

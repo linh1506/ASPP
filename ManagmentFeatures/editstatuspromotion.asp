@@ -6,6 +6,9 @@ Sub handleError(message)
     Session("Error") = message
 End Sub
 
+    dim page
+    page = Request.QueryString("page")
+
     If (isnull(Session("email")) OR TRIM(Session("email")) = "") Then
         response.redirect("../login.asp")
     else
@@ -37,11 +40,11 @@ End Sub
             set result = cmdPrep.execute()
             If Err.Number = 0 Then 
                 Session("Success") = "Status has changed"
-                response.redirect("../management.asp")
+                response.redirect("../management.asp?page="&page&"&type=3")
             else
                 handleError(Err.Description)
                 Session("Error") = "something wrong, try again"
-                response.redirect("../management.asp")
+                response.redirect("../management.asp?page=1&type=3")
             End If
             Result.Close()
             connDB.Close()
