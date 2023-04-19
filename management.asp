@@ -94,6 +94,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./bootstrap-5.2.0-dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="./stylelogin.css" />
+    <link rel="stylesheet" href="./Resources/web-font-files/lineicons.css">
     <script src="./Jquery/jquery-3.6.1.min.js"></script>
   </head>
   <body>
@@ -104,21 +105,61 @@
         <button class="tablinks" onclick="openCity(event, 'promotions')" id="OpenManagePromotion">Manage Promotions</button>
     </div>
     <div class="container">
-        <div id="products" class="tabcontent">
+        <div id="products" class="tabcontent table-responsive">
             <h1>Manage Products</h1>
             <a href="./ManagmentFeatures/addproduct.asp" class="btn btn-primary">ADD PRODUCT</a>
-            <table class="table table-dark">
+            <table class="table table-dark table-hover table-responsive">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">NAME</th>
                         <th scope="col">PRICE</th>
                         <th scope="col">STATUS</th>
+                        <th scope="col">Edit</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
-                
+                    <%
+                        dim cmdPrep
+                        Set cmdPrep = Server.CreateObject("ADODB.Command")
+                        cmdPrep.ActiveConnection = connDB
+                        cmdPrep.CommandType = 1
+                        cmdPrep.Prepared = True
+                        cmdPrep.commandText = "select * from PRODUCT"
+                        set Result = cmdPrep.execute
+                        do while not Result.EOF
+                    %>
+                    <tr>
+                            <td><%=Result("ID")%></td>
+                            <td><%=Result("NAME")%></td>
+                            <td><%=Result("PRICE")%></td>
+                            <td>
+                                <a href="./ManagmentFeatures/ToggleProductAvailabilty.asp?id=<%=Result("ID")%>" class="btn 
+                                <%if(Result("IS_AVAILABLE") = true) then%>
+                                    btn-success">Open For Sale
+                                    <%else%>
+                                    btn-danger">Closed
+                                <%end if%>
+                                </a>
+                            </td>
+                            <td>
+                                <a class="edit-product-button" href="./ManagmentFeatures/editProduct.asp?id=<%=Result("ID")%>">
+                                    <i class = "lni lni-pencil-alt" style="margin:0;padding:0;color:#f3f3f3;font-size:1.5em"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="./Errors/404.asp" class="redirect-product-page">
+                                    <i class = "lni lni-chevron-right-circle" style="margin:0;padding:0;color:#f3f3f3;font-size:1.5em"></i>
+                                </a>
+                            </td>
+                    </tr>
+                    <%
+                        Result.MoveNext
+                        loop
+                        Result.Close
+                        set Result = nothing
+                    %>
                 </tbody>
             </table>
         </div>
@@ -139,7 +180,6 @@
                 </thead>
                 <tbody>
                     <%
-                        dim cmdPrep
                         Set cmdPrep = Server.CreateObject("ADODB.Command")
                         cmdPrep.ActiveConnection = connDB
                         cmdPrep.CommandType = 1
