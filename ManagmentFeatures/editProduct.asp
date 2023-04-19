@@ -247,6 +247,7 @@
                 Next
                 If Err.Number = 0 Then  
                     connDB.CommitTrans
+                    Session("Success") = "Product info changed successfully"
                 Else
                     ConnDB.RollbackTrans
                     Response.redirect("/management.asp")
