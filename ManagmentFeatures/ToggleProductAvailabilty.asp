@@ -1,6 +1,10 @@
 <!-- #include file="../connect.asp" -->
 <%
 On Error Resume Next
+    dim page
+    page = Request.QueryString("page")
+    dim sorttype 
+    sorttype = Request.QueryString("sorttype")
     If (isnull(Session("email")) OR TRIM(Session("email")) = "") Then
         response.redirect("../login.asp")
     else
@@ -32,10 +36,10 @@ On Error Resume Next
         set result = cmdPrep.execute
         If Err.Number = 0 Then 
             Session("Success") = "Availability changed Successfully"
-            response.redirect("../management.asp")
+            response.redirect("../management.asp?page="&page&"&type=1&sorttype="&sorttype)
         else
             Session("Error") = "something wrong, try again"
-            response.redirect("../management.asp")
+            response.redirect("../management.asp?page=1&type=1")
         End If
             result.Close
             connDB.Close
