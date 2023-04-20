@@ -129,9 +129,9 @@
             <h1>Manage Products</h1>
             <div class="Product-Feature-row">
                 <a href="./ManagmentFeatures/addproduct.asp" class="btn btn-primary">ADD PRODUCT</a>
-                <a href="../management.asp?sorttype=1" class="btn btn-warning <%if sorttype=1 then %>tag-disabled<%end if%>">Sort by ID</a>
-                <% if not (sorttype=2) then %><a href="../management.asp?sorttype=2" class="btn btn-warning">Sort by Name (Ascending)</a><% end if %>
-                <% if not (sorttype=3) then %><a href="../management.asp?sorttype=3" class="btn btn-warning">Sort by Price (Asending)</a><% end if %>
+                <a href="../management.asp?sorttype=1" class="btn btn-warning <%if sorttype=1 then %>disabled<%end if%>" role="button" aria-disabled="true">Sort by ID</a>
+                <a href="../management.asp?sorttype=2" class="btn btn-warning <%if sorttype=2 then %>disabled<%end if%>" role="button" aria-disabled="true"">Sort by Name (Ascending)</a>
+                <a href="../management.asp?sorttype=3" class="btn btn-warning <%if sorttype=3 then %>disabled<%end if%>" role="button" aria-disabled="true"">Sort by Price (Asending)</a>
             </div>
             
             <table class="table table-dark table-hover table-responsive">
