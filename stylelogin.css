@@ -62,3 +62,19 @@
     .edit-product-button:hover i{
         transform: scale(1.1)
     }
+.tag-disabled{
+    pointer-events: none;
+    cursor: not-allowed;
+    filter: grayscale(70%);
+}
+.Product-Feature-row{
+    margin: 1.5vh 0;
+    display: flex;
+    gap:0.6vw
+}
+tr th{
+    text-align: center;
+}
+tr td{
+    text-align: center;
+}

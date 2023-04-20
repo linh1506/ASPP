@@ -127,10 +127,13 @@
     <div class="container">
         <div id="products" class="tabcontent table-responsive">
             <h1>Manage Products</h1>
-            <a href="./ManagmentFeatures/addproduct.asp" class="btn btn-primary">ADD PRODUCT</a>
-            <% if not (sorttype=1) then %><a href="../management.asp?sorttype=1" class="btn btn-warning">Sort id</a><% end if %>
-            <% if not (sorttype=2) then %><a href="../management.asp?sorttype=2" class="btn btn-warning">Sort name A-Z</a><% end if %>
-            <% if not (sorttype=3) then %><a href="../management.asp?sorttype=3" class="btn btn-warning">Sort price cheap - expensive</a><% end if %>
+            <div class="Product-Feature-row">
+                <a href="./ManagmentFeatures/addproduct.asp" class="btn btn-primary">ADD PRODUCT</a>
+                <a href="../management.asp?sorttype=1" class="btn btn-warning <%if sorttype=1 then %>tag-disabled<%end if%>">Sort by ID</a>
+                <% if not (sorttype=2) then %><a href="../management.asp?sorttype=2" class="btn btn-warning">Sort by Name (Ascending)</a><% end if %>
+                <% if not (sorttype=3) then %><a href="../management.asp?sorttype=3" class="btn btn-warning">Sort by Price (Asending)</a><% end if %>
+            </div>
+            
             <table class="table table-dark table-hover table-responsive">
                 <thead>
                     <tr>
