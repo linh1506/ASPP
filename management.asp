@@ -119,7 +119,7 @@
   </head>
   <body>
   <!--#include file="header.asp"-->
-    <div class="tab">
+    <div class="sidetab">
         <button class="tablinks" onclick="openCity(event, 'products')" id="OpenManageProduct">Manage Products</button>
         <button class="tablinks" onclick="openCity(event, 'customers')" id="OpenManageCustomer">Manage Customers</button>
         <button class="tablinks" onclick="openCity(event, 'promotions')" id="OpenManagePromotion">Manage Promotions</button>
