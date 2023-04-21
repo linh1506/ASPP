@@ -1,0 +1,10 @@
+:root{
+    --primary:var(--white);
+    --secondary: var(--black);
+    --accent:var(--midnight);
+    --white: #f3f3f3;
+    --darkblue:#003366;
+    --midnight:#191970;
+    --black: #252526;
+    --whiteLowContrast:#f5f5f5be;
+}
