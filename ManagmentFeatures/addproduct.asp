@@ -9,10 +9,12 @@
     <link rel="stylesheet" href="./addproduct.css" />
     <link rel="stylesheet" href="../Resources/web-font-files/lineicons.css">
     <link rel="stylesheet" href='../UIcomponents/header.css'>
+    <link rel="stylesheet" href='../UIcomponents/notification.css'>
     <script src="../Jquery/jquery-3.6.1.min.js"></script>
   </head>
   <body>
     <!--#include file="../UIcomponents/header.asp"-->
+    <!--#include file="../UIcomponents/notification.asp"-->
     <div class="container">
         <form method="post">
             <div>
@@ -111,8 +113,19 @@
         </form>
         <script>
             function removeRow(button) {
-                var row = button.closest('.size-quantity-inputs');
-                row.remove();
+                var index = document.querySelectorAll(".size-quantity-inputs").length;
+                console.log(index);
+                if(index>1){
+                    var row = button.closest('.size-quantity-inputs');
+                    row.remove();
+                }
+                else{
+                    button.classList.add('shake')
+                    notification('Không em nhé',"var(--bs-orange)")
+                    setTimeout(() => {
+                        button.classList.remove('shake')
+                    }, 500);
+                }
             }
             document.getElementById("add-button").addEventListener("click", function() {
                 var row = document.querySelector('.size-quantity-inputs').cloneNode(true);
@@ -129,6 +142,13 @@
             if (index<=5) {
                 var inputHTML = '<div class="form-group"><input type="text" class="form-control image-input" id="input' + index + '" name="input[]" required><button type="button" class="btn btn-danger removeButton">Remove</button></div>';
                 $("#inputContainer").append(inputHTML);
+            }
+            else{
+                notification('Bạn đang thêm quá nhiều ảnh','var(--bs-orange)')
+                $(this).addClass('shake')
+                setTimeout(() => {
+                    $(this).removeClass('shake')
+                }, 500);
             }
             });
             // Remove button click handler

@@ -1,0 +1,51 @@
+@import url(../palette.css);
+@font-face {
+    font-family: Josefin;
+    src: url(../Resources/JosefinSans-Bold.ttf);
+}
+@font-face {
+    font-family: quicksand;
+    src: url(../Resources/QuickSand/Quicksand-SemiBold.ttf);
+}
+:root{
+    --noti-width: 30rem;
+    --noti-height:6rem;
+    --nev: calc(var(--noti-width) / -1 )
+}
+.notification{
+    width: var(--noti-width);
+    height:var(--noti-height);
+    max-width: 100vw;
+    position: fixed;
+    top:7vh;
+    left: var(--nev);
+    z-index: 99;
+    color: var(--primary);
+    border: none;
+    border-radius: 0 5px 5px 0;
+    display: flex;
+    align-items: center;
+}
+.notification i{
+    font-size: 2.5rem;
+    margin: 0 .5rem;
+    margin-left: 1rem;
+}
+.notification h3{
+    font-family: quicksand;
+    font-size: 1.5rem;
+    margin: 0;
+
+}
+.triggered{
+    animation: slidein 0.5s ease forwards, slideout 0.5s 3s ease forwards;
+}
+@keyframes slidein {
+    from { left: var(--nev); }
+    to   { left: 0; }
+  }
+  
+  @keyframes slideout {
+    from { left: 0; }
+    to   { left: var(--nev); }
+  }
