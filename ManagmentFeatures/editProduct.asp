@@ -51,10 +51,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../bootstrap-5.2.0-dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../stylelogin.css" />
+    <link rel="stylesheet" href="./addproduct.css" />
+    <link rel="stylesheet" href="../Resources/web-font-files/lineicons.css">
+    <link rel="stylesheet" href='../UIcomponents/header.css'>
+    <link rel="stylesheet" href='../UIcomponents/notification.css'>
     <script src="../Jquery/jquery-3.6.1.min.js"></script>
   </head>
   <body>
+    <!--#include file="../UIcomponents/header.asp"-->
+    <!--#include file="../UIcomponents/notification.asp"-->
     <div class="container">
         <form method="post">
             <div>
@@ -159,12 +164,34 @@
             </div>
              <button type="button" class="btn btn-primary addButton">Add</button>
             <!-- SUBMIT -->
-            <button type="submit" class="btn btn-success" style="display:block;">Submit</button>
+            <button type="submit" class="btn btn-success submit-btn" style="display:block;">Submit</button>
         </form>
         <script>
+            // function removeRow(button) {
+            //     var row = button.closest('.size-quantity-inputs');
+            //     row.remove();
+            // }
+            // document.getElementById("add-button").addEventListener("click", function() {
+            //     var row = document.querySelector('.size-quantity-inputs').cloneNode(true);
+            //     row.querySelectorAll('input').forEach(function(input) {
+            //         input.value = '';
+            //     });
+            //     document.querySelector('#dynamic-fields').appendChild(row);
+            // });
             function removeRow(button) {
-                var row = button.closest('.size-quantity-inputs');
-                row.remove();
+                var index = document.querySelectorAll(".size-quantity-inputs").length;
+                console.log(index);
+                if(index>1){
+                    var row = button.closest('.size-quantity-inputs');
+                    row.remove();
+                }
+                else{
+                    button.classList.add('shake')
+                    notification('Không em nhé',"var(--bs-orange)")
+                    setTimeout(() => {
+                        button.classList.remove('shake')
+                    }, 500);
+                }
             }
             document.getElementById("add-button").addEventListener("click", function() {
                 var row = document.querySelector('.size-quantity-inputs').cloneNode(true);
@@ -176,33 +203,51 @@
         </script>
         <script>
             // Add button click handler
+            // $(".addButton").click(function() {
+            // var index = $("#inputContainer").children().length + 1
+            // if (index<=4) {
+            //     var inputHTML = '<div class="form-group"><input type="text" class="form-control" id="input' + index + '" name="input[]" required><button type="button" class="btn btn-danger removeButton">Remove</button></div>';
+            //     $("#inputContainer").append(inputHTML);
+            // }
+            // });
+            // // Remove button click handler
+            // $(document).on("click", ".removeButton", function() {
+            //     $(this).closest(".form-group").remove();
+            // });
             $(".addButton").click(function() {
-            var index = $("#inputContainer").children().length + 1
-            if (index<=4) {
-                var inputHTML = '<div class="form-group"><input type="text" class="form-control" id="input' + index + '" name="input[]" required><button type="button" class="btn btn-danger removeButton">Remove</button></div>';
+            var index = $("#inputContainer").children().length + 1;
+            if (index<=5) {
+                var inputHTML = '<div class="form-group"><input type="text" class="form-control image-input" id="input' + index + '" name="input[]" required><button type="button" class="btn btn-danger removeButton">Remove</button></div>';
                 $("#inputContainer").append(inputHTML);
+            }
+            else{
+                notification('Bạn đang thêm quá nhiều ảnh','var(--bs-orange)')
+                $(this).addClass('shake')
+                setTimeout(() => {
+                    $(this).removeClass('shake')
+                }, 500);
             }
             });
             // Remove button click handler
             $(document).on("click", ".removeButton", function() {
-                $(this).closest(".form-group").remove();
+            $(this).closest(".form-group").remove();
             });
         </script>
         <%  
-        Function ArrayToJson()
-            Dim getstring
-            getstring = Request.Form("input[]")
-            Dim arr
-            arr = Split(getstring, ", ")
-            Dim json, i
-            json = "{"
-            For i = 0 To UBound(arr)
-                json = json & """" & CStr(i) & """:""" & arr(i) & """"
-                If i < UBound(arr) Then json = json & ","
-            Next
-            json = json & "}"
-            ArrayToJson = json
-        End Function
+            Function ArrayToJson()
+                Dim getstring
+                getstring = Request.Form("input[]")
+                Dim arr
+                arr = Split(getstring, ", ")
+                Dim json, i
+                json = "{"
+                For i = 0 To UBound(arr)
+                    json = json & """" & CStr(i) & """:""" & arr(i) & """"
+                    If i < UBound(arr) Then json = json & ","
+                Next
+                json = json & "}"
+                ArrayToJson = json
+            End Function
 
             If Request.ServerVariables("REQUEST_METHOD") = "POST" Then
                 connDB.BeginTrans

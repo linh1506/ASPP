@@ -157,20 +157,20 @@
             });
         </script>
         <%  
-        Function ArrayToJson()
-            Dim getstring
-            getstring = Request.Form("input[]")
-            Dim arr
-            arr = Split(getstring, ", ")
-            Dim json, i
-            json = "{"
-            For i = 0 To UBound(arr)
-                json = json & """" & CStr(i) & """:""" & arr(i) & """"
-                If i < UBound(arr) Then json = json & ","
-            Next
-            json = json & "}"
-            ArrayToJson = json
-        End Function
+            Function ArrayToJson()
+                Dim getstring
+                getstring = Request.Form("input[]")
+                Dim arr
+                arr = Split(getstring, ", ")
+                Dim json, i
+                json = "{"
+                For i = 0 To UBound(arr)
+                    json = json & """" & CStr(i) & """:""" & arr(i) & """"
+                    If i < UBound(arr) Then json = json & ","
+                Next
+                json = json & "}"
+                ArrayToJson = json
+            End Function
 
             If Request.ServerVariables("REQUEST_METHOD") = "POST" Then
                 connDB.BeginTrans

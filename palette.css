@@ -1,3 +1,11 @@
+@font-face {
+    font-family: Josefin;
+    src: url(../Resources/JosefinSans-Bold.ttf);
+}
+@font-face {
+    font-family: quicksand;
+    src: url(../Resources/QuickSand/Quicksand-SemiBold.ttf);
+}
 :root{
     --primary:var(--white);
     --secondary: var(--black);
