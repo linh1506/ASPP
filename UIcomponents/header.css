@@ -1,0 +1,71 @@
+@import url(../palette.css);
+@font-face {
+    font-family: Josefin;
+    src: url(../Resources/JosefinSans-Bold.ttf);
+}
+@font-face {
+    font-family: quicksand;
+    src: url(../Resources/QuickSand/Quicksand-SemiBold.ttf);
+}
+.navbar-custom{
+    height: 7vh;
+    background-color: var(--primary);
+}
+.container-fluid{
+    justify-content: flex-start;
+    align-items: center;
+}
+.container-custom{
+    height: 100%;
+    align-items: center;
+}
+    .exit-icon{
+        font-size: 5vh;
+        color: var(--secondary);
+        font-weight: bold;
+        margin-left: 1.5vw;
+        transition: all .2s;
+    }
+    .exit-icon:hover{
+        color: var(--accent);
+    }
+    .brand-custom{
+        font-family: Josefin;
+        font: 700;
+        margin-left: auto;
+        color: var(--secondary);
+        border-radius: 4px;
+        padding-left: .5rem;
+        padding-right: .5rem;
+        transition: all .2s;
+    }
+    .brand-custom:hover{
+        background-color: var(--accent);
+        color: var(--primary);
+    }
+.page-address{
+    margin-left: 2em;
+    display: flex;
+    flex-direction: row;
+    gap :.5rem;
+    align-items: center;
+}
+    .address{
+        font-family: quicksand;
+        font: 600;
+        font-size: 1.3rem;
+        color: var(--secondary);
+        text-decoration: none;
+        transition: all .2s ease;
+    }
+        .address:hover{
+            color: var(--accent);
+            transform: translateY(-5px);
+        }
+    .address-small{
+        font-family: quicksand;
+        font: 600;
+        font-size: 1rem;
+        color: var(--accent);
+        text-decoration: none;
+    }

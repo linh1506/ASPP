@@ -9,7 +9,6 @@ If (Request.ServerVariables("REQUEST_METHOD") = "POST") THEN
       sql = "SELECT * FROM USERS WHERE EMAIL = '" & email & "' AND PASSWORD = '" & password & "'"
       Dim cmdPrep
       set cmdPrep = Server.CreateObject("ADODB.Command")
-      connDB.Open()
       cmdPrep.ActiveConnection = connDB
       cmdPrep.CommandType=1
       cmdPrep.Prepared=true
@@ -55,13 +54,15 @@ End if
     />
     <link
       rel="stylesheet"
-      href="./stylelogin.css"
+      href="./login.css"
     />
     <script src="./Jquery/jquery-3.6.1.min.js"></script>
   </head>
   <body>
     <!--#include file="header.asp"-->
-    <div class="container loginform">
+    
+    <div style="margin-top:100px" class="container loginform">
+        <h3 style="text-align:center">Ở ĐÂY BÁN GIÀY</h3>
         <form method="post">
             <div class="input-group flex-nowrap">
                 <span class="input-group-text label-long">Email</span>
