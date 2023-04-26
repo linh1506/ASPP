@@ -1,5 +1,21 @@
-
+@import url(palette.css);
+@media (min-width: 1200px), (min-width: 960px) and (-webkit-device-pixel-ratio: 1.25) {
+    /* Add Styles Here */
+    .container{
+        width: 70vw;
+    }
+  }
+  
+html{
+    height: 100vh;
+    width: 100vw;
+}
+body{
+    height: 100%;
+    width: 100%;
+}
 /* Style the.sidetab */
+
 .sidetab {
     float: left;
     border: 1px solid #ccc;
@@ -28,7 +44,7 @@
     text-align: left;
     cursor: pointer;
     transition: 0.3s;
-    font-size: 17px;
+    font-size: 1.2rem;
 } 
 /* Change background color of buttons on hover */
 .sidetab button:hover {
