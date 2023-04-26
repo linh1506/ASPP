@@ -1,4 +1,5 @@
 <%
+' SELECT j.[key], j.[value] FROM PRODUCT t CROSS APPLY OPENJSON(t.PRODUCT_IMAGE) j where ID = ?
 Dim conn, cmd, sql, recordsAffected
 Set conn = Server.CreateObject("ADODB.Connection")
 conn.Open "your_connection_string"

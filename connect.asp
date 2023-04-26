@@ -9,6 +9,9 @@ Dim strConnection
 strConnection = "Provider=SQLOLEDB.1;Data Source=NOTDOTBON;Database=DB_ODBG;User Id=ma;Password=1"
 ' Linh
 ' strConnection = "Provider=SQLOLEDB.1;Data Source=MSI\LINH;Database=DB_ODBG;User Id=sa;Password=123456789"
+' Vdacs
+' strConnection = "Provider=SQLOLEDB.1;Data Source=VdacHUB\SQLEXPRESS;Database=DB_ODBG;User Id=sa;Password=123"
+'strConnection = "Provider=SQLOLEDB.1;Data Source=FIRELINKSHRINE\SQLEXPRESS;Database=DB_ODBG;User Id=sa;Password=123"
 connDB.ConnectionString = strConnection
-' connDB.Open
+connDB.Open
 %>

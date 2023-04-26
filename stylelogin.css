@@ -1,26 +1,23 @@
-.loginform {
-    width: 30%;
-    position: relative;
-    height: 290px;
-}
-.label-long {
-    width: 30%;
-}
-.signup {
-    position: absolute;
-    right: 0px;
-    bottom: 0px;
-}
-/* Style the tab */
-.tab {
+
+/* Style the.sidetab */
+.sidetab {
     float: left;
     border: 1px solid #ccc;
     background-color: #f1f1f1;
-    width: 30%;
+    width: 20vw;
     height: 300px;
+    background-color: #f1f1f1;
+    margin-right: 2vw;
 }
-/* Style the buttons inside the tab */
-.tab button {
+.container{
+    margin-right: 0;
+    display: flex;
+    align-items: center;
+    margin-left: 0;
+
+}
+/* Style the buttons inside the.sidetab */
+.sidetab button {
     display: block;
     background-color: inherit;
     color: black;
@@ -34,19 +31,46 @@
     font-size: 17px;
 } 
 /* Change background color of buttons on hover */
-.tab button:hover {
+.sidetab button:hover {
     background-color: #ddd;
 }
-/* Create an active/current "tab button" class */
-.tab button.active {
+/* Create an active/current .sidetab button" class */
+.sidetab button.active {
     background-color: #ccc;
 }
-/* Style the tab content */
+/* Style the.sidetab content */
 .tabcontent {
-    float: left;
-    padding: 0px 12px;
-    border: 1px solid #ccc;
-    width: 70%;
+    padding: 2vh 0px;
+    /* border: 1px solid #ccc; */
+    width: 100%;
     border-left: none;
-    height: 300px;
+    height: auto;
+}
+.redirect-product-page i{
+    transition: all .2s ease;
+    }
+    .redirect-product-page:hover i{
+        transform: translateX(5px);
+    }
+.edit-product-button i{
+    transition: all .2s ease;
+    }
+    .edit-product-button:hover i{
+        transform: scale(1.1)
+    }
+.tag-disabled{
+    pointer-events: none;
+    cursor: not-allowed;
+    filter: grayscale(70%);
+}
+.Product-Feature-row{
+    margin: 1.5vh 0;
+    display: flex;
+    gap:0.6vw
+}
+tr th{
+    text-align: center;
+}
+tr td{
+    text-align: center;
 }
