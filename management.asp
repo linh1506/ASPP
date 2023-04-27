@@ -56,10 +56,16 @@
     Set CountResult = Nothing
     pagesUsers = Ceil(totalRowsUsers/limit)
 
+    strSQL = "SELECT COUNT(ID) AS count FROM BRAND"
+    Set CountResult = connDB.execute(strSQL)
+    totalRowsBrands = CLng(CountResult("count"))
+    Set CountResult = Nothing
+    pagesBrands = Ceil(totalRowsBrands/limit)
+
     typeOfPage = Request.QueryString("type")
     if (trim(typeOfPage) = "") or (isnull(typeOfPage)) then
         ' type of page de trong thi set 1
-        typeOfPage = 4
+        typeOfPage = 1
     end if
     typeOfPage = CInt(typeOfPage)
     page = Request.QueryString("page")
@@ -73,6 +79,7 @@
             pageProducts = page
             pageUsers = 1
             pagePromotions = 1
+            pageBrands = 1
 
             if (CInt(pageProducts) > pagesProducts) then
                 pageProducts = pagesProducts
@@ -81,6 +88,7 @@
             pageProducts = 1
             pageUsers = page
             pagePromotions = 1
+            pageBrands = 1
 
             if (CInt(pageUsers) > pagesUsers) then
                 pageUsers = pagesUsers
@@ -90,20 +98,35 @@
             pageProducts = 1
             pageUsers = 1
             pagePromotions = page
+            pageBrands = 1
 
             if (CInt(pagePromotions) > pagesPromotions) then
                 pagePromotions = pagesPromotions
             end if
 
+        Case 4
+            pageProducts = 1
+            pageUsers = 1
+            pagePromotions = 1
+            pageBrands = page
+
+            if (CInt(pageBrands) > pagesBrands) then
+                pageBrands = pagesBrands
+            end if
+
+
         Case Else
             pageProducts = 1
             pageUsers = 1
             pagePromotions = 1
+            pageBrands = 1
     End Select
 
     offsetProducts = (Clng(pageProducts) * Clng(limit)) - Clng(limit)
     offsetPromotions = (Clng(pagePromotions) * Clng(limit)) - Clng(limit)
     offsetUsers = (Clng(pageUsers) * Clng(limit)) - Clng(limit)
+    offsetBrands = (Clng(pageBrands) * Clng(limit)) - Clng(limit)
+
     
 %>
 <!DOCTYPE html>
@@ -123,6 +146,7 @@
         <button class="tablinks" onclick="openCity(event, 'products')" id="OpenManageProduct">Manage Products</button>
         <button class="tablinks" onclick="openCity(event, 'customers')" id="OpenManageCustomer">Manage Customers</button>
         <button class="tablinks" onclick="openCity(event, 'promotions')" id="OpenManagePromotion">Manage Promotions</button>
+        <button class="tablinks" onclick="openCity(event, 'brands')" id="OpenManageBrand">Manage Brands</button>    
     </div>
     <div class="container">
         <div id="products" class="tabcontent table-responsive">
@@ -326,6 +350,50 @@
                 </ul>
             </nav>
         </div>
+        <div id="brands" class="tabcontent">
+            <h1>Manage Brands</h1>
+            <a href="./ManagmentFeatures/addbrand.asp" class="btn btn-outline-primary">Add Brand</a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                        Set cmdPrep = Server.CreateObject("ADODB.Command")
+                        cmdPrep.ActiveConnection = connDB
+                        cmdPrep.CommandType = 1
+                        cmdPrep.Prepared = True
+                        cmdPrep.commandText = "select * from BRAND order by id offset "& CLng(offsetBrands) &" rows fetch next "& CLng(limit) &" row only"
+                        set Result = cmdPrep.execute
+                        do while not Result.EOF
+                    %>
+                    <tr>
+                        <td><%=Result("ID")%></td>
+                        <td><%=Result("NAME")%></td>
+                    </tr>
+                    <%
+                        Result.MoveNext
+                        loop
+                    %>
+                </tbody>
+            </table>
+
+            <nav aria-label="Page Navigation">
+                <ul class="pagination pagination-sm">
+                    <% if (pagesBrands > 1) then 
+                        for i= 1 to pagesBrands
+                    %>
+                        <li class="page-item <%=checkPage(Clng(i)=Clng(pageBrands),"active")%>"><a class="page-link" href="management.asp?type=4&page=<%=i%>"><%=i%></a></li>
+                    <%
+                        next
+                        end if
+                    %>
+                </ul>
+            </nav>
+        </div>
     </div>
     <script>
         function openCity(evt, cityName) {
@@ -354,6 +422,10 @@
             case 3
             %>
             document.getElementById("OpenManagePromotion").click();
+            <%
+            case 4
+            %>
+            document.getElementById("OpenManageBrand").click();
             <%
             case else
             %>
