@@ -1,0 +1,43 @@
+@import url(../palette.css);
+@font-face {
+    font-family: quicksand;
+    src: url(../Resources/QuickSand/Quicksand-SemiBold.ttf);
+}
+html {
+    width: 100%;
+    height: 100%;
+}
+body {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: var(--primary);
+    /* background: linear-gradient(
+      180deg,
+      rgba(151, 84, 203, 1) 0%,
+      rgba(187, 132, 159, 1) 50%,
+      rgba(242, 205, 92, 1) 100%
+    ), repeat;  */
+}
+label{
+    font-family: quicksand;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+.container {
+  padding-top: 3vh;
+  padding-left: 3vh;
+  padding-right: 3vh;
+  min-height: 93vh;
+  background-color: var(--whiteLowContrast);
+  border-radius: 5px;
+}
+.btn{
+    color: white;
+    border: solid 1px black;
+    background-color: var(--secondary);
+    transition: all .2s ease;
+}
+.btn:hover{
+    background-color: none;
+}
