@@ -13,7 +13,7 @@
             ParentUrl = "../management.asp"
         case "addpromote"
             Parent = "Management"
-            CurrentPage = "Add promotion pode"
+            CurrentPage = "Add promotion code"
             ParentUrl = "../management.asp"
     end select
 

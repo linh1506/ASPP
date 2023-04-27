@@ -43,17 +43,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../bootstrap-5.2.0-dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../stylelogin.css" />
+    <link rel="stylesheet" href="../Resources/web-font-files/lineicons.css">
+    <link rel="stylesheet" href='../UIcomponents/header.css'>
+    <link rel="stylesheet" href='../UIcomponents/notification.css'>
+    <link rel="stylesheet" href="./addpromote.css">
     <script src="../Jquery/jquery-3.6.1.min.js"></script>
     <title>Add Promotion</title>
 </head>
 <body>
-    <!--#include file="../header.asp"-->
+    <!--#include file="../UIcomponents/header.asp"-->
+    <!--#include file="../UIcomponents/notification.asp"-->
     <div class="container">
-        <div>
-            <h2>Add Promotion</h2>
-
-        </div>
             <form method="post">
             <div class="form-group">
                 <label for="name">Name</label>
@@ -72,9 +72,9 @@
                 <input type="date" required class="form-control" id="expired" name="expired">
             </div>
             <br>
-            <button type="submit" class="btn btn-outline-success">Submit</button>
+            <button type="submit" class="btn btn-success">Submit</button>
             </form>
-            <a style="text-decoration:none" href="../management.asp" class="btn btn-link">Quay trở về trang quản lý</a>
+            
 </div>
 </body>
 </html>
