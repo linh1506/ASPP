@@ -1,5 +1,6 @@
 <%
     Class products
+    
         Private p_Id
         Private p_Name
         Private p_Price
@@ -39,6 +40,4 @@
         ' End Sub
     
     End Class
-
-
 %>
