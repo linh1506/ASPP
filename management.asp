@@ -1,3 +1,4 @@
+<!--#include file="security.asp"-->
 <!--#include file="connect.asp"-->
 <!--#include file="./models/products.asp" -->
 <!--#include file="./models/customersDTO.asp" -->
