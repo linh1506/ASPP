@@ -1,4 +1,8 @@
 <!--#include file="connect.asp"-->
+<!--#include file="./models/products.asp" -->
+<!--#include file="./models/customersDTO.asp" -->
+<!--#include file="./models/promotions.asp" -->
+<!--#include file="./models/brands.asp" -->
 <%
     ' ham lam tron so nguyen
     function Ceil(Number)
@@ -50,7 +54,7 @@
     Set CountResult = Nothing
     pagesPromotions = Ceil(totalRowsPromotions/limit)
 
-    strSQL = "SELECT COUNT(ID) AS count FROM USERS"
+    strSQL = "SELECT COUNT(ID) AS count FROM USERS WHERE ROLE='USER'"
     Set CountResult = connDB.execute(strSQL)
     totalRowsUsers = CLng(CountResult("count"))
     Set CountResult = Nothing
@@ -65,7 +69,7 @@
     typeOfPage = Request.QueryString("type")
     if (trim(typeOfPage) = "") or (isnull(typeOfPage)) then
         ' type of page de trong thi set 1
-        typeOfPage = 1
+        typeOfPage = 5
     end if
     typeOfPage = CInt(typeOfPage)
     page = Request.QueryString("page")
@@ -157,242 +161,307 @@
                 <a href="../management.asp?sorttype=2" class="btn btn-warning <%if sorttype=2 then %>disabled<%end if%>" role="button" aria-disabled="true"">Sort by Name (Ascending)</a>
                 <a href="../management.asp?sorttype=3" class="btn btn-warning <%if sorttype=3 then %>disabled<%end if%>" role="button" aria-disabled="true"">Sort by Price (Asending)</a>
             </div>
-            
-            <table class="table table-dark table-hover table-responsive">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">NAME</th>
-                        <th scope="col">PRICE</th>
-                        <th scope="col">STATUS</th>
-                        <th scope="col">Edit</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <%
-                        dim cmdPrep
-                        Set cmdPrep = Server.CreateObject("ADODB.Command")
-                        cmdPrep.ActiveConnection = connDB
-                        cmdPrep.CommandType = 1
-                        cmdPrep.Prepared = True
-                        cmdPrep.commandText = "select * from PRODUCT order by "& sortProducts &" offset "& CLng(offsetProducts) &" rows fetch next "& CLng(limit) &" row only"
-                        set Result = cmdPrep.execute
-                        do while not Result.EOF
-                    %>
-                    <tr>
-                            <td><%=Result("ID")%></td>
-                            <td><%=Result("NAME")%></td>
-                            <td><%=Result("PRICE")%></td>
-                            <td>
-                                <a href="./ManagmentFeatures/ToggleProductAvailabilty.asp?id=<%=Result("ID")%>&page=<%=Page%>&type=<%=typeOfPage%>&sorttype=<%=sorttype%>" class="btn 
-                                <%if(Result("IS_AVAILABLE") = true) then%>
-                                    btn-success">Open For Sale
-                                    <%else%>
-                                    btn-danger">Closed
-                                <%end if%>
-                                </a>
-                            </td>
-                            <td>
-                                <a class="edit-product-button" href="./ManagmentFeatures/editProduct.asp?id=<%=Result("ID")%>&page=<%=page%>&sorttype=<%=sorttype%>">
-                                    <i class = "lni lni-pencil-alt" style="margin:0;padding:0;color:#f3f3f3;font-size:1.5em"></i>
-                                </a>
-                            </td>
-                            <td>
-                                <a href="./Errors/404.asp" class="redirect-product-page">
-                                    <i class = "lni lni-chevron-right-circle" style="margin:0;padding:0;color:#f3f3f3;font-size:1.5em"></i>
-                                </a>
-                            </td>
-                    </tr>
-                    <%
-                        Result.MoveNext
-                        loop
-                        Result.Close
-                        set Result = nothing
-                    %>
-                </tbody>
-            </table>
-
-            <nav aria-label="Page Navigation">
-                <ul class="pagination pagination-sm">
-                    <% if (pagesProducts > 1) then 
-                        for i= 1 to pagesProducts
-                    %>
-                        <li class="page-item <%=checkPage(Clng(i)=Clng(pageProducts),"active")%>"><a class="page-link" href="management.asp?type=1&page=<%=i%><% if (CInt(sorttype) <> 1) then Response.Write "&sorttype=" & sorttype%>"><%=i%></a></li>
-                    <%
-                        next
-                        end if
-                    %>
-                </ul>
-            </nav>
+            <%if (totalRowsProducts = 0) then%>
+                <h5>THERE'S NO ONE AT ALL</h5>
+            <%else%>
+                <div>
+                    <table class="table table-dark table-hover table-responsive">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">NAME</th>
+                                <th scope="col">PRICE</th>
+                                <th scope="col">STATUS</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                                Set listProducts = Server.CreateObject("Scripting.Dictionary")
+                                dim cmdPrep
+                                Set cmdPrep = Server.CreateObject("ADODB.Command")
+                                cmdPrep.ActiveConnection = connDB
+                                cmdPrep.CommandType = 1
+                                cmdPrep.Prepared = True
+                                cmdPrep.commandText = "select * from PRODUCT order by "& sortProducts &" offset "& CLng(offsetProducts) &" rows fetch next "& CLng(limit) &" row only"
+                                set Result = cmdPrep.execute
+                                seq = 0
+                                do while not Result.EOF
+                                    seq = seq + 1
+                                    set product = New Products
+                                    product.Id = Result("ID")
+                                    product.Name = Result("NAME")
+                                    product.Price = Result("PRICE")
+                                    product.Status = Result("IS_AVAILABLE")
+                                    listProducts.add seq,product
+                                    Result.MoveNext
+                                Loop
+                                Result.Close
+                                set Result = nothing
+                            %>
+                            <% for each item in listProducts %>
+                            <tr>
+                                    <td><%=listProducts(item).Id%></td>
+                                    <td><%=listProducts(item).Name%></td>
+                                    <td><%=listProducts(item).Price%></td>
+                                    <td>
+                                        <a href="./ManagmentFeatures/ToggleProductAvailabilty.asp?id=<%=listProducts(item).Id%>&page=<%=Page%>&type=<%=typeOfPage%>&sorttype=<%=sorttype%>" class="btn 
+                                        <%if(listProducts(item).Status = true) then%>
+                                            btn-success">Open For Sale
+                                            <%else%>
+                                            btn-danger">Closed
+                                        <%end if%>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="edit-product-button" href="./ManagmentFeatures/editProduct.asp?id=<%=listProducts(item).Id%>&page=<%=page%>&sorttype=<%=sorttype%>">
+                                            <i class = "lni lni-pencil-alt" style="margin:0;padding:0;color:#f3f3f3;font-size:1.5em"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="./Errors/404.asp" class="redirect-product-page">
+                                            <i class = "lni lni-chevron-right-circle" style="margin:0;padding:0;color:#f3f3f3;font-size:1.5em"></i>
+                                        </a>
+                                    </td>
+                            </tr>
+                            <% Next %>
+                        </tbody>
+                    </table>
+                    <nav aria-label="Page Navigation">
+                        <ul class="pagination pagination-sm">
+                            <% if (pagesProducts > 1) then 
+                                for i= 1 to pagesProducts
+                            %>
+                                <li class="page-item <%=checkPage(Clng(i)=Clng(pageProducts),"active")%>"><a class="page-link" href="management.asp?type=1&page=<%=i%><% if (CInt(sorttype) <> 1) then Response.Write "&sorttype=" & sorttype%>"><%=i%></a></li>
+                            <%
+                                next
+                                end if
+                            %>
+                        </ul>
+                    </nav>
+                </div>
+            <%end if%>
         </div>
         <div id="customers" class="tabcontent">
             <h1>Manage Customers</h1>
-            <table class="table table-dark">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">NAME</th>
-                        <th scope="col">EMAIL</th>
-                        <th scope="col">PASSWORD</th>
-                        <th scope="col">ADDRESS</th>
-                        <th scope="col">PHONE</th>
-                        <th scope="col">ROLE</th>
-                        <th scope="col">STATUS</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <%
-                        Set cmdPrep = Server.CreateObject("ADODB.Command")
-                        cmdPrep.ActiveConnection = connDB
-                        cmdPrep.CommandType = 1
-                        cmdPrep.Prepared = True
-                        cmdPrep.commandText = "select * from users order by id offset "& CLng(offsetUsers) &" rows fetch next "& CLng(limit) &" row only"
-                        set Result = cmdPrep.execute
-                        do while not Result.EOF
-                    %>
-                    <tr>
-                        <td><%=Result("Id")%></td>
-                        <td><%=Result("Name")%></td>
-                        <td><%=Result("Email")%></td>
-                        <td><%=Result("Password")%></td>
-                        <td><%=Result("Address")%></td>
-                        <td><%=Result("Phone")%></td>
-                        <td><%=Result("Role")%></td>
-                        <td>
-                            <a href="./ManagmentFeatures/editstatususer.asp?id=<%=Result("Id")%>&page=<%=Page%>&type=<%=typeOfPage%>" class="btn 
-                            <%if(Result("Status") = true) then%>
-                                btn-success">active
-                                <%else%>
-                                btn-danger">block
-                                <%end if%>
-                            </a>
-                        </td>
-                    </tr>
-                    <%
-                        Result.MoveNext
-                        loop
-                    %>
-                </tbody>
-            </table>
-
-            <nav aria-label="Page Navigation">
-                <ul class="pagination pagination-sm">
-                    <% if (pagesUsers>1) then 
-                        for i= 1 to pagesUsers
-                    %>
-                        <li class="page-item <%=checkPage(Clng(i)=Clng(pageUsers),"active")%>"><a class="page-link" href="management.asp?type=2&page=<%=i%>"><%=i%></a></li>
-                    <%
-                        next
-                        end if
-                    %>
-                </ul>
-            </nav>
-
+            <%if (totalRowsUsers = 0) then%>
+                <h5>THERE'S NO ONE AT ALL</h5>
+            <%else%>
+                <div>
+                    <table class="table table-dark">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">NAME</th>
+                                <th scope="col">EMAIL</th>
+                                <th scope="col">PHONE</th>
+                                <th scope="col">STATUS</th>
+                                <th scope="col"></th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                                Set listCustomersDTO = Server.CreateObject("Scripting.Dictionary")
+                                Set cmdPrep = Server.CreateObject("ADODB.Command")
+                                cmdPrep.ActiveConnection = connDB
+                                cmdPrep.CommandType = 1
+                                cmdPrep.Prepared = True
+                                cmdPrep.commandText = "select * from users where ROLE = 'USER' order by id offset "& CLng(offsetUsers) &" rows fetch next "& CLng(limit) &" row only"
+                                set Result = cmdPrep.execute
+                                seq = 0
+                                do while not Result.EOF
+                                    seq = seq + 1
+                                    set cus = New customersDTO
+                                    cus.Id = Result("ID")
+                                    cus.Name = Result("NAME")
+                                    cus.Email = Result("EMAIL")
+                                    cus.Phone = Result("PHONE")
+                                    cus.Status = Result("STATUS")
+                                    listCustomersDTO.add seq,cus
+                                    Result.MoveNext
+                                Loop
+                                Result.Close
+                                set Result = nothing
+                            %>
+                            <% for each item in listCustomersDTO %>
+                            <tr>
+                                <td><%=listCustomersDTO(item).Id%></td>
+                                <td><%=listCustomersDTO(item).Name%></td>
+                                <td><%=listCustomersDTO(item).Email%></td>
+                                <td><%=listCustomersDTO(item).Phone%></td>
+                                <td>
+                                    <a href="./ManagmentFeatures/editstatususer.asp?id=<%=listCustomersDTO(item).Id%>&page=<%=Page%>&type=<%=typeOfPage%>" class="btn 
+                                    <%if(listCustomersDTO(item).Status = true) then%>
+                                        btn-success">active
+                                        <%else%>
+                                        btn-danger">block
+                                        <%end if%>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="./ManagmentFeatures/info_customer.asp?id=<%=listCustomersDTO(item).Id%>" class="redirect-product-page">
+                                        <i class = "lni lni-chevron-right-circle" style="margin:0;padding:0;color:#f3f3f3;font-size:1.5em"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <% Next %>
+                        </tbody>
+                    </table>
+                    <nav aria-label="Page Navigation">
+                        <ul class="pagination pagination-sm">
+                            <% if (pagesUsers>1) then 
+                                for i= 1 to pagesUsers
+                            %>
+                                <li class="page-item <%=checkPage(Clng(i)=Clng(pageUsers),"active")%>"><a class="page-link" href="management.asp?type=2&page=<%=i%>"><%=i%></a></li>
+                            <%
+                                next
+                                end if
+                            %>
+                        </ul>
+                    </nav>
+                </div>
+            <%end if%>
         </div>
         <div id="promotions" class="tabcontent">
             <h1>Manage Promotions</h1>
             <a href="./ManagmentFeatures/addpromote.asp" class="btn btn-outline-primary">Add Promotion</a>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Coupon Code</th>
-                        <th scope="col">Discount Value</th>
-                        <th scope="col">Expired</th>
-                        <th scope="col">Active</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <%
-                        Set cmdPrep = Server.CreateObject("ADODB.Command")
-                        cmdPrep.ActiveConnection = connDB
-                        cmdPrep.CommandType = 1
-                        cmdPrep.Prepared = True
-                        cmdPrep.commandText = "select * from PROMOTION order by id offset "& CLng(offsetPromotions) &" rows fetch next "& CLng(limit) &" row only"
-                        set Result = cmdPrep.execute
-                        do while not Result.EOF
-                    %>
-                    <tr>
-                        <td><%=Result("ID")%></td>
-                        <td><%=Result("NAME")%></td>
-                        <td><%=Result("COUPON_CODE")%></td>
-                        <td><%=Result("DISCOUNT_VALUE")%></td>
-                        <td><%=Result("EXPIRED_AT")%></td>
-                        <td>
-                            <a href="./ManagmentFeatures/editstatuspromotion.asp?id=<%=Result("ID")%>&page=<%=page%>" class="btn 
-                            <% if (Result("IS_ACTIVE") = True ) then %>
-                                btn-success "> Enable
-                            <% else %> 
-                                btn-danger "> Disable
-                            <% end if %>
-                            </a>
-                        </td>
-                    </tr>
-                    <%
-                        Result.MoveNext
-                        loop
-                    %>
-                </tbody>
-            </table>
-
-            <nav aria-label="Page Navigation">
-                <ul class="pagination pagination-sm">
-                    <% if (pagesPromotions > 1) then 
-                        for i= 1 to pagesPromotions
-                    %>
-                        <li class="page-item <%=checkPage(Clng(i)=Clng(pagePromotions),"active")%>"><a class="page-link" href="management.asp?type=3&page=<%=i%>"><%=i%></a></li>
-                    <%
-                        next
-                        end if
-                    %>
-                </ul>
-            </nav>
+            <%if (totalRowsPromotions = 0) then%>
+                <h5>THERE'S NO ONE AT ALL</h5>
+            <%else%>
+                <div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Coupon Code</th>
+                                <th scope="col">Discount Value</th>
+                                <th scope="col">Expired</th>
+                                <th scope="col">Active</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                                Set listPromotions = Server.CreateObject("Scripting.Dictionary")
+                                Set cmdPrep = Server.CreateObject("ADODB.Command")
+                                cmdPrep.ActiveConnection = connDB
+                                cmdPrep.CommandType = 1
+                                cmdPrep.Prepared = True
+                                cmdPrep.commandText = "select * from PROMOTION order by id offset "& CLng(offsetPromotions) &" rows fetch next "& CLng(limit) &" row only"
+                                set Result = cmdPrep.execute
+                                seq = 0
+                                do while not Result.EOF
+                                    seq = seq + 1
+                                    set promotion = New promotions
+                                    promotion.Id = Result("ID")
+                                    promotion.Name = Result("NAME")
+                                    promotion.CouponCode = Result("COUPON_CODE")
+                                    promotion.Is_Active = Result("IS_ACTIVE")
+                                    promotion.Expired_At = Result("EXPIRED_AT")
+                                    promotion.Discount_Value = Result("DISCOUNT_VALUE")
+                                    listPromotions.add seq,promotion
+                                    Result.MoveNext
+                                Loop
+                                Result.Close
+                                set Result = nothing
+                            %>
+                            <% for each item in listPromotions %>
+                            <tr>
+                                <td><%=listPromotions(item).Id%></td>
+                                <td><%=listPromotions(item).Name%></td>
+                                <td><%=listPromotions(item).CouponCode%></td>
+                                <td><%=listPromotions(item).Discount_Value%></td>
+                                <td><%=listPromotions(item).Expired_At%></td>
+                                <td>
+                                    <a href="./ManagmentFeatures/editstatuspromotion.asp?id=<%=listPromotions(item).Id%>&page=<%=page%>" class="btn 
+                                    <% if (listPromotions(item).Is_Active = True ) then %>
+                                        btn-success "> Enable
+                                    <% else %> 
+                                        btn-danger "> Disable
+                                    <% end if %>
+                                    </a>
+                                </td>
+                            </tr>
+                            <% Next %>
+                        </tbody>
+                    </table>
+                    <nav aria-label="Page Navigation">
+                        <ul class="pagination pagination-sm">
+                            <% if (pagesPromotions > 1) then 
+                                for i= 1 to pagesPromotions
+                            %>
+                                <li class="page-item <%=checkPage(Clng(i)=Clng(pagePromotions),"active")%>"><a class="page-link" href="management.asp?type=3&page=<%=i%>"><%=i%></a></li>
+                            <%
+                                next
+                                end if
+                            %>
+                        </ul>
+                    </nav>
+                </div>
+            <%end if%>
         </div>
         <div id="brands" class="tabcontent">
             <h1>Manage Brands</h1>
-            <a href="./ManagmentFeatures/addbrand.asp" class="btn btn-outline-primary">Add Brand</a>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <%
-                        Set cmdPrep = Server.CreateObject("ADODB.Command")
-                        cmdPrep.ActiveConnection = connDB
-                        cmdPrep.CommandType = 1
-                        cmdPrep.Prepared = True
-                        cmdPrep.commandText = "select * from BRAND order by id offset "& CLng(offsetBrands) &" rows fetch next "& CLng(limit) &" row only"
-                        set Result = cmdPrep.execute
-                        do while not Result.EOF
-                    %>
-                    <tr>
-                        <td><%=Result("ID")%></td>
-                        <td><%=Result("NAME")%></td>
-                    </tr>
-                    <%
-                        Result.MoveNext
-                        loop
-                    %>
-                </tbody>
-            </table>
-
-            <nav aria-label="Page Navigation">
-                <ul class="pagination pagination-sm">
-                    <% if (pagesBrands > 1) then 
-                        for i= 1 to pagesBrands
-                    %>
-                        <li class="page-item <%=checkPage(Clng(i)=Clng(pageBrands),"active")%>"><a class="page-link" href="management.asp?type=4&page=<%=i%>"><%=i%></a></li>
-                    <%
-                        next
-                        end if
-                    %>
-                </ul>
-            </nav>
+            <form action="./ManagmentFeatures/addBrand.asp" method="POST">
+                <input type="text" name="nameBrand">
+                <button type="submit" class="btn btn-outline-primary">Add Brand</button>
+            </form>
+            <%if (totalRowsBrands = 0) then%>
+                <h5>THERE'S NO ONE AT ALL</h5>
+            <%else%>
+                <div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                                Set listBrands = Server.CreateObject("Scripting.Dictionary")
+                                Set cmdPrep = Server.CreateObject("ADODB.Command")
+                                cmdPrep.ActiveConnection = connDB
+                                cmdPrep.CommandType = 1
+                                cmdPrep.Prepared = True
+                                cmdPrep.commandText = "select * from BRAND order by id offset "& CLng(offsetBrands) &" rows fetch next "& CLng(limit) &" row only"
+                                set Result = cmdPrep.execute
+                                seq = 0
+                                do while not Result.EOF
+                                    seq = seq + 1
+                                    set brand = new brands
+                                    brand.Id = Result("ID")
+                                    brand.Name = Result("NAME")
+                                    listBrands.add seq,brand
+                                    Result.MoveNext
+                                loop
+                                Result.Close
+                                set Result = nothing
+                            %>
+                            <% for each item in listBrands %>
+                            <tr>
+                                <td><%=listBrands(item).Id%></td>
+                                <td><%=listBrands(item).Name%></td>
+                            </tr>
+                            <% Next %>
+                        </tbody>
+                    </table>
+                    <nav aria-label="Page Navigation">
+                        <ul class="pagination pagination-sm">
+                            <% if (pagesBrands > 1) then 
+                                for i= 1 to pagesBrands
+                            %>
+                                <li class="page-item <%=checkPage(Clng(i)=Clng(pageBrands),"active")%>"><a class="page-link" href="management.asp?type=4&page=<%=i%>"><%=i%></a></li>
+                            <%
+                                next
+                                end if
+                            %>
+                        </ul>
+                    </nav>
+                </div>
+            <%end if%>
         </div>
     </div>
     <script>
