@@ -8,6 +8,5 @@
             <a href="#" class='nav-link address'><%=CurrentPage%></a>
         </div>
         <a href="#" class="navbar-brand brand-custom">ODBG</a>
-        
     </div>
 </nav>
