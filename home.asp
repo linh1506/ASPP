@@ -35,6 +35,7 @@
               %>
             </ul>
             <div class="d-flex">
+              <a href="" class="link-info">My Cart</a>
               <%
                 if (IsNull(Session("Email")) or Trim(Session("Email"))="") then
               %>
@@ -42,8 +43,7 @@
               <%
                 else 
               %>
-              <a href="" class="link-success"><%=Session("Name")%></a>
-              <a href="" class="link-info">My Cart</a>
+              <a href="profile.asp" class="link-success"><%=Session("Name")%></a>
               <a href="logout.asp" class="link-danger">Log out</a>
               <%
                 End if

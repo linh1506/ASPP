@@ -14,13 +14,13 @@
     if (Result("count") = 1) then
         cmdPrep.commandText = "select * from USERS where Id = " & id
         set Result = cmdPrep.execute
-        set cus = New customers
-        cus.Id = Result("ID")
-        cus.Address = Result("ADDRESS")
-        cus.Name = Result("NAME")
-        cus.Email = Result("EMAIL")
-        cus.Phone = Result("PHONE")
-        cus.Status = Result("STATUS")
+        set cust = New customers
+        cust.Id = Result("ID")
+        cust.Address = Result("ADDRESS")
+        cust.Name = Result("NAME")
+        cust.Email = Result("EMAIL")
+        cust.Phone = Result("PHONE")
+        cust.Status = Result("STATUS")
         Result.Close
         set Result = nothing
     Else
@@ -39,11 +39,11 @@
     <script src="./Jquery/jquery-3.6.1.min.js"></script>
   </head>
   <body>
-    <p>ID: <%=cus.Id%></p>
-    <p>Name: <%=cus.Name%></p>
-    <p>Email: <%=cus.Email%></p>
-    <p>Phone: <%=cus.Phone%></p>
-    <p>Address: <%=cus.Address%></p>
+    <p>ID: <%=cust.Id%></p>
+    <p>Name: <%=cust.Name%></p>
+    <p>Email: <%=cust.Email%></p>
+    <p>Phone: <%=cust.Phone%></p>
+    <p>Address: <%=cust.Address%></p>
     <p>All orders previous:</p>
   </body>
 </html>
