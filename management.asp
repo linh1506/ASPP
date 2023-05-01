@@ -74,6 +74,7 @@
     end if
     typeOfPage = CInt(typeOfPage)
     page = Request.QueryString("page")
+
     if (trim(page) = "") or (isnull(page)) then
         page = 1
     end if
