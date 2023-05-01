@@ -1,4 +1,4 @@
-<!--#include file="security.asp"-->
+<!--#include file="../security.asp"-->
 <!--#include file="../connect.asp"-->
 <%
     if (Request.ServerVariables("REQUEST_METHOD") = "POST") THEN
