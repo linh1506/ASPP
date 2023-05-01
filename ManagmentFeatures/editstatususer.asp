@@ -1,3 +1,5 @@
+<!--#include file="../security.asp"-->
+
 <!-- #include file="../connect.asp" -->
 <%
 On Error Resume Next
@@ -7,8 +9,7 @@ End Sub
 
     dim page 
     page = Request.QueryString("page")
-
-
+    
     If (isnull(Session("email")) OR TRIM(Session("email")) = "") Then
         response.redirect("../login.asp")
     else
@@ -43,9 +44,7 @@ End Sub
     set result = cmdPrep.execute()
     If Err.Number = 0 Then 
     Session("Success") = "Status has changed"
-    dim link
-    link = "../management.asp?page="&Page&"&type=2"
-    response.redirect(link)
+    response.redirect("../management.asp?page="&Page&"&type=2")
     else
     handleError(Err.Description)
     Session("Error") = "something wrong, try again"

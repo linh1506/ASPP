@@ -1,3 +1,5 @@
+<!--#include file="../security.asp"-->
+
 <!--#include file="../connect.asp"-->
 <%
     name = Request.form("name")
@@ -34,8 +36,6 @@
         Result.Close()
         connDB.Close()
     end if
-    
-
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,9 +50,11 @@
 </head>
 <body>
     <!--#include file="../header.asp"-->
-    <button class="btn btn-succes"></button>
     <div class="container">
-        <h2>Add Promotion</h2>
+        <div>
+            <h2>Add Promotion</h2>
+
+        </div>
             <form method="post">
             <div class="form-group">
                 <label for="name">Name</label>
@@ -71,8 +73,9 @@
                 <input type="date" required class="form-control" id="expired" name="expired">
             </div>
             <br>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-outline-success">Submit</button>
             </form>
+            <a style="text-decoration:none" href="../management.asp" class="btn btn-link">Quay trở về trang quản lý</a>
 </div>
 </body>
 </html>
