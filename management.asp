@@ -254,7 +254,6 @@
                     <table class="table table-dark">
                         <thead>
                             <tr>
-                                <th scope="col">ID</th>
                                 <th scope="col">NAME</th>
                                 <th scope="col">EMAIL</th>
                                 <th scope="col">PHONE</th>
@@ -276,7 +275,6 @@
                                 do while not Result.EOF
                                     seq = seq + 1
                                     set cus = New customersDTO
-                                    cus.Id = Result("ID")
                                     cus.Name = Result("NAME")
                                     cus.Email = Result("EMAIL")
                                     cus.Phone = Result("PHONE")
@@ -289,7 +287,6 @@
                             %>
                             <% for each item in listCustomersDTO %>
                             <tr>
-                                <td><%=listCustomersDTO(item).Id%></td>
                                 <td><%=listCustomersDTO(item).Name%></td>
                                 <td><%=listCustomersDTO(item).Email%></td>
                                 <td><%=listCustomersDTO(item).Phone%></td>
