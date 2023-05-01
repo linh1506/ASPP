@@ -1,7 +1,8 @@
+<!--#include file="../security.asp"-->
+
 <!-- #include file="../connect.asp" -->
 <%
 On Error Resume Next
-
 Sub handleError(message)
     Session("Error") = message
 End Sub
