@@ -57,15 +57,15 @@
             <form method="post">
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" required class="form-control" id="name" placeholder="Enter name promotion" name="name">
+                ' <input type="text" required class="form-control" id="name" name="name">
             </div>
             <div class="form-group">
                 <label for="code">Code</label>
-                <input type="text" required class="form-control" id="code" placeholder="Enter code promotion" name="code">
+                <input type="text" required class="form-control" id="code"  name="code">
             </div>
             <div class="form-group">
                 <label for="discount">Discount</label>
-                <input type="number" step="0.1" class="form-control" id="discount" placeholder="Discount value" name="discount" min="0" max="1">
+                <input type="number" step="0.1" class="form-control" id="discount"  name="discount" min="0" max="1">
             </div>
             <div class="form-group">
                 <label for="expired">Expired at</label>
