@@ -59,7 +59,7 @@ End if
     <script src="./Jquery/jquery-3.6.1.min.js"></script>
   </head>
   <body>
-    <!--#include file="header.asp"-->
+    <!--#include file="./UIcomponents/ManagementHeader.asp"-->
     
     <div style="margin-top:100px" class="container loginform">
         <h3 style="text-align:center">Ở ĐÂY BÁN GIÀY</h3>

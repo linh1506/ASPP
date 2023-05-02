@@ -145,7 +145,7 @@
     <script src="./Jquery/jquery-3.6.1.min.js"></script>
   </head>
   <body>
-  <!--#include file="header.asp"-->
+  <!--#include file="./UIcomponents/ManagementHeader.asp"-->
     <div class="sidetab">
         <button class="tablinks" onclick="openCity(event, 'products')" id="OpenManageProduct">Manage Products</button>
         <button class="tablinks" onclick="openCity(event, 'customers')" id="OpenManageCustomer">Manage Customers</button>

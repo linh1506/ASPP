@@ -1,0 +1,8 @@
+@import url(palette.css);
+@import url(fonts.css);
+html{
+    width: 100vw;
+}
+body{
+    width: 100%;
+}
