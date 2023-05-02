@@ -22,4 +22,22 @@
         ' End Sub
     
     End Class
+    Set allBrands = Server.CreateObject("Scripting.Dictionary")
+                                Set cmdPrep = Server.CreateObject("ADODB.Command")
+                                cmdPrep.ActiveConnection = connDB
+                                cmdPrep.CommandType = 1
+                                cmdPrep.Prepared = True
+                                cmdPrep.commandText = "select * from BRAND"
+                                set Result = cmdPrep.execute
+                                seq = 0
+                                do while not Result.EOF
+                                    seq = seq + 1
+                                    set brand = new brands
+                                    brand.Id = Result("ID")
+                                    brand.Name = Result("NAME")
+                                    allBrands.add seq,brand
+                                    Result.MoveNext
+                                loop
+                                Result.Close
+                                set Result = nothing
 %>
