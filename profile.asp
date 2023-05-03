@@ -42,5 +42,14 @@
     Address: <input type="text" value="<%=cust.Address%>" name="address">
     <button type="submit">Submit</button>
 </form> 
+
+<h1>changepassword</h1>
+<form action="changepassword.asp?id=<%=Session("Id")%>" method="POST">
+password: <input type="text" name="password">
+password change: <input type="text" name="passwordchange">
+re-enter password: <input type="text" name="passwordreenter"> 
+<button type="submit">change password</button>
+</form> 
 <%end if%>
+
 
