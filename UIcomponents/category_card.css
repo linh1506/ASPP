@@ -1,0 +1,31 @@
+@import url(../palette.css);
+@import url(/fonts.css);
+.category{
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 5px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-position:top center;
+    transition: all .3s ease;
+    color:var(--primary);
+    filter: grayscale(100%);
+}
+.category:hover{
+    filter: none
+}
+.category-name{
+    position: relative;
+    z-index: 30;
+    text-decoration: none;
+    font-family: Josefin;
+    font-size: 3em;
+    color: var(--red);
+    transition: all .3s ease;
+}

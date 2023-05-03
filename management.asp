@@ -1,3 +1,4 @@
+<!--#include file="./Security/security.asp"-->
 <!--#include file="connect.asp"-->
 <!--#include file="./models/products.asp" -->
 <!--#include file="./models/customersDTO.asp" -->
@@ -73,6 +74,7 @@
     end if
     typeOfPage = CInt(typeOfPage)
     page = Request.QueryString("page")
+
     if (trim(page) = "") or (isnull(page)) then
         page = 1
     end if
@@ -140,7 +142,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="./bootstrap-5.2.0-dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="./stylelogin.css" />
+    <link rel="stylesheet" href="./management.css" />
     <link rel="stylesheet" href="./Resources/web-font-files/lineicons.css">
     <script src="./Jquery/jquery-3.6.1.min.js"></script>
   </head>
@@ -201,30 +203,30 @@
                                 set Result = nothing
                             %>
                             <% for each item in listProducts %>
-                            <tr>
-                                    <td><%=listProducts(item).Id%></td>
-                                    <td><%=listProducts(item).Name%></td>
-                                    <td><%=listProducts(item).Price%></td>
-                                    <td>
-                                        <a href="./ManagmentFeatures/ToggleProductAvailabilty.asp?id=<%=listProducts(item).Id%>&page=<%=Page%>&type=<%=typeOfPage%>&sorttype=<%=sorttype%>" class="btn 
-                                        <%if(listProducts(item).Status = true) then%>
-                                            btn-success">Open For Sale
-                                            <%else%>
-                                            btn-danger">Closed
-                                        <%end if%>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a class="edit-product-button" href="./ManagmentFeatures/editProduct.asp?id=<%=listProducts(item).Id%>&page=<%=page%>&sorttype=<%=sorttype%>">
-                                            <i class = "lni lni-pencil-alt" style="margin:0;padding:0;color:#f3f3f3;font-size:1.5em"></i>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="./Errors/404.asp" class="redirect-product-page">
-                                            <i class = "lni lni-chevron-right-circle" style="margin:0;padding:0;color:#f3f3f3;font-size:1.5em"></i>
-                                        </a>
-                                    </td>
-                            </tr>
+                                <tr>
+                                        <td><%=listProducts(item).Id%></td>
+                                        <td><%=listProducts(item).Name%></td>
+                                        <td><%=listProducts(item).Price%></td>
+                                        <td>
+                                            <a href="./ManagmentFeatures/ToggleProductAvailabilty.asp?id=<%=listProducts(item).Id%>&page=<%=Page%>&type=<%=typeOfPage%>&sorttype=<%=sorttype%>" class="btn 
+                                            <%if(listProducts(item).Status = true) then%>
+                                                btn-success">Open For Sale
+                                                <%else%>
+                                                btn-danger">Closed
+                                            <%end if%>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a class="edit-product-button" href="./ManagmentFeatures/editProduct.asp?id=<%=listProducts(item).Id%>&page=<%=page%>&sorttype=<%=sorttype%>">
+                                                <i class = "lni lni-pencil-alt" style="margin:0;padding:0;color:#f3f3f3;font-size:1.5em"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="./Errors/404.asp" class="redirect-product-page">
+                                                <i class = "lni lni-chevron-right-circle" style="margin:0;padding:0;color:#f3f3f3;font-size:1.5em"></i>
+                                            </a>
+                                        </td>
+                                </tr>
                             <% Next %>
                         </tbody>
                     </table>
@@ -252,7 +254,6 @@
                     <table class="table table-dark">
                         <thead>
                             <tr>
-                                <th scope="col">ID</th>
                                 <th scope="col">NAME</th>
                                 <th scope="col">EMAIL</th>
                                 <th scope="col">PHONE</th>
@@ -274,7 +275,6 @@
                                 do while not Result.EOF
                                     seq = seq + 1
                                     set cus = New customersDTO
-                                    cus.Id = Result("ID")
                                     cus.Name = Result("NAME")
                                     cus.Email = Result("EMAIL")
                                     cus.Phone = Result("PHONE")
@@ -287,7 +287,6 @@
                             %>
                             <% for each item in listCustomersDTO %>
                             <tr>
-                                <td><%=listCustomersDTO(item).Id%></td>
                                 <td><%=listCustomersDTO(item).Name%></td>
                                 <td><%=listCustomersDTO(item).Email%></td>
                                 <td><%=listCustomersDTO(item).Phone%></td>

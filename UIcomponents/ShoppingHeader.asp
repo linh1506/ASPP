@@ -13,7 +13,7 @@
                             <ul>
                                 <% for each item in listCategory %>
                                 <li>
-                                    <div class="content-img" style="background-image:url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c2hvZXN8ZW58MHx8MHx8&w=1000&q=80'); background-size:contain; background-repeat:no-repeat; background-position:right center"></div>
+                                    <div class="content-img" style="background-image:url('<%=listCategory(item).Image%>'); background-size:contain; background-repeat:no-repeat; background-position:right center"></div>
                                     <h2 class="drp-content-text" ><%=CStr(listCategory(item).Name)%></h2>
                                     <a  class="drp-content-text" href="#">Xem danh sách sản phẩm ></a> 
                                 </li>
@@ -29,7 +29,7 @@
                             <ul>
                                 <% for item  = 1 To 3 %>
                                 <li>
-                                    <div class="content-img" style="background-image:url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c2hvZXN8ZW58MHx8MHx8&w=1000&q=80'); background-size:contain; background-repeat:no-repeat; background-position:right center"></div>
+                                    <div class="content-img" style="background-image:url('<%=allBrands(item).Image%>'); background-size:contain; background-repeat:no-repeat; background-position:right center"></div>
                                     <h2 class="drp-content-text" ><%=CStr(allBrands(item).Name)%></h2>
                                     <a  class="drp-content-text" href="#">Xem danh sách sản phẩm ></a> 
                                 </li>
@@ -43,21 +43,27 @@
             <div class="d-flex">
                 <%
                     if (Trim(Session("Role")) = "ADMIN") then
-                %>
-                        <a href="management.asp">Management</a>
+                %>      
+                        <a class="right-area" href="management.asp">
+                            <i class='lni lni-restaurant'></i>
+                            <h5>Quản Lý Cửa Hàng</h5>
+                        </a>
+                        
                 <%
                     end if
                 %>
                 <%
                         if (IsNull(Session("Email")) or Trim(Session("Email"))="") then
                 %>
-                <a href="login.asp">Login</a>
+                <a href="login.asp" class='loginbtn'>Đăng nhập</a>
                 <%
                         else 
                 %>
-                <a href="" class="link-success"><%=Session("Name")%></a>
-                <a href="" class="link-info">My Cart</a>
-                <a href="logout.asp" class="link-danger">Log out</a>
+                <a href="" class="username">Xin chào, <%=Session("Name")%></a>
+                <a href="" class="cart" title='Giỏ Hàng'>
+                    <i class='lni lni-cart'></i>
+                </a>
+                <a href="logout.asp" title = 'Đăng xuất' class='extbtn' ><i class = 'lni lni-enter '></i></a>
                 <%
                         End if
                 %>

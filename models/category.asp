@@ -2,7 +2,7 @@
     Class categories
         Private p_Id
         Private p_Name 
-
+        Private p_img
         Public Property Get Id()
             Id = p_Id
         End Property
@@ -20,6 +20,12 @@
         ' End Sub
         ' Private Sub Class_Terminate()
         ' End Sub
+        Public Property Get Image()
+            Image = p_img
+        End Property
+        Public Property Let Image(Value)
+            p_img = Value
+        End Property
     End Class
     Set listCategory = Server.CreateObject("Scripting.Dictionary")
     Set cmdPrep = Server.CreateObject("ADODB.Command")
@@ -34,6 +40,7 @@
             set category = new categories
             category.Id = Result("ID")
             category.Name = Result("NAME")
+            category.Image = Result("img")
             listCategory.add seq,category
             Result.MoveNext
         loop
