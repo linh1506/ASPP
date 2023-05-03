@@ -1,3 +1,4 @@
+<!--#include file="../Security/security.asp"-->
 <!-- #include file="../connect.asp" -->
 <%
 On Error Resume Next

@@ -2,9 +2,9 @@
 'code here
 Dim connDB
 set connDB = Server.CreateObject("ADODB.Connection")
-Dim strConnection
+Dim strConnection,ambatukam
 ' Duy
-' strConnection = "Provider=SQLOLEDB.1;Data Source=LAPTOP-AMVIO3LT\SQLEXPRESS;Database=DB_ODBG;User Id= duyvu;Password=16012002"
+strConnection = "Provider=SQLOLEDB.1;Data Source=LAPTOP-AMVIO3LT\SQLEXPRESS;Database=DB_ODBG;User Id= duyvu;Password=16012002"
 ' Son
 ' strConnection = "Provider=SQLOLEDB.1;Data Source=NOTDOTBON;Database=DB_ODBG;User Id=ma;Password=1"
 ' Linh
