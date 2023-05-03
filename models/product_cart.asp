@@ -21,7 +21,7 @@
         Public Property Get Soluong()
             Soluong = p_Soluong
         End Property
-        Public Property Let Size(Value)
+        Public Property Let Soluong(Value)
             p_Soluong = Value
         End Property
     

@@ -1,5 +1,6 @@
 <!--#include file="../connect.asp"-->
 <!--#include file="../models/customers.asp"-->
+
 <%
     
     if (isnull(Session("Id")) or Session("Id") = "") then
@@ -32,12 +33,22 @@
         Result.Close
         set Result = nothing
 %>
+<!--#include file="header.asp"-->
+
 <form action="" method="POST">
     Email: <%=cust.Email%>
     Name: <input type="text" value="<%=cust.Name%>" name="name">
     Phone: <input type="text" value="<%=cust.Phone%>" name="phone"> 
     Address: <input type="text" value="<%=cust.Address%>" name="address">
     <button type="submit">Submit</button>
+</form> 
+
+<h1>changepassword</h1>
+<form action="changepassword.asp?id=<%=Session("Id")%>" method="POST">
+password: <input type="text" name="password">
+password change: <input type="text" name="passwordchange">
+re-enter password: <input type="text" name="passwordreenter"> 
+<button type="submit">change password</button>
 </form> 
 <%end if%>
 
