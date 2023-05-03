@@ -29,13 +29,13 @@ if (idProduct > 0 and size > 0) then
     cmdPrep.commandText = "select count(id) as count from PRODUCT, PRODUCT_SIZE where id = " & idProduct & " AND PRODUCT.ID = PRODUCT_SIZE.PRODUCT_ID AND PRODUCT_SIZE.SIZE= " & size
     set result = cmdPrep.execute
     if (result("count")=1) then
-        'cmdPrep.commandText = "select quantity from PRODUCT, PRODUCT_SIZE WHERE PRODUCT.ID = PRODUCT_SIZE.PRODUCT_ID AND PRODUCT_SIZE.SIZE= " & size & " AND PRODUCT.ID = " & idProduct
+        cmdPrep.commandText = "select quantity from PRODUCT, PRODUCT_SIZE WHERE PRODUCT.ID = PRODUCT_SIZE.PRODUCT_ID AND PRODUCT_SIZE.SIZE= " & size & " AND PRODUCT.ID = " & idProduct
         set result = cmdPrep.execute
         if  (soluong <= result("quantity")) then
             dim currentCart,mycart
             'neu gio hang da ton tai
 
-            if (not isempty(Session("mycarts"))) then
+            if (not isempty(Session("Mycart"))) then
                 'gan bien de su dung gio hang
                 set currentCart = Session("Mycart")
                 'kiem tra xem gio hang da co san pham do hay chua
@@ -56,20 +56,23 @@ if (idProduct > 0 and size > 0) then
                 else
                 'neu chua co
                 'them san pham do vao voi key = idproduct, value = cartItem
-                    currentCarts.ADD idproduct,cartItem
+                    dim newitem
+                    newitem = Server.CreateObject("Scripting.Dictionary")
+                    newitem.ADD size,soluong
+                    currentCart.ADD idproduct,newitem
                 end if
                 'gan lai gio hang cho session
-                set Session("mycarts") = currentCarts
+                set Session("Mycart") = currentCart
             else
                 'NEU CHUA CO, TAO MOI MYCARTS VA LUU VAO SESSION
                 set mycart = Server.CreateObject("Scripting.Dictionary")
                 dim item
                 set item = Server.CreateObject("Scripting.Dictionary")
                 item.add size,soluong
-                mycarts.add idproduct,item
+                mycart.add idproduct,item
                 'gan gio hang cho session
                 set Session("Mycart") = mycart
-                set mycarts = nothing
+                set mycart = nothing
             end if
             Session("Success") = "The product has been added to your cart"
         else
