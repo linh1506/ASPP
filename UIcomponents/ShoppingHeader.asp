@@ -59,7 +59,7 @@
                 <%
                         else 
                 %>
-                <a href="" class="username">Xin chào, <%=Session("Name")%></a>
+                <a href="../GeneralFeature/profile.asp" class="username">Xin chào, <%=Session("Name")%></a>
                 <a href="" class="cart" title='Giỏ Hàng'>
                     <i class='lni lni-cart'></i>
                 </a>
