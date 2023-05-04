@@ -508,6 +508,7 @@
         %>
     </script>
     <script>
+        var localhostAddress = "http://localhost:86"
         function toggleProductStatus(id) {
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
@@ -521,7 +522,7 @@
                     }
                 }
             };
-            xmlhttp.open("GET", "http://localhost:86/ManagmentFeatures/ToggleProductAvailabilty.asp?id=" + id, true);
+            xmlhttp.open("GET", localhostAddress + "/ManagmentFeatures/ToggleProductAvailabilty.asp?id=" + id, true);
             xmlhttp.send();
         }
         function toggleUserStatus(id) {
@@ -537,7 +538,7 @@
                     }
                 }
             };
-            xmlhttp.open("GET", "http://localhost:86/ManagmentFeatures/EditStatusUser.asp?id=" + id, true);
+            xmlhttp.open("GET", localhostAddress + "/ManagmentFeatures/EditStatusUser.asp?id=" + id, true);
             xmlhttp.send();
         }
         function TogglePromotionStatus(id) {
@@ -553,7 +554,7 @@
                     }
                 }
             };
-            xmlhttp.open("GET", "http://localhost:86/ManagmentFeatures/EditStatusPromotion.asp?id=" + id, true);
+            xmlhttp.open("GET", localhostAddress + "/ManagmentFeatures/EditStatusPromotion.asp?id=" + id, true);
             xmlhttp.send();
         }
     </script>

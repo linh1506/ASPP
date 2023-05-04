@@ -1,4 +1,4 @@
-@import url(~/palette.css);
+@import url(../palette.css);
 .product{
     display: flex;
     flex-direction: column;
