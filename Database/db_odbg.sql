@@ -93,3 +93,9 @@ go
 update BRAND set img = default
 update CATEGORY set img = default
 update PRODUCT set PRODUCT_IMAGE = '{"0":"https://i.imgur.com/bvzb5pv.jpg","1":"https://i.imgur.com/V8C7ZC8.jpg","2":"https://i.imgur.com/RRoObHO.png","3":"https://i.imgur.com/wo6ueQ4.png"}'
+
+UPDATE CATEGORY SET img='https://img.freepik.com/premium-photo/bright-female-sneakers-pink-background-fashion-blog-magazine-concept-women-s-shoes-trendy-sneakers-fashion-style-lifestyle-flat-lay-top-view-copy-space-minimal-background_479776-6531.jpg' where id=2
+UPDATE CATEGORY SET img='https://t4.ftcdn.net/jpg/04/14/84/53/360_F_414845314_oWmvQVASyyfjYqrSjgHOwjkiourGXPgB.jpg' where id=3
+
+update BRAND set img ='https://i.imgur.com/bVpqXMP.jpeg' where id = 1
+update BRAND set img ='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRn1R9MYiBJEW9NH4IPLpy9fWqTc-WnDp1PAANWI04&s' where id = 3

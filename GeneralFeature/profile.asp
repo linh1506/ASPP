@@ -33,8 +33,6 @@
         Result.Close
         set Result = nothing
 %>
-<!--#include file="header.asp"-->
-
 <form action="" method="POST">
     Email: <%=cust.Email%>
     Name: <input type="text" value="<%=cust.Name%>" name="name">
@@ -51,4 +49,5 @@ re-enter password: <input type="text" name="passwordreenter">
 <button type="submit">change password</button>
 </form> 
 <%end if%>
+
 
