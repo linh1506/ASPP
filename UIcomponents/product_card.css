@@ -1,0 +1,29 @@
+@import url(~/palette.css);
+.product{
+    display: flex;
+    flex-direction: column;
+    padding: 1.2em 1em;
+    padding-left: none;
+    height: 100%;
+    width: 100%;
+    gap: .3em;
+    text-align: right;
+}
+    .product-img{
+        width: 100%;
+        max-height:90%;
+        overflow: hidden;
+    }
+        .product-img img{
+            width: 100%;
+            border-radius: 5px;
+        }
+    .product-name{
+        color: var(--secondary);
+        text-overflow: ellipsis;
+    }
+    .product-price{
+        color: var(--red);
+        font-family: sans-serif;
+        font-weight: bold;
+    }
