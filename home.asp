@@ -30,7 +30,7 @@
             <div class="swiper-wrapper">
                 <div class="swiper-slide"><img src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/92a774157325607.63768ffc717ea.jpg" alt=""></div>
                 <div class="swiper-slide"><img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/c5f87e147486429.62c39ec35694d.jpg" alt=""></div>
-                <div class="swiper-slide"><img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/22e2a1111795411.601da00d3bd52.png" alt=""></div>
+                <div class="swiper-slide"><img src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/26fe78134261997.61d2c6bb27ecc.jpg" alt=""></div>
                 <div class="swiper-slide"><img src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/b7f369150879029.630261a7c5e2f.jpg" alt=""></div>
             </div>
 
