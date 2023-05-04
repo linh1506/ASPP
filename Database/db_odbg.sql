@@ -81,3 +81,15 @@ CREATE TABLE ORDER_ITEMS (
 
 INSERT INTO USERS VALUES ('1','1','1','1','1','ADMIN',1)
 
+-- 3/5/23
+use DB_ODBG
+go
+alter table category
+add img nvarchar(max) default 'https://i.imgur.com/LZfjaaQ.png'
+go
+alter table brand
+add img nvarchar(max) default 'https://i.imgur.com/uuIkTsO.jpg'
+go
+update BRAND set img = default
+update CATEGORY set img = default
+update PRODUCT set PRODUCT_IMAGE = '{"0":"https://i.imgur.com/bvzb5pv.jpg","1":"https://i.imgur.com/V8C7ZC8.jpg","2":"https://i.imgur.com/RRoObHO.png","3":"https://i.imgur.com/wo6ueQ4.png"}'
