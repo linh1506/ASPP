@@ -41,7 +41,7 @@
             sortProducts = "PRICE"
     End Select
 
-    limit = 2
+    limit = 1
 
     strSQL = "SELECT COUNT(ID) AS count FROM PRODUCT"
     Set CountResult = connDB.execute(strSQL)
@@ -70,7 +70,7 @@
     typeOfPage = Request.QueryString("type")
     if (trim(typeOfPage) = "") or (isnull(typeOfPage)) then
         ' type of page de trong thi set 1
-        typeOfPage = 5
+        typeOfPage = 1
     end if
     typeOfPage = CInt(typeOfPage)
     page = Request.QueryString("page")
@@ -160,7 +160,7 @@
             <div class="Product-Feature-row">
                 <a href="./ManagmentFeatures/addproduct.asp" class="btn btn-primary">ADD PRODUCT</a>
                 <a href="../management.asp?sorttype=1" class="btn btn-warning <%if sorttype=1 then %>disabled<%end if%>" role="button" aria-disabled="true">Sort by ID</a>
-                <a href="../management.asp?sorttype=2" class="btn btn-warning <%if sorttype=2 then %>disabled<%end if%>" role="button" aria-disabled="true"">Sort by Name (Ascending)</a>
+                <a href="../management.asp?sorttype=2" class="btn btn-warning <%if sorttype=2 then %>disabled<%end if%>" role="button" aria-disabled="true">Sort by Name (Ascending)</a>
                 <a href="../management.asp?sorttype=3" class="btn btn-warning <%if sorttype=3 then %>disabled<%end if%>" role="button" aria-disabled="true"">Sort by Price (Asending)</a>
             </div>
             <%if (totalRowsProducts = 0) then%>
@@ -208,13 +208,17 @@
                                         <td><%=listProducts(item).Name%></td>
                                         <td><%=listProducts(item).Price%></td>
                                         <td>
-                                            <a href="./ManagmentFeatures/ToggleProductAvailabilty.asp?id=<%=listProducts(item).Id%>&page=<%=Page%>&type=<%=typeOfPage%>&sorttype=<%=sorttype%>" class="btn 
-                                            <%if(listProducts(item).Status = true) then%>
-                                                btn-success">Open For Sale
+                                            <button id="status<%=listProducts(item).Id%>" onClick="toggleProductStatus(<%=listProducts(item).Id%>)" class="<%if(listProducts(item).Status = true) then%>
+                                                    btn btn-success
                                                 <%else%>
-                                                btn-danger">Closed
-                                            <%end if%>
-                                            </a>
+                                                    btn btn-danger
+                                                <%end if%>">
+                                                <%if(listProducts(item).Status = true) then%>
+                                                    Open For Sale
+                                                <%else%>
+                                                    Closed
+                                                <%end if%>
+                                            </button>
                                         </td>
                                         <td>
                                             <a class="edit-product-button" href="./ManagmentFeatures/editProduct.asp?id=<%=listProducts(item).Id%>&page=<%=page%>&sorttype=<%=sorttype%>">
@@ -235,7 +239,7 @@
                             <% if (pagesProducts > 1) then 
                                 for i= 1 to pagesProducts
                             %>
-                                <li class="page-item <%=checkPage(Clng(i)=Clng(pageProducts),"active")%>"><a class="page-link" href="management.asp?type=1&page=<%=i%><% if (CInt(sorttype) <> 1) then Response.Write "&sorttype=" & sorttype%>"><%=i%></a></li>
+                                <li class="page-item <%=checkPage(Clng(i)=Clng(pageProducts),"active")%>"><a class="page-link" href="management.asp?page=<%=i%><% if (CInt(sorttype) <> 1) then Response.Write "&sorttype=" & sorttype%>"><%=i%></a></li>
                             <%
                                 next
                                 end if
@@ -275,6 +279,7 @@
                                 do while not Result.EOF
                                     seq = seq + 1
                                     set cus = New customersDTO
+                                    cus.Id = Result("ID")
                                     cus.Name = Result("NAME")
                                     cus.Email = Result("EMAIL")
                                     cus.Phone = Result("PHONE")
@@ -291,13 +296,13 @@
                                 <td><%=listCustomersDTO(item).Email%></td>
                                 <td><%=listCustomersDTO(item).Phone%></td>
                                 <td>
-                                    <a href="./ManagmentFeatures/editstatususer.asp?id=<%=listCustomersDTO(item).Id%>&page=<%=Page%>&type=<%=typeOfPage%>" class="btn 
-                                    <%if(listCustomersDTO(item).Status = true) then%>
-                                        btn-success">active
+                                    <button id="UserStatus<%=listCustomersDTO(item).Id%>" onClick="toggleUserStatus(<%=listCustomersDTO(item).Id%>)" class="btn btn-<%if(listCustomersDTO(item).Status = true) then%>success<%else%>danger<%end if%>">
+                                        <%if(listCustomersDTO(item).Status = true) then%>
+                                            Active
                                         <%else%>
-                                        btn-danger">block
+                                            Block
                                         <%end if%>
-                                    </a>
+                                    </button>
                                 </td>
                                 <td>
                                     <a href="./ManagmentFeatures/info_customer.asp?id=<%=listCustomersDTO(item).Id%>" class="redirect-product-page">
@@ -374,13 +379,13 @@
                                 <td><%=listPromotions(item).Discount_Value%></td>
                                 <td><%=listPromotions(item).Expired_At%></td>
                                 <td>
-                                    <a href="./ManagmentFeatures/editstatuspromotion.asp?id=<%=listPromotions(item).Id%>&page=<%=page%>" class="btn 
-                                    <% if (listPromotions(item).Is_Active = True ) then %>
-                                        btn-success "> Enable
-                                    <% else %> 
-                                        btn-danger "> Disable
-                                    <% end if %>
-                                    </a>
+                                    <button id="PromotionStatus<%=listPromotions(item).Id%>" onClick="TogglePromotionStatus(<%=listPromotions(item).Id%>)" class="btn btn-<% if (listPromotions(item).Is_Active = True ) then %>success<% else %>danger<% end if %>">
+                                        <% if (listPromotions(item).Is_Active = True ) then %>
+                                            Enable
+                                        <% else %> 
+                                           Disable
+                                        <% end if %>
+                                    </button>
                                 </td>
                             </tr>
                             <% Next %>
@@ -501,6 +506,56 @@
             <%
         end select
         %>
+    </script>
+    <script>
+        function toggleProductStatus(id) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    if (this.responseText === "true") {
+                        document.getElementById("status" + id).className = "btn btn-success";
+                        document.getElementById("status" + id).innerHTML = "Open for sale";
+                    } else {
+                        document.getElementById("status" + id).className = "btn btn-danger";
+                        document.getElementById("status" + id).innerHTML = "Closed";
+                    }
+                }
+            };
+            xmlhttp.open("GET", "http://localhost:86/ManagmentFeatures/ToggleProductAvailabilty.asp?id=" + id, true);
+            xmlhttp.send();
+        }
+        function toggleUserStatus(id) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    if (this.responseText === "true") {
+                        document.getElementById("UserStatus" + id).className = "btn btn-success";
+                        document.getElementById("UserStatus" + id).innerHTML = "Active";
+                    } else {
+                        document.getElementById("UserStatus" + id).className = "btn btn-danger";
+                        document.getElementById("UserStatus" + id).innerHTML = "Block";
+                    }
+                }
+            };
+            xmlhttp.open("GET", "http://localhost:86/ManagmentFeatures/EditStatusUser.asp?id=" + id, true);
+            xmlhttp.send();
+        }
+        function TogglePromotionStatus(id) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    if (this.responseText === "true") {
+                        document.getElementById("PromotionStatus" + id).className = "btn btn-success";
+                        document.getElementById("PromotionStatus" + id).innerHTML = "Enable";
+                    } else {
+                        document.getElementById("PromotionStatus" + id).className = "btn btn-danger";
+                        document.getElementById("PromotionStatus" + id).innerHTML = "Disable";
+                    }
+                }
+            };
+            xmlhttp.open("GET", "http://localhost:86/ManagmentFeatures/EditStatusPromotion.asp?id=" + id, true);
+            xmlhttp.send();
+        }
     </script>
   </body>
 </html>

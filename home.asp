@@ -175,7 +175,31 @@
           </section>
           <!-- Section: Social -->
         </div>
-      </nav>
-    </div>
+        <!-- Grid container -->
+
+        <!-- Copyright -->
+        <div
+            class="text-center p-3"
+            style="background-color: rgba(0, 0, 0, 0.2)"
+        >
+          © 2023 Copyright:
+          <a class="text-white" href="/"
+            >odbg.com</a
+            >
+        </div>
+        <!-- Copyright -->
+      </footer>
+  <!-- Footer -->
+    <script src="./Jquery/jquery-3.6.1.min.js"></script>
+    <script src='./bootstrap-5.2.0-dist/js/bootstrap.min.js'/></script>
+    <script src='/Resources/swiper-9.2.4/package/swiper-bundle.min.js'></script>
+    <script>
+      var swiper = new Swiper(".slideshow", {
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
+  </script>
   </body>
 </html>
