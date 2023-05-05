@@ -508,7 +508,7 @@
         %>
     </script>
     <script>
-        var localhostAddress = "http://localhost:86"
+        var localhostAddress = window.location.origin
         function toggleProductStatus(id) {
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
