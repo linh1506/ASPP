@@ -2,13 +2,14 @@
 <!--#include file="../models/product_cart.asp"-->
 <!--#include file="../ShoppingFeature/filterAvailable.asp"-->
 <%
+Set listProductInCart = Server.CreateObject("Scripting.Dictionary")
+
 if (not isempty(Session("Mycart"))) then 
     dim cart
     Session("Mycart") = filterAvailable(Session("Mycart"))
     cart = Session("Mycart")
     dim seq
     seq = 0
-    Set listProductInCart = Server.CreateObject("Scripting.Dictionary")
     For i = 0 to UBound(cart)-1
       'Get id of each item
       dim idProduct
