@@ -1,3 +1,5 @@
+<!--#include file="../security.asp"-->
+
 <!--#include file="../connect.asp"-->
 <%
     name = Request.form("name")
@@ -7,7 +9,6 @@
     
     if(Not isnull(name) and not isnull(code) and not isnull(discount) and not isnull(expired) and trim(name)<>"" and trim(code)<>"") then
         Set cmdPrep = Server.CreateObject("ADODB.Command")
-        connDB.Open
         cmdPrep.ActiveConnection = connDB
         cmdPrep.CommandType = 1
         cmdPrep.Prepared = True
