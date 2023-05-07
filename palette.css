@@ -2,7 +2,7 @@
 :root{
     --primary:var(--white);
     --secondary: var(--black);
-    --accent:var(--azure);
+    --accent:var(--red);
     --white: #f3f3f3;
     --darkblue:#003366;
     --midnight:#191970;

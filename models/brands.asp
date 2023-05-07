@@ -47,4 +47,14 @@
     loop
     Result.Close
     set Result = nothing
+    Public Function findBrand(search_id)
+        ' Do Something...
+        for each item in allBrands
+            If allBrands(item).Id = search_id Then
+                findBrand = allBrands(item).Name
+                exit Function
+            End if
+        next
+        findBrand = "N/A"
+    End Function
 %>
