@@ -18,9 +18,6 @@
     <link rel="stylesheet" href="/UIcomponents/category_card.css">
   </head>
   <body>
-    <!--#include file="./models/category.asp"-->
-    <!--#include file="./models/brands.asp"-->
-    <!--#include file="./models/products.asp"-->
     <!--#include file="./UIcomponents/ShoppingHeader.asp"-->
     <!--#include file="./UIcomponents/product_card.asp"-->
     <!--#include file="./UIcomponents/category_card.asp"-->
@@ -33,7 +30,6 @@
                 <div class="swiper-slide"><img src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/26fe78134261997.61d2c6bb27ecc.jpg" alt=""></div>
                 <div class="swiper-slide"><img src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/b7f369150879029.630261a7c5e2f.jpg" alt=""></div>
             </div>
-
             <div class="swiper-button-next slide_btn"></div>
             <div class="swiper-button-prev slide_btn"></div>
         </div>
@@ -80,11 +76,11 @@
                 set Result = nothing
                 'IN ra danh sách product mới
                 for each item in featuredProduct
-                    %> <a class="new-product"><%
-                          displayProduct featuredProduct(item)
-                    %></a>
-                <%next
-              %>
+                  %> 
+                    <a class="new-product" href="/ShoppingFeature/productDetail.asp?id=<%=featuredProduct(item).Id%>">
+                    <%displayProduct featuredProduct(item)%>
+                    </a>
+                  <%next%>
           </div>
         </div>
         <div class="see-more">
@@ -93,102 +89,7 @@
         </div>
       </div>
   <!-- Footer -->
-      <footer class="text-center text-white footer" style="background-color: var(--secondary)">
-        <!-- Grid container -->
-        <div class="container">
-          <!-- Section: Links -->
-          <section class="mt-5">
-            <!-- Grid row-->
-            <div class="row text-center d-flex justify-content-center pt-5">
-              <!-- Grid column -->
-              <div class="col-md-2">
-                <h6 class="text-uppercase font-weight-bold">
-                  <a href="#!" class="text-white">About us</a>
-                </h6>
-              </div>
-              <!-- Grid column -->
-
-              <!-- Grid column -->
-              <div class="col-md-2">
-                <h6 class="text-uppercase font-weight-bold">
-                  <a href="#!" class="text-white">Products</a>
-                </h6>
-              </div>
-              <!-- Grid column -->
-
-              <!-- Grid column -->
-              <div class="col-md-2">
-                <h6 class="text-uppercase font-weight-bold">
-                  <a href="#!" class="text-white">Awards</a>
-                </h6>
-              </div>
-              <!-- Grid column -->
-
-              <!-- Grid column -->
-              <div class="col-md-2">
-                <h6 class="text-uppercase font-weight-bold">
-                  <a href="#!" class="text-white">Help</a>
-                </h6>
-              </div>
-              <!-- Grid column -->
-
-              <!-- Grid column -->
-              <div class="col-md-2">
-                <h6 class="text-uppercase font-weight-bold">
-                  <a href="#!" class="text-white">Contact</a>
-                </h6>
-              </div>
-              <!-- Grid column -->
-            </div>
-            <!-- Grid row-->
-          </section>
-          <!-- Section: Links -->
-
-          <hr class="my-5" />
-
-          <!-- Section: Text -->
-          <section class="mb-5">
-            <div class="row d-flex justify-content-center">
-              <div class="col-lg-8">
-                <p class="text-white">
-                  Đúng vậy, chúng tôi bán giầy
-                </p>
-              </div>
-            </div>
-          </section>
-          <!-- Section: Text -->
-
-          <!-- Section: Social -->
-          <section class="text-center mb-5">
-            <a href="https://www.facebook.com/profile.php?id=100008553451184" class="text-white me-4">
-              <i class="lni lni-facebook"></i>
-            </a>
-            <a href="google.com" class="text-white me-4">
-              <i class="lni lni-google"></i>
-            </a>
-            <a href="https://steamcommunity.com/id/d1agn0ze/" class="text-white me-4">
-              <i class="lni lni-steam"></i>
-            </a>
-            <a href="https://github.com/linh1506/ASPP" class="text-white me-4">
-              <i class="lni lni-github"></i>
-            </a>
-          </section>
-          <!-- Section: Social -->
-        </div>
-        <!-- Grid container -->
-
-        <!-- Copyright -->
-        <div
-            class="text-center p-3"
-            style="background-color: rgba(0, 0, 0, 0.2)"
-        >
-          © 2023 Copyright:
-          <a class="text-white" href="/"
-            >odbg.com</a
-            >
-        </div>
-        <!-- Copyright -->
-      </footer>
+    <!--#include file="./UIcomponents/footer.asp"-->
   <!-- Footer -->
     <script src="./Jquery/jquery-3.6.1.min.js"></script>
     <script src='./bootstrap-5.2.0-dist/js/bootstrap.min.js'/></script>

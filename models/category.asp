@@ -46,4 +46,15 @@
         loop
         Result.Close
         set Result = nothing
+
+    Public Function findCategory(search_id)
+        ' Do Something...
+        for each item in listCategory
+            If listCategory(item).Id = search_id Then
+                findCategory = listCategory(item).Name
+                exit Function
+            End if
+        next
+        findCategory = "N/A"
+    End Function
 %>
