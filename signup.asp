@@ -40,7 +40,7 @@
                 Session("Error") = "Phone is exist"
                 else 
                     ' Neu da thoa man dieu kien, insert thong tin khach
-                    cmdPrep.CommandText = "INSERT INTO USERS VALUES ('" & address & "','" & email & "','" & name & "','" & pass1 & "','" & phone & "','USER',1)"
+                    cmdPrep.CommandText = "INSERT INTO USERS VALUES (N'" & address & "','" & email & "',N'" & name & "','" & pass1 & "','" & phone & "','USER',1)"
                     cmdPrep.execute
                     ' Thong bao tao tai khoan thanh cong
                     Session("Success") = "CREATE ACCOUNT SUCCESSFUL"

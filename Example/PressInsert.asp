@@ -10,26 +10,20 @@
 <body>
     <button onclick="Press()">Vailon</button>
     <%
-                    Dim cmdPrep
-                    Set cmdPrep = Server.CreateObject("ADODB.Command")
-                    cmdPrep.ActiveConnection = connDB
-                    cmdPrep.CommandType = 1
-                    cmdPrep.Prepared = True
-                    
-                    
-                        Response.Write "hello?<br>"
-                        Dim RowAffected
-                        Dim sql
-                        sql =  "insert into PRODUCT_SIZE values(" & 45 & "," & 2 & "," & 3 & ")"
-                        ' Set Result  = cmdPrep.execute(sqlQuery)
-                        connDB.execute sql,RowAffected
-                        if RowAffected>0 then
-                            Response.Write "hurray!!"
-                        Else 
-                         Response.Write "<br>Something went wrong"
-                        end if
-                
-    
-    %>
+' Declare an array with size 10
+Dim myArray(2)
+
+' Put 3 values into the array
+myArray(0) = "value1"
+myArray(1) = "value2"
+myArray(2) = "value3"
+
+' Re-dimension the array to size 3
+
+' The array now has a size of 3
+Response.Write "Array size: " & UBound(myArray) + 1
+Response.Write myArray(2)
+%>
+
 </body>
 </html>

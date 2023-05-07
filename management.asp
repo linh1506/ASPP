@@ -41,7 +41,7 @@
             sortProducts = "PRICE"
     End Select
 
-    limit = 1
+    limit = 10
 
     strSQL = "SELECT COUNT(ID) AS count FROM PRODUCT"
     Set CountResult = connDB.execute(strSQL)

@@ -1,6 +1,10 @@
+<% Response.codepage = 65001 %>
+<!--#include file="../models/category.asp"-->
+<!--#include file="../models/brands.asp"-->
+<!--#include file="../models/products.asp"-->
 <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand brand-custom" href="home.asp">ODBG</a>
+        <a class="navbar-brand brand-custom" href="/home.asp">ODBG</a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
@@ -41,20 +45,14 @@
                 </li>    
             </ul>
             <div class="d-flex">
-                <%
-                    if (Trim(Session("Role")) = "ADMIN") then
-                %>      
-                        <a class="right-area" href="management.asp">
+                <% if (Trim(Session("Role")) = "ADMIN") then %>      
+                        <a class="right-area" href="/management.asp">
                             <i class='lni lni-restaurant'></i>
                             <h5>Quản Lý Cửa Hàng</h5>
                         </a>
                         
-                <%
-                    end if
-                %>
-                <%
-                        if (IsNull(Session("Email")) or Trim(Session("Email"))="") then
-                %>
+                <% end if %>
+                <% if (IsNull(Session("Email")) or Trim(Session("Email"))="") then %>
                 <a href="login.asp" class='loginbtn'>Đăng nhập</a>
                 <%
                         else 
@@ -66,6 +64,7 @@
                 <a href="logout.asp" title = 'Đăng xuất' class='extbtn' ><i class = 'lni lni-enter '></i></a>
                 <%
                         End if
+                        Response.codepage = 1252      
                 %>
             </div>
         </div>
