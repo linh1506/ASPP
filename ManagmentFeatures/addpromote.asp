@@ -1,5 +1,4 @@
-<!--#include file="../security.asp"-->
-
+<!--#include file="../Security/security.asp"-->
 <!--#include file="../connect.asp"-->
 <%
     name = Request.form("name")
@@ -31,7 +30,7 @@
                 cmdPrep.execute
                 
                 Session("Success") = "Thêm khyến mãi thành công"
-                Response.Redirect("../management.asp")
+                Response.Redirect("../management.asp?type=3")
         end if
         Result.Close()
         connDB.Close()
@@ -52,9 +51,10 @@
     <title>Add Promotion</title>
 </head>
 <body>
-    <!--#include file="../UIcomponents/header.asp"-->
-    <!--#include file="../UIcomponents/notification.asp"-->
     <div class="container">
+        <div>
+            <h2>Add Promotion</h2>
+        </div>
             <form method="post">
             <div class="form-group">
                 <label for="name">Name</label>
