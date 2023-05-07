@@ -46,7 +46,7 @@
             </ul>
             <div class="d-flex">
                 <% if (Trim(Session("Role")) = "ADMIN") then %>      
-                        <a class="right-area" href="management.asp">
+                        <a class="right-area" href="/management.asp">
                             <i class='lni lni-restaurant'></i>
                             <h5>Quản Lý Cửa Hàng</h5>
                         </a>
