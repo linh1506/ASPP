@@ -5,6 +5,7 @@
         Private p_Name
         Private p_Price
         Private p_Status
+        Private p_img
 
         Public Property Get Id()
             Id = p_Id
@@ -34,6 +35,12 @@
             p_Status = Value
         End Property
         
+        Public Property Get Image()
+            Image = p_img
+        End Property
+        Public Property Let Image(Value)
+            p_img = Value
+        End Property
         ' Private Sub Class_Initialize()
         ' End Sub
         ' Private Sub Class_Terminate()
