@@ -59,6 +59,8 @@ end if
   <body>
     <!--#include file="../UIcomponents/notification.asp"-->
     <!--#include file="./notifyDeleteItemsNotAvailable.asp"-->
+    
+    <!--#include file="../UIcomponents/ShoppingHeader.asp"-->
     <nav class = 'navbar sticky-top navbar-light navbar-custom flex-row'>
     <div class="d-flex flex-row container-custom">
         <a class ="nav-link active" href="../home.asp"><i style="font-size:20px" class="lni lni-arrow-left"></i></a>
@@ -72,7 +74,7 @@ end if
       
       <!-- Cột danh sách sản phẩm trong giỏ hàng -->
       <div class="col-8">
-      <h4>Bạn chưa thêm sản phẩm nào vào giỏ hàng, vui lòng quay trở về trang chủ</h4>
+      
       <% if (not IsEmpty(listProductInCart) or listProductInCart.Count = 0) then %>
         <% for each item in listProductInCart %>
           <div id="InCartItem<%=item%>" class="CartItem">
@@ -105,21 +107,20 @@ end if
             </div>
             <!-- Xoá sản phẩm khỏi giỏ hàng -->
             <div class="col-2">
-            <button class="btn btn-danger" onClick="DeleteProductInCart(<%=item%>,<%=listProductInCart(item).id%>,<%=listProductInCart(item).size%>)">Delete</button>
+            <button class="btn btn-danger btn-delete" onClick="DeleteProductInCart(<%=item%>,<%=listProductInCart(item).id%>,<%=listProductInCart(item).size%>)">Delete</button>
             </div>
             </div>
           </div>
           <hr class="my-4">
         <% next %>
       <%
-        end if
+        else %>
+          <h4>Bạn chưa thêm sản phẩm nào vào giỏ hàng, vui lòng quay trở về trang chủ</h4>
+        <% end if
       %>
       </div>
       <!-- Cột đặt mua-->
       <div class="col-4">
-        <!--<div id="SubTotalElement">
-          <p id="SubTotal"></p>
-        </div>-->
                  <div class="mb-5">
                     <div class="form-outline">
                       <input type="text" id="form3Examplea2" class="form-control form-control-lg" />
@@ -130,19 +131,19 @@ end if
                   
                   <!-- Tính giá tiền của tất cả sản phẩm trong giỏ hàng -->
                   <div class="d-flex justify-content-between mb-5">
-                    <h5 class="text-uppercase">Total price</h5>
-                    <div id="SubTotalElement">
+                    <h5 class="text-uppercase">Total price:</h5>
+                    <div id="SubTotalElement " style="justify-content:center">
                       <p id="SubTotal"></p>
                     </div>
                   </div>
                   <div class="row">
-                    <button type="button" class="btn btn-outline-success btn-lg"
+                    <button type="button" class="btn btn-purchase btn-lg"
                       data-mdb-ripple-color="dark">Purchase</button>
                   </div>
         </div>
       </div>
     </div>
-
+    
     <script>
       var localhostAddress = window.location.origin
       $("#NothingInCart").hide();
@@ -187,11 +188,12 @@ end if
             subTotal += (parseInt(document.getElementById("PriceItem"+item).innerHTML) * parseInt(document.getElementById("Quantity"+item).value))
           }
         }
-        document.getElementById("SubTotal").innerHTML = "<b>Sub Total: </b>" + subTotal + "đ"
+        document.getElementById("SubTotal").innerHTML = subTotal + "đ"
       }
       
       GetSubTotal()
       checkNullInCart()
-    </script> 
+    </script>
+    <!--#include file="../UIcomponents/footer.asp"-->
   </body>
 </html>

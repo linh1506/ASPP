@@ -26,16 +26,8 @@ body {
     rgba(242, 205, 92, 1) 100%
   ), repeat;  */
 }
-.container {
-    padding-top: 3vh;
-    padding-left: 2vw;
-    padding-right: 2vw;
-    min-height: 93vh;
-    background-color: var(--whiteLowContrast);
-    border-radius: 5px;
-}
 .navbar-custom{
-  height: 7vh;
+  height: 10vh;
   background-color: var(--primary);
 }
 
@@ -70,4 +62,17 @@ body {
 .img{
   width: 100px;
   height: 100px;
+}
+.btn-delete{
+  background:var(--accent);
+}
+.btn-purchase{
+  background-color:var(--secondary);
+  color: var(--primary);
+}
+.btn-purchase::hover{
+  background-color:var(--secondary);
+  color: var(--primary);
+  border: 3px solid black;
+  border-radius: 5px;
 }
