@@ -53,7 +53,7 @@
                         
                 <% end if %>
                 <% if (IsNull(Session("Email")) or Trim(Session("Email"))="") then %>
-                <a href="login.asp" class='loginbtn'>Đăng nhập</a>
+                <a href="../login.asp" class='loginbtn'>Đăng nhập</a>
                 <%
                         else 
                 %>
@@ -61,7 +61,7 @@
                 <a href="../ShoppingFeature/myCart.asp" class="cart" title='Giỏ Hàng'>
                     <i class='lni lni-cart'></i>
                 </a>
-                <a href="logout.asp" title = 'Đăng xuất' class='extbtn' ><i class = 'lni lni-enter '></i></a>
+                <a href="../logout.asp" title = 'Đăng xuất' class='extbtn' ><i class = 'lni lni-enter '></i></a>
                 <%
                         End if
                         Response.codepage = 1252      
