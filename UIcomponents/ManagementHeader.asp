@@ -19,15 +19,17 @@
             </ul>
             <div class="d-flex">
               <%
+
                 if (IsNull(Session("Email")) or Trim(Session("Email"))="") then
               %>
-              <a href="login.asp">Login</a>
+
+              <a id="login_link" href="">Login</a>
               <%
                 else 
               %>
               <a href="" class="link-success"><%=Session("Name")%></a>
               <a href="" class="link-info">My Cart</a>
-              <a href="logout.asp" class="link-danger">Log out</a>
+              <a id="logout_link" href="" class="link-danger">Log out</a>
               <%
                 End if
               %>
@@ -58,3 +60,10 @@
             End If
     %>
 </div>
+<script>
+  var localhostAddress = window.location.origin;
+  var loginLink = document.getElementById("login_link");
+  loginLink.href = localhostAddress + "/login.asp";
+  var logout_link = document.getElementById("logout_link");
+  logout_link.href = localhostAddress + "/logout.asp";
+</script>
