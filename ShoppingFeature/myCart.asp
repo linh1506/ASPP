@@ -50,17 +50,17 @@ end if
       rel="stylesheet"
       href="../bootstrap-5.2.0-dist/css/bootstrap.min.css"
     />
+    <link rel="stylesheet" href="myCart.css">
     <link rel="stylesheet" href='../UIcomponents/ShoppingHeader.css'>
     <link rel="stylesheet" href='../UIcomponents/notification.css'>
-    <link rel="stylesheet" href="myCart.css">
     <link rel="stylesheet" href="../Resources/web-font-files/lineicons.css">
     <script src="../Jquery/jquery-3.6.1.min.js"></script>
     </head>
   <body>
-    <!--#include file="../UIcomponents/notification.asp"-->
     <!--#include file="./notifyDeleteItemsNotAvailable.asp"-->
     
     <!--#include file="../UIcomponents/ShoppingHeader.asp"-->
+    <!--#include file="../UIcomponents/notification.asp"-->
     <nav class = 'navbar sticky-top navbar-light navbar-custom flex-row'>
     <div class="d-flex flex-row container-custom">
         <a class ="nav-link active" href="../home.asp"><i style="font-size:20px" class="lni lni-arrow-left"></i></a>
@@ -154,12 +154,13 @@ end if
         }
       }
       function DeleteProductInCart(ItemId,ProductId,Size) {
+        console.log("Deleted")
         var element = document.getElementById("InCartItem"+ItemId);
         element.remove();
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-              notification(this.responseText,"var(--bs-orange)")
+              notification(''+this.responseText,"var(--bs-orange)")
             }
         };
         xmlhttp.open("GET", localhostAddress + "/ShoppingFeature/deleteItemInCart.asp?idProduct="+ProductId+"&size="+Size, true);

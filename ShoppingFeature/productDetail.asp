@@ -54,6 +54,9 @@
     <link rel="stylesheet" href="/UIcomponents/ShoppingHeader.css">
     <link rel="stylesheet" href="/Resources/web-font-files/lineicons.css">
     <link rel="stylesheet" href="/ShoppingFeature/productDetail.css">
+    <link rel="stylesheet" href='../UIcomponents/notification.css'>
+
+    <script src="../Jquery/jquery-3.6.1.min.js"></script>
     <title>Thong tin san pham</title>
 </head>
 <body>
@@ -85,6 +88,8 @@
     set Result = nothing
 %>
 <!--#include file="../UIcomponents/ShoppingHeader.asp"-->
+    <!--#include file="../UIcomponents/notification.asp"-->
+
     <div class="container">
         <div class="product">
             <div class="swiper product__images">
@@ -101,9 +106,27 @@
                 <div class="product__available-sizes">
                     <%
                         for each item in available_sizes
-                            %> <div class="product__size product__size--bdr-black"><div><%=item%></div></div> <%
+                            %> <div class="product__size product__size--bdr-black"><div class="value"><%=item%></div></div> <%
                         next
                     %>
+                    <script>
+    // Function to select only one size at a time
+                        function selectSize(element) {
+                            var selectedSize = element.textContent.trim();
+                            var sizes = document.getElementsByClassName("product__size");
+                            for (var i = 0; i < sizes.length; i++) {
+                                sizes[i].classList.remove("selected");
+                            }
+                            element.classList.add("selected");
+                        }
+                        // Add event listeners to the size buttons
+                        var sizes = document.getElementsByClassName("product__size");
+                        for (var i = 0; i < sizes.length; i++) {
+                            sizes[i].addEventListener("click", function() {
+                                selectSize(this);
+                            });
+                        }
+                    </script>
                 </div>
                 <div class='product__Status<%
                     If product.Status = True Then
@@ -113,8 +136,8 @@
                     End if
                 %></div>
                 <div class="product__purchase_options">
-                    <a href="" class="purchase__options purchase__options--red">Mua Ngay</a>
-                    <a href="" class="purchase__options purchase__options--black"><p>Thêm vào Giỏ Hàng</p><span><i class='lni lni-cart'></i></span></a>
+                    <a href=""  class="purchase__options purchase__options--red">Mua Ngay</a>
+                    <button onclick="addCart()" class="purchase__options purchase__options--black"><p>Thêm vào Giỏ Hàng</p><span><i class='lni lni-cart'></i></span></button>
                 </div>
                 <div class="product__detail">
                     <h4>Nhãn hiệu: <%=findBrand(brandId)%></h4>
@@ -176,6 +199,20 @@
             prevEl: ".swiper-button-prev",
         },
     });
+
+    var localhostAddress = window.location.origin
+    function addCart() {
+        var sizeSelected = $(".selected .value").html()
+        sizeSelected = parseInt(sizeSelected)
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                notification(''+this.responseText,'var(--bs-orange)')
+            }
+        };
+        xmlhttp.open("GET", localhostAddress + "/ShoppingFeature/addcart.asp?idproduct=" + <%=product.Id%> + "&size=" + sizeSelected + "&quantity=1", true);
+        xmlhttp.send();    
+    }
 </script>
 </body>
 </html>
