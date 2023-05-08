@@ -56,7 +56,7 @@ else
                                 Call Err.Raise(1, "addCart", "Quantity of this product is less than your requirement")
                                 currentCart(i)(2) = result("quantity")
                             end if
-                            Response.Write(currentCart(i)(2))
+                            <!-- Response.Write(currentCart(i)(2)) -->
                             Exit For
                         End If
                     Next
@@ -122,13 +122,13 @@ else
                 if Err.Number > 0 then
                     Response.Write(Err.Description)
                 else
-                    response.write("add successfully")
+                    response.write("Add successfully")
                 end if
             else
             'false
                 
                 'quantity left is less than requirement
-                response.write("quantity left is less than requirement")
+                response.write("Quantity left is less than requirement")
 
             end if
 
@@ -141,7 +141,7 @@ else
         end if
     else
         'false
-        response.write("bad idProduct and size")
+        response.write("Not found size")
     end if
 end if
 
