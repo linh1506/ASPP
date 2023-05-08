@@ -9,5 +9,8 @@
         var context = document.getElementById('context-detail');
         context.innerHTML = content;
         slideout.classList.toggle('triggered');
+        setTimeout(() => {
+            slideout.classList.toggle('triggered');
+        }, 3000);
     }
 </script>

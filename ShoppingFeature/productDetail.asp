@@ -1,4 +1,5 @@
 <!--#include file="../connect.asp"-->
+<!--#include file="../models/product_sizes.asp"-->
 <%  Dim requested_id
     requested_id = Request.QueryString("id")
 %>
@@ -24,20 +25,22 @@
     set Result = nothing
 %>
 <%  'Lay size san pham
-    Dim  available_sizes()
+    set listSizes = Server.CreateObject("Scripting.Dictionary")
     Set cmdPrep = Server.CreateObject("ADODB.Command")
     cmdPrep.ActiveConnection = connDB
     cmdPrep.CommandType = 1
     cmdPrep.Prepared = True
-    cmdPrep.CommandText = "select SIZE from PRODUCT_SIZE where PRODUCT_ID= ? and QUANTITY > 0 "
+    cmdPrep.CommandText = "select SIZE,QUANTITY from PRODUCT_SIZE where PRODUCT_ID= ? and QUANTITY > 0 "
     cmdPrep.parameters.Append cmdPrep.createParameter("id",3,1, ,requested_id)
     set Result = cmdPrep.execute
     dim sizes_count
     sizes_count = 0
     do while not Result.EOF
-        Redim Preserve available_sizes(sizes_count)
-        available_sizes(sizes_count) = Result("SIZE")
         sizes_count = sizes_count + 1
+        set product_all_sizes = new Sizes
+        product_all_sizes.Size = Result("SIZE")
+        product_all_sizes.Quantity = Result("QUANTITY")
+        listSizes.add sizes_count,product_all_sizes
         Result.MoveNext
     loop
     Result.Close
@@ -87,9 +90,8 @@
     Result.Close
     set Result = nothing
 %>
+<!--#include file="../UIcomponents/notification.asp"-->
 <!--#include file="../UIcomponents/ShoppingHeader.asp"-->
-    <!--#include file="../UIcomponents/notification.asp"-->
-
     <div class="container">
         <div class="product">
             <div class="swiper product__images">
@@ -105,28 +107,10 @@
                 <h1 class='product__title'><%=product.Name%></h1>
                 <div class="product__available-sizes">
                     <%
-                        for each item in available_sizes
-                            %> <div class="product__size product__size--bdr-black"><div class="value"><%=item%></div></div> <%
+                        for each item in listSizes
+                            %> <div class="product__size product__size--bdr-black"><div class="value"><%=listSizes(item).Size%></div></div><%
                         next
                     %>
-                    <script>
-    // Function to select only one size at a time
-                        function selectSize(element) {
-                            var selectedSize = element.textContent.trim();
-                            var sizes = document.getElementsByClassName("product__size");
-                            for (var i = 0; i < sizes.length; i++) {
-                                sizes[i].classList.remove("selected");
-                            }
-                            element.classList.add("selected");
-                        }
-                        // Add event listeners to the size buttons
-                        var sizes = document.getElementsByClassName("product__size");
-                        for (var i = 0; i < sizes.length; i++) {
-                            sizes[i].addEventListener("click", function() {
-                                selectSize(this);
-                            });
-                        }
-                    </script>
                 </div>
                 <div class='product__Status<%
                     If product.Status = True Then
@@ -135,6 +119,21 @@
                         %> product__Status--red'><span>&#x2022;</span> <h4>Hết Hàng</h4><%
                     End if
                 %></div>
+                <div class="product__quantity">
+                    <h4>Quantity</h4>
+                    <div class="product__quantity-selector-group">
+                        <button class='btn-minus --btn-black'><i class='lni lni-minus text-white'></i></button>
+                        <input class='product__quantity-selector --input-white' type="number" value="1" step='1' min='0' max='10'/>
+                        <button class='btn-plus --btn-black'><i class='lni lni-plus text-white'></i></button>
+                    </div>
+                    <div class='product__quantity-list'>
+                        <%
+                        for each item in listSizes
+                            %><div class="product__quantity-remain">Size <%=listSizes(item).Size%> còn <span class="quantity__remaining-number"><%=listSizes(item).Quantity%></span> sản phẩm</div><%
+                        next
+                        %>
+                    </div>
+                </div>
                 <div class="product__purchase_options">
                     <a href=""  class="purchase__options purchase__options--red">Mua Ngay</a>
                     <button onclick="addCart()" class="purchase__options purchase__options--black"><p>Thêm vào Giỏ Hàng</p><span><i class='lni lni-cart'></i></span></button>
@@ -177,6 +176,31 @@
 <!--#include file="../UIcomponents/footer.asp"-->
 <script src='/Resources/swiper-9.2.4/package/swiper-bundle.min.js'></script>
 <script>
+    $('.btn-plus, .btn-minus').on('click', function(e) {
+        const isNegative = $(e.target).closest('.btn-minus').is('.btn-minus');
+        const input = $(e.target).closest('.product__quantity-selector-group').find('input');
+        if (input.is('input')) {
+            input[0][isNegative ? 'stepDown' : 'stepUp']()
+        }
+    })
+    // Function to select only one size at a time
+    function selectSize(element) {
+        var selectedSize = element.textContent.trim();
+        var sizes = document.getElementsByClassName("product__size");
+        for (var i = 0; i < sizes.length; i++) {
+            sizes[i].classList.remove("selected");
+        }
+        element.classList.add("selected");
+    }
+    // Add event listeners to the size buttons
+    var sizes = document.getElementsByClassName("product__size");
+    for (var i = 0; i < sizes.length; i++) {
+        sizes[i].addEventListener("click", function() {
+            selectSize(this);
+        });
+    }
+</script>
+<script>
     var swiper = new Swiper(".product__images", {
     autoplay: {
         delay: 2500,
@@ -199,7 +223,9 @@
             prevEl: ".swiper-button-prev",
         },
     });
-
+    const getQuantity = () =>{
+        return $('.product__quantity-selector').val()
+    }
     var localhostAddress = window.location.origin
     function addCart() {
         var sizeSelected = $(".selected .value").html()
@@ -207,12 +233,31 @@
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                notification(''+this.responseText,'var(--bs-orange)')
+                notification(''+ this.responseText,'var(--bs-green)')
             }
         };
-        xmlhttp.open("GET", localhostAddress + "/ShoppingFeature/addcart.asp?idproduct=" + <%=product.Id%> + "&size=" + sizeSelected + "&quantity=1", true);
-        xmlhttp.send();    
+        xmlhttp.onerror = function() {
+            notification('Không thể thêm vào giỏ hàng\nVui lòng thử lại sau','var(--bs-orange)')
+        };
+        xmlhttp.open("GET", localhostAddress + "/ShoppingFeature/addcart.asp?idproduct=" + <%=product.Id%> + "&size=" + sizeSelected + "&quantity=" + getQuantity(), true);
+        xmlhttp.send();
     }
+</script>
+<script>
+    $(document).ready(function() {
+        $('.product__quantity-remain').hide()
+        $('.product__size').on('click', function() {
+            var selected_size = $(this).index();
+            var selected_size_value = $(this).find(".value").text()
+            $('.product__quantity-remain').hide()
+            var remaining = $('.product__quantity-remain').eq(selected_size)
+            remaining.show()
+            var remainingNumber = Number(remaining.find('.quantity__remaining-number').text())
+            $('.product__quantity-selector').attr('max', remainingNumber)
+            var pr = $('.product__quantity-selector').attr('max')
+            console.log(pr);
+        });
+    });
 </script>
 </body>
 </html>

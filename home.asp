@@ -84,7 +84,7 @@
           </div>
         </div>
         <div class="see-more">
-          <h3>vẫn còn nhiều thứ hay ho nữa cơ</h3>
+          <h3>vẫn còn nhiều thứ hay ho nữa</h3>
           <a href="">KHÁM PHÁ THÊM</a>
         </div>
       </div>
