@@ -52,15 +52,15 @@
                         </a>
                         
                 <% end if %>
+                <a href="../ShoppingFeature/myCart.asp" class="cart" title='Giỏ Hàng'>
+                    <i class='lni lni-cart'></i>
+                </a>
                 <% if (IsNull(Session("Email")) or Trim(Session("Email"))="") then %>
                 <a href="../login.asp" class='loginbtn'>Đăng nhập</a>
                 <%
                         else 
                 %>
                 <a href="../GeneralFeature/profile.asp" class="username">Xin chào, <%=Session("Name")%></a>
-                <a href="../ShoppingFeature/myCart.asp" class="cart" title='Giỏ Hàng'>
-                    <i class='lni lni-cart'></i>
-                </a>
                 <a href="../logout.asp" title = 'Đăng xuất' class='extbtn' ><i class = 'lni lni-enter '></i></a>
                 <%
                         End if

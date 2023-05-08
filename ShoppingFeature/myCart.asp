@@ -63,9 +63,9 @@ end if
     <!--#include file="../UIcomponents/notification.asp"-->
     <nav class = 'navbar sticky-top navbar-light navbar-custom flex-row'>
     <div class="d-flex flex-row container-custom">
-        <a class ="nav-link active" href="../home.asp"><i style="font-size:20px" class="lni lni-arrow-left"></i></a>
+        <a class ="nav-link active" href="#"  onclick="history.go(-1); return false;"><i style="font-size:20px" class="lni lni-arrow-left"></i></a>
         <div class="page-address">
-            <a href="../home.asp" class = "nav-link address">Quay lại trang chủ</a>
+            <a href="#" class = "nav-link address">Quay lại</a>
         </div>
     </div>
     </nav>
