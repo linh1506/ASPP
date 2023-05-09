@@ -10,6 +10,13 @@ body{
     width: 100%;
     margin: 0;
     padding: 0;
+    /*height: fit-content;
+    position: relative;*/
+    display:grid;
+    grid-template-rows:auto 1fr auto;
+    grid-template-columns:100%;
+    min-height:100vh;
+    min-height:100svh;
 }
 .container-fluid-custom{
     background-color: var(--primary);

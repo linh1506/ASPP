@@ -98,9 +98,12 @@
         footer *{
             text-decoration: none;
         }
-        footer{
-          position: absolute;
-          bottom:0;
-          width:100vw
-        }
+         /* footer{
+            box-sizing:border-box;
+            position: absolute;
+            bottom: 0;
+            width: inherit;
+            -webkit-transform: translateY(100%); 
+            transform: translateY(100%); 
+          }*/
       </style>
