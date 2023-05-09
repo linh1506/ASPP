@@ -66,7 +66,7 @@ end if
     <!--#include file="./notifyDeleteItemsNotAvailable.asp"-->
     
     <!--#include file="../UIcomponents/ShoppingHeader.asp"-->
-    <nav class = 'navbar sticky-top navbar-light navbar-custom flex-row'>
+    <nav style="z-index:1" class = 'navbar sticky-top navbar-light navbar-custom flex-row'>
     <div class="d-flex flex-row container-custom">
         <a class ="nav-link active" href="../home.asp"><i style="font-size:20px" class="lni lni-arrow-left"></i></a>
         <div class="page-address">
@@ -88,32 +88,34 @@ end if
             <div class="row mb-4 d-flex justify-content-between align-items-center">
             <!--<p>Name of Product: <%=listProductInCart(item).name%></p>-->
             <!-- Ảnh -->
-            <div class="col-2">
+            <div class="col">
                       <img
                         src="<%=listProductInCart(item).Image%>"
                         class="img-fluid rounded-3" alt="Fumo">
             </div>
             <!-- Tên và size -->
-            <div class="col-2 ft">
+            <div class="col ft">
               <h6 class="text-muted"><%=listProductInCart(item).name%></h6>
               <h6 class="text-black mb-0">Size: <%=listProductInCart(item).size%></h6>
             </div>
             <!-- Giá -->
             <!--<p>Size: <%=listProductInCart(item).size%></p>-->
-            <div class="col-2">
-                <p>Price: <span id="PriceItem<%=item%>"><%=listProductInCart(item).price%> VNĐ</span></p>
+            <div class="col-3">
+                <p><span id="PriceItem<%=item%>"><%=listProductInCart(item).price%> VNĐ</span></p>
             </div>
             <!-- Số lượng -->
             <!--<p>Price: <span id="PriceItem<%=item%>"><%=listProductInCart(item).price%></span></p>-->
-            <div class="col-2">
-            <p>Quantity: 
-              <input type="number" value="<%=listProductInCart(item).quantity%>" id="Quantity<%=item%>" onChange="AdjustQuantity(<%=item%>,<%=listProductInCart(item).id%>,<%=listProductInCart(item).size%>)" min="1" max="<%=listProductInCart(item).LimitQuantity%>">
-              <i>/<%=listProductInCart(item).LimitQuantity%> product<% if (listProductInCart(item).LimitQuantity > 1) then Response.Write("s") %> left</i>
-            </p>
+            <div class="col-2 justify-content-center">
+              <div class="d-flex justify-content-center">
+                <input type="number" value="<%=listProductInCart(item).quantity%>" id="Quantity<%=item%>" onChange="AdjustQuantity(<%=item%>,<%=listProductInCart(item).id%>,<%=listProductInCart(item).size%>)" min="1" max="<%=listProductInCart(item).LimitQuantity%>">
+              </div>
+              <div class="d-flex justify-content-center">
+                <i style="color:var(--red)"><%=listProductInCart(item).LimitQuantity%> product<% if (listProductInCart(item).LimitQuantity > 1) then Response.Write("s") %> left</i>
+              </div>
             </div>
             <!-- Xoá sản phẩm khỏi giỏ hàng -->
-            <div class="col-2">
-            <button class="btn btn-danger btn-delete" onClick="DeleteProductInCart(<%=item%>,<%=listProductInCart(item).id%>,<%=listProductInCart(item).size%>)">Delete</button>
+            <div class="d-flex justify-content-center col btn-delete">
+            <i class="lni lni-close" onClick="DeleteProductInCart(<%=item%>,<%=listProductInCart(item).id%>,<%=listProductInCart(item).size%>)"></i>
             </div>
             </div>
           </div>
@@ -143,7 +145,7 @@ end if
                     </div>
                   </div>
                   <div class="row">
-                    <button type="button" class="btn btn-purchase btn-lg"
+                    <button type="button" class="btn btn-outline-dark btn-lg"
                       data-mdb-ripple-color="dark">Purchase</button>
                   </div>
         </div>
