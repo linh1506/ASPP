@@ -176,6 +176,7 @@
 <!--#include file="../UIcomponents/footer.asp"-->
 <script src='/Resources/swiper-9.2.4/package/swiper-bundle.min.js'></script>
 <script>
+    document.title = document.getElementsByClassName("product__title")[0].innerHTML
     $('.btn-plus, .btn-minus').on('click', function(e) {
         const isNegative = $(e.target).closest('.btn-minus').is('.btn-minus');
         const input = $(e.target).closest('.product__quantity-selector-group').find('input');
