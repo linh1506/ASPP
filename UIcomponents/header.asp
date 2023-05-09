@@ -10,3 +10,12 @@
         <a href="#" class="navbar-brand brand-custom">ODBG</a>
     </div>
 </nav>
+<script>
+    var link = document.querySelector("link[rel~='icon']");
+    if (!link) {
+        link = document.createElement('link');
+        link.rel = 'icon';
+        document.head.appendChild(link);
+    }
+    link.href = '/Resources/logover2.ico';
+</script>

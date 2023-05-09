@@ -99,8 +99,6 @@
             text-decoration: none;
         }
         footer{
-          position: absolute;
-          bottom:0;
-          width:100vw
-        }
+            margin-top: 3rem;
+          }
       </style>

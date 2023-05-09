@@ -3,21 +3,26 @@
 </div>
 <style>
 @import url(/fonts.css);
+@import url(/palette.css);
     @keyframes rotate {
 	100% {
 		transform: rotate(1turn);
 	}
 }
 #loader{
-    position: absolute;
-    width:100vw;
+    margin:0;
+    position: fixed;
+    width:100%;
     height:100vh;
+    box-sizing:border-box
     top:0;
     left:0;
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    background-color: var(--secondary);
+    color: var(--primary);
 }
 .pageloader{
 	position: relative;
@@ -43,7 +48,7 @@
     top: -50%;
     width: 200%;
     height: 200%;
-    background-color: #fff;
+    background-color: var(--primary);
     background-repeat: no-repeat;
     background-size: 50% 50%;
     background-position: 0 0;
@@ -59,7 +64,7 @@
     top: 20px;
     width: calc(100% - 40px);
     height: calc(100% - 40px);
-    background: white;
+    background: var(--secondary);
     border-radius: 5px;
 }
 </style>

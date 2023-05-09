@@ -23,6 +23,7 @@
 }
 .container-fluid {
   width: 100vw;
+  box-sizing: border-box;
   height: var(--navHeight);
   position: relative;
   align-items: center;

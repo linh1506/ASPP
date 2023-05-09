@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/Resources/web-font-files/lineicons.css">
     <link rel="stylesheet" href="/UIcomponents/product_card.css">
     <link rel="stylesheet" href="/UIcomponents/category_card.css">
+    <title>ODBG</title>
   </head>
   <body>
     <!--#include file="./UIcomponents/pageLoader.asp"-->
