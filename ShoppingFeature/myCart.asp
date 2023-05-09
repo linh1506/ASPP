@@ -59,6 +59,7 @@ end if
     <link rel="stylesheet" href='../UIcomponents/ShoppingHeader.css'>
     <link rel="stylesheet" href='../UIcomponents/notification.css'>
     <link rel="stylesheet" href="../Resources/web-font-files/lineicons.css">
+    <title>Giỏ hàng</title>
     <script src="../Jquery/jquery-3.6.1.min.js"></script>
     </head>
   <body>

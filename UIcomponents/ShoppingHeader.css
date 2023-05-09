@@ -156,6 +156,9 @@
 .dropdown-custom:hover > .dropdown-content {
   display: flex;
 }
+.dropdown-custom:hover .nav-link{
+  border-bottom: 3px solid var(--primary);
+}
 /* BÊN PHẢI THANH NAV */
 .d-flex {
   gap: 0.5rem;
