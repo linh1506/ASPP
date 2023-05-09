@@ -76,6 +76,8 @@ end if
     </div>
     </nav>
     <div class="container">
+      <div>
+      </div>
       <div class="row">
       <div class="col-12">
         <h5 class="mt-3 text-center text-body-secondary <%= view1 %>">Bạn không có sản phẩm nào trong giỏ hàng.</h5> 
