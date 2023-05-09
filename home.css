@@ -10,8 +10,6 @@ body{
     width: 100%;
     margin: 0;
     padding: 0;
-    /*height: fit-content;
-    position: relative;*/
     display:grid;
     grid-template-rows:auto 1fr auto;
     grid-template-columns:100%;

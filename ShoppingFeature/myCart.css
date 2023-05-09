@@ -1,35 +1,38 @@
-@import url(../palette.css);
+@import url(/palette.css);
 @font-face {
     font-family: quicksand;
-    src: url(../Resources/QuickSand/Quicksand-SemiBold.ttf);
+    src: url(/Resources/QuickSand/Quicksand-SemiBold.ttf);
 }
 @media (min-width: 1200px), (min-width: 960px) and (-webkit-device-pixel-ratio: 1.25) {
   /* Add Styles Here */
   body{
-    overflow-x: hidden;
+    overflow-x: visible;
   }
-}
-html {
-  width: 100vw;
+  
 }
 body {
   width: 100%;
   min-height: 100vh;
   position: relative;
-
   background: var(--whiteLowContrast);
+  margin: 0;
+  padding: 0;
   /* background: linear-gradient(
     180deg,
     rgba(151, 84, 203, 1) 0%,
     rgba(187, 132, 159, 1) 50%,
     rgba(242, 205, 92, 1) 100%
   ), repeat;  */
+  display:grid;
+  grid-template-rows:auto 1fr auto;
+  grid-template-columns:100%;
+  min-height:100vh;
+  min-height:100svh;
 }
 .navbar-custom{
   height: 10vh;
   background-color: var(--primary);
 }
-
 .container-custom{
   height: 100%;
   align-items: center;
