@@ -3,8 +3,10 @@
 <!--#include file="../ShoppingFeature/filterAvailable.asp"-->
 <%
 Set listProductInCart = Server.CreateObject("Scripting.Dictionary")
-
+dim view1,view2
 if (not isempty(Session("Mycart"))) then 
+    view1 = "d-none"
+    view2 = "d-block"
     dim cart
     Session("Mycart") = filterAvailable(Session("Mycart"))
     cart = Session("Mycart")
@@ -37,6 +39,9 @@ if (not isempty(Session("Mycart"))) then
       seq = seq + 1
       listProductInCart.add seq,product
     Next
+    Else
+      view1 = "d-block"
+      view2 = "d-none"
 end if
 %>
 <!DOCTYPE html>
@@ -71,10 +76,11 @@ end if
     </nav>
     <div class="container">
       <div class="row">
-      
+      <div class="col-12">
+        <h5 class="mt-3 text-center text-body-secondary <%= view1 %>">Bạn không có sản phẩm nào trong giỏ hàng.</h5> 
+      </div>
       <!-- Cột danh sách sản phẩm trong giỏ hàng -->
       <div class="col-8">
-      
       <% if (not IsEmpty(listProductInCart) or listProductInCart.Count = 0) then %>
         <% for each item in listProductInCart %>
           <div id="InCartItem<%=item%>" class="CartItem">
@@ -120,7 +126,7 @@ end if
       %>
       </div>
       <!-- Cột đặt mua-->
-      <div class="col-4">
+      <div class="col-4 <%=view2%>">
                  <div class="mb-5">
                     <div class="form-outline">
                       <input type="text" id="form3Examplea2" class="form-control form-control-lg" />
