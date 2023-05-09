@@ -6,9 +6,8 @@
 @media (min-width: 1200px), (min-width: 960px) and (-webkit-device-pixel-ratio: 1.25) {
   /* Add Styles Here */
   body{
-    overflow-x: visible;
+    overflow-x: hidden;
   }
-  
 }
 body {
   width: 100%;
@@ -17,12 +16,6 @@ body {
   background: var(--whiteLowContrast);
   margin: 0;
   padding: 0;
-  /* background: linear-gradient(
-    180deg,
-    rgba(151, 84, 203, 1) 0%,
-    rgba(187, 132, 159, 1) 50%,
-    rgba(242, 205, 92, 1) 100%
-  ), repeat;  */
   display:grid;
   grid-template-rows:auto 1fr auto;
   grid-template-columns:100%;
