@@ -63,9 +63,6 @@ body {
   width: 100px;
   height: 100px;
 }
-.btn-delete{
-  background:var(--accent);
-}
 .btn-purchase{
   background-color:var(--secondary);
   color: var(--primary);
@@ -75,4 +72,7 @@ body {
   color: var(--primary);
   border: 3px solid black;
   border-radius: 5px;
+}
+.btn-delete{
+  cursor: pointer;
 }
