@@ -5,8 +5,8 @@
 Set listProductInCart = Server.CreateObject("Scripting.Dictionary")
 dim view1,view2
 if (not isempty(Session("Mycart"))) then 
-    view1 = "d-none"
-    view2 = "d-block"
+    view1 = "none-div"
+    view2 = "display-div"
     dim cart
     Session("Mycart") = filterAvailable(Session("Mycart"))
     cart = Session("Mycart")
@@ -40,8 +40,8 @@ if (not isempty(Session("Mycart"))) then
       listProductInCart.add seq,product
     Next
     Else
-      view1 = "d-block"
-      view2 = "d-none"
+      view1 = "display-div"
+      view2 = "none-div"
 end if
 %>
 <!DOCTYPE html>
@@ -76,11 +76,10 @@ end if
     </div>
     </nav>
     <div class="container">
-      <div>
-      </div>
+     
       <div class="row">
       <div class="col-12">
-        <h5 class="mt-3 text-center text-body-secondary <%= view1 %>">Bạn không có sản phẩm nào trong giỏ hàng.</h5> 
+        <h5 id="view-1" class="mt-3 text-center text-body-primary <%=view1%>">Bạn không có sản phẩm nào trong giỏ hàng.</h5> 
       </div>
       <!-- Cột danh sách sản phẩm trong giỏ hàng -->
       <div class="col-8">
@@ -88,9 +87,11 @@ end if
         <% for each item in listProductInCart %>
           <div id="InCartItem<%=item%>" class="CartItem">
             <% if listProductInCart(item).Status = false then %><span style="color:Red">NOT Openning for sale</span><% end if %></h2>
-            <div class="row mb-4 d-flex justify-content-between align-items-center">
+              <div class="row mb-4 d-flex justify-content-between align-items-center">
             <!--<p>Name of Product: <%=listProductInCart(item).name%></p>-->
             <!-- Ảnh -->
+              <div class="v">
+              </div>
             <div class="col">
                       <img
                         src="<%=listProductInCart(item).Image%>"
@@ -131,7 +132,7 @@ end if
       %>
       </div>
       <!-- Cột đặt mua-->
-      <div class="col-4 <%=view2%>">
+      <div id="view-2" class="col-4 <%=view2%> ">
                  <div class="mb-5">
                     <div class="form-outline">
                       <input type="text" id="form3Examplea2" class="form-control form-control-lg" />
@@ -151,7 +152,7 @@ end if
                     <button type="button" class="btn btn-outline-dark btn-lg"
                       data-mdb-ripple-color="dark">Purchase</button>
                   </div>
-        </div>
+      </div>
       </div>
     </div>
     
@@ -174,12 +175,17 @@ end if
               notification(''+this.responseText,"var(--bs-orange)")
             }
         };
+        var dem = $(".v").length;
+        if($(".v").length === 0)
+        {
+          $("#view-1").show();
+          $("#view-2").hide();
+        }
         xmlhttp.open("GET", localhostAddress + "/ShoppingFeature/deleteItemInCart.asp?idProduct="+ProductId+"&size="+Size, true);
         xmlhttp.send();
         GetSubTotal()
         checkNullInCart()
       }
-
       function AdjustQuantity(ItemId,ProductId,Size) {
         var element = document.getElementById("Quantity"+ItemId);
         var Quantity = element.value
