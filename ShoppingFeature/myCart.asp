@@ -125,14 +125,9 @@ end if
           </div>
           <hr class="my-4">
         <% next %>
-      <%
-        else %>
-          <h4>Bạn chưa thêm sản phẩm nào vào giỏ hàng, vui lòng quay trở về trang chủ</h4>
-        <% end if
-      %>
       </div>
       <!-- Cột đặt mua-->
-      <div id="view-2" class="col-4 <%=view2%> ">
+      <div id="view-2" class="col-4">
                  <div class="mb-5">
                     <div class="form-outline">
                       <input type="text" id="form3Examplea2" class="form-control form-control-lg" />
@@ -153,6 +148,7 @@ end if
                       data-mdb-ripple-color="dark">Purchase</button>
                   </div>
       </div>
+      <% end if %>
       </div>
     </div>
     
@@ -163,6 +159,8 @@ end if
         if ($(".CartItem").length === 0) {
           $("#SubTotalElement").hide();
           $("#NothingInCart").show();
+          $("#view-1").show();
+          $("#view-2").hide();
         }
       }
       function DeleteProductInCart(ItemId,ProductId,Size) {
@@ -178,8 +176,6 @@ end if
         var dem = $(".v").length;
         if($(".v").length === 0)
         {
-          $("#view-1").show();
-          $("#view-2").hide();
         }
         xmlhttp.open("GET", localhostAddress + "/ShoppingFeature/deleteItemInCart.asp?idProduct="+ProductId+"&size="+Size, true);
         xmlhttp.send();
