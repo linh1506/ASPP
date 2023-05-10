@@ -71,3 +71,7 @@ body {
 .btn-delete{
   cursor: pointer;
 }
+#NothingInCart{
+  font-family: quicksand;
+  font-size: 1.2rem;
+}

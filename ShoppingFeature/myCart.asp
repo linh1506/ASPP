@@ -79,9 +79,6 @@ end if
 
     <div class="container">
       <div class="row">
-        <div class="col-12">
-          <h5 class="mt-3 text-center text-body-secondary <%= view1 %>">Bạn không có sản phẩm nào trong giỏ hàng.</h5> 
-        </div>
         <!-- Cột danh sách sản phẩm trong giỏ hàng -->
         <% if (not listProductInCart.Count = 0) then %>
           <div class="col-8">
@@ -129,7 +126,7 @@ end if
         <% end if %>
       </div>
 
-      <div id="NothingInCart">
+      <div id="NothingInCart" class='mt-3 text-center text-body-secondary'>
         <p style="text-align:center">Nothing in your cart</p>
       </div>
 
@@ -191,8 +188,6 @@ end if
       }
       
       GetSubTotal()
-
-
     </script>
     <!--#include file="../UIcomponents/footer.asp"-->
   </body>
