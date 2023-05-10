@@ -29,7 +29,7 @@
               %>
               <a href="" class="link-success"><%=Session("Name")%></a>
               <a href="" class="link-info">My Cart</a>
-              <a id="logout_link" href="" class="link-danger">Log out</a>
+              <a id="logout_link" href="/logout.asp" class="link-danger">Log out</a>
               <%
                 End if
               %>
@@ -66,13 +66,4 @@
   loginLink.href = localhostAddress + "/login.asp";
   var logout_link = document.getElementById("logout_link");
   logout_link.href = localhostAddress + "/logout.asp";
-</script>
-<script>
-    var link = document.querySelector("link[rel~='icon']");
-    if (!link) {
-        link = document.createElement('link');
-        link.rel = 'icon';
-        document.head.appendChild(link);
-    }
-    link.href = '/Resources/logover2.ico';
 </script>

@@ -1,4 +1,3 @@
-<!--#include file="connect.asp"-->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,14 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
-      href="/bootstrap-5.2.0-dist/css/bootstrap.min.css"
+      href="../bootstrap-5.2.0-dist/css/bootstrap.min.css"
     />
-    <link rel="stylesheet" href="/login.css" />
-    <link rel="stylesheet" href="/UIcomponents/notification.css">
+    <link rel="stylesheet" href="./style.css" />
     <title>login</title>
   </head>
   <body>
-    <!--#include file="./UIcomponents/notification.asp"-->
     <h1 class="store-title">ODGB</h1>
     <div class="change-mode">
         <p>Chưa có tài khoản ?</p>
@@ -29,7 +26,7 @@
       </div>
       <div class="form-group overflow-hidden">
             <div class="form-component signup">
-              <form class='signup-form' method="post" action='/signup.asp'>
+              <form method="post">
                 <input
                   type="text"
                   class="form-control input-control"
@@ -82,7 +79,7 @@
               </form>
             </div>
             <div class="form-component login">
-              <form method="post" class='login-form'>
+              <form method="post">
                 <div class="input-group flex-nowrap">
                   <input
                     type="text"
@@ -120,61 +117,5 @@
       };
     </script>
     <script src="/Jquery/jquery-3.6.1.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            var localhostAddress = window.location.origin
-            $('.login-form').submit(function(event) {
-                // Prevent the form from submitting normally
-                event.preventDefault();
-
-                // Send the form data to the server using AJAX
-                $.ajax({
-                url: localhostAddress+'/loginHandler.asp',
-                method: 'POST',
-                data: $(this).serialize(),
-                dataType: 'json',
-                success: function(response) {
-                    if (response.success) {
-                    // If the form was submitted successfully, display a success message
-                    window.location.href = response.message
-                    } else {
-                    // If there was an error, display an error message
-                    notification(response.message, 'var(--bs-orange)')
-                    }
-                },
-                error: function(xhr, status, error) {
-                    // If there was an error with the AJAX request, display an error message
-                    alert('An error occurred while submitting the form: ' + error);
-                }
-                });
-            });
-            $('.signup-form').submit(function(event) {
-                // Prevent the form from submitting normally
-                event.preventDefault();
-
-                // Send the form data to the server using AJAX
-                $.ajax({
-                url: localhostAddress+'/signup.asp',
-                method: 'POST',
-                data: $(this).serialize(),
-                dataType: 'json',
-                success: function(response) {
-                    if (response.success) {
-                    // If the form was submitted successfully, display a success message
-                    notification(response.message,'var(--bs-green)')
-                    Reveal()
-                    } else {
-                    // If there was an error, display an error message
-                    notification(response.message, 'var(--bs-orange)')
-                    }
-                },
-                error: function(xhr, status, error) {
-                    // If there was an error with the AJAX request, display an error message
-                    alert('An error occurred while submitting the form: ' + error);
-                }
-                });
-            });
-        });
-    </script>
   </body>
 </html>
