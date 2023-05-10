@@ -114,14 +114,7 @@ end if
               </div>
             <% next %>
           </div>
-          <div class="col-4" id="SubTotalElement">
-            <div class="mb-5">
-              <div class="form-outline">
-                <input type="text" id="form3Examplea2" class="form-control form-control-lg" />
-                <label class="form-label" for="form3Examplea2">Enter your code</label>
-              </div>
-            </div>
-            <hr class="my-4">    
+          <div class="col-4" id="SubTotalElement"> 
             <!-- Tính giá tiền của tất cả sản phẩm trong giỏ hàng -->
             <div class="d-flex justify-content-between mb-5">
               <h5 class="text-uppercase">Total price:</h5>
