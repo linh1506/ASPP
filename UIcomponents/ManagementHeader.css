@@ -1,0 +1,74 @@
+@import url(/fonts.css);
+@import url(/palette.css);
+*{
+    font-family: quicksand;
+}
+#current{
+    background-color: var(--primary);
+    border-radius: 5px;
+    color: var(--secondary);
+}
+.d-flex{
+    margin-left: auto;
+    gap: 1rem;
+}
+.d-flex .extbtn:hover {
+    color: var(--accent);
+  }
+  .d-flex .username:hover {
+    color: var(--accent);
+  }
+.username {
+    text-decoration: none;
+    color: var(--secondary);
+    background-color: var(--primary);
+    border-radius: 5px;
+  }
+  .cart {
+    margin: 0 1rem;
+    position: relative;
+    width: 2.5rem;
+    height: 2.5rem;
+    color: var(--secondary);
+    border-radius: 50%;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    background-color: var(--primary);
+  }
+  .cart:hover {
+    color: var(--primary);
+    background-color: var(--accent);
+  }
+  .extbtn {
+    font-size: 2rem;
+    color: var(--primary);
+    padding: 0.4rem 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  .extbtn:hover {
+    transform: translateX(5px);
+  }
+  /* login button */
+  .loginbtn {
+    text-decoration: none;
+    padding: 0.2rem 0.5rem;
+    color: var(--secondary);
+    background-color: var(--primary);
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  .alert{
+    position: absolute;
+    inset: 0;
+  }
+  

@@ -1,6 +1,21 @@
-@import url(palette.css);
+@import url(/palette.css);
+@import url(/fonts.css);
+.nav-sidebar{
+    font-family: quicksand;
+}
+.btn-active {
+    background-color: var(--accent);
+    transition: all .2s ease;
+}
+
+.brand-link {
+  width: 100%;
+  text-align: center;
+  font-family: Josefin;
+  font-size: 3rem;
+}
+/*
 @media (min-width: 1200px), (min-width: 960px) and (-webkit-device-pixel-ratio: 1.25) {
-    /* Add Styles Here */
     .container{
         width: 70vw;
     }
@@ -14,9 +29,8 @@ body{
     height: 100%;
     width: 100%;
 }
-/* Style the.sidetab */
 
-.sidetab {
+.sidebar {
     float: left;
     border: 1px solid #ccc;
     background-color: #f1f1f1;
@@ -32,8 +46,7 @@ body{
     margin-left: 0;
 
 }
-/* Style the buttons inside the.sidetab */
-.sidetab button {
+.sidebar .tablinks {
     display: block;
     background-color: inherit;
     color: black;
@@ -46,18 +59,14 @@ body{
     transition: 0.3s;
     font-size: 1.2rem;
 } 
-/* Change background color of buttons on hover */
-.sidetab button:hover {
+.sidebar button:hover {
     background-color: #ddd;
 }
-/* Create an active/current .sidetab button" class */
-.sidetab button.active {
+.sidebar button.active {
     background-color: #ccc;
 }
-/* Style the.sidetab content */
 .tabcontent {
     padding: 2vh 0px;
-    /* border: 1px solid #ccc; */
     width: 100%;
     border-left: none;
     height: auto;
@@ -89,4 +98,7 @@ tr th{
 }
 tr td{
     text-align: center;
+} */
+table{
+    margin-top: .3rem;
 }
