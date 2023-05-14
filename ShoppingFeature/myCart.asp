@@ -59,6 +59,7 @@ end if
     <link rel="stylesheet" href='../UIcomponents/ShoppingHeader.css'>
     <link rel="stylesheet" href='../UIcomponents/notification.css'>
     <link rel="stylesheet" href="../Resources/web-font-files/lineicons.css">
+    <title>Giỏ hàng</title>
     <script src="../Jquery/jquery-3.6.1.min.js"></script>
     </head>
   <body>
@@ -68,93 +69,84 @@ end if
     <!--#include file="../UIcomponents/notification.asp"-->
 
     <nav style="z-index:1" class = 'navbar sticky-top navbar-light navbar-custom flex-row'>
-    <div class="d-flex flex-row container-custom">
-        <a class ="nav-link active" href="#"  onclick="history.go(-1); return false;"><i style="font-size:20px" class="lni lni-arrow-left"></i></a>
-        <div class="page-address">
-            <a href="#" class = "nav-link address">Quay lại</a>
-        </div>
-    </div>
+      <div class="d-flex flex-row container-custom">
+          <a class ="nav-link active" href="#"  onclick="history.go(-1); return false;"><i style="font-size:20px" class="lni lni-arrow-left"></i></a>
+          <div class="page-address">
+              <a href="#" class = "nav-link address">Quay lại</a>
+          </div>
+      </div>
     </nav>
+
     <div class="container">
      
       <div class="row">
-      <div class="col-12">
-        <h5 id="view-1" class="mt-3 text-center text-body-primary <%=view1%>">Bạn không có sản phẩm nào trong giỏ hàng.</h5> 
-      </div>
-      <!-- Cột danh sách sản phẩm trong giỏ hàng -->
-      <div class="col-8">
-      <% if (not IsEmpty(listProductInCart) or listProductInCart.Count = 0) then %>
-        <% for each item in listProductInCart %>
-          <div id="InCartItem<%=item%>" class="CartItem">
-            <% if listProductInCart(item).Status = false then %><span style="color:Red">NOT Openning for sale</span><% end if %></h2>
-              <div class="row mb-4 d-flex justify-content-between align-items-center">
-            <!--<p>Name of Product: <%=listProductInCart(item).name%></p>-->
-            <!-- Ảnh -->
-              <div class="v">
+        <!-- Cột danh sách sản phẩm trong giỏ hàng -->
+        <% if (not listProductInCart.Count = 0) then %>
+          <div class="col-8">
+            <% for each item in listProductInCart %>
+              <div id="InCartItem<%=item%>" class="CartItem">
+                <div class="row mb-4 d-flex justify-content-between align-items-center">
+                  <div class="col">
+                    <img src="<%=listProductInCart(item).Image%>" class="img-fluid rounded-3" alt="Fumo">
+                  </div>
+                  <div class="col ft">
+                    <h6 class="text-muted"><%=listProductInCart(item).name%></h6>
+                    <h6 class="text-black mb-0">Size: <%=listProductInCart(item).size%></h6>
+                  </div>
+                  <div class="col-3">
+                    <p><span id="PriceItem<%=item%>"><%=listProductInCart(item).price%> VNĐ</span></p>
+                  </div>
+                  <div class="col-2 justify-content-center">
+                    <div class="d-flex justify-content-center">
+                      <input type="number" value="<%=listProductInCart(item).quantity%>" id="Quantity<%=item%>" onChange="AdjustQuantity(<%=item%>,<%=listProductInCart(item).id%>,<%=listProductInCart(item).size%>)" min="1" max="<%=listProductInCart(item).LimitQuantity%>">
+                    </div>
+                    <div class="d-flex justify-content-center">
+                      <i style="color:var(--red)"><%=listProductInCart(item).LimitQuantity%> product<% if (listProductInCart(item).LimitQuantity > 1) then Response.Write("s") %> left</i>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-center col btn-delete">
+                    <i class="lni lni-close" onClick="DeleteProductInCart(<%=item%>,<%=listProductInCart(item).id%>,<%=listProductInCart(item).size%>)"></i>
+                  </div>
+                </div>
+                <hr class="my-4">
               </div>
-            <div class="col">
-                      <img
-                        src="<%=listProductInCart(item).Image%>"
-                        class="img-fluid rounded-3" alt="Fumo">
-            </div>
-            <!-- Tên và size -->
-            <div class="col ft">
-              <h6 class="text-muted"><%=listProductInCart(item).name%></h6>
-              <h6 class="text-black mb-0">Size: <%=listProductInCart(item).size%></h6>
-            </div>
-            <!-- Giá -->
-            <!--<p>Size: <%=listProductInCart(item).size%></p>-->
-            <div class="col-3">
-                <p><span id="PriceItem<%=item%>"><%=listProductInCart(item).price%> VNĐ</span></p>
-            </div>
-            <!-- Số lượng -->
-            <!--<p>Price: <span id="PriceItem<%=item%>"><%=listProductInCart(item).price%></span></p>-->
-            <div class="col-2 justify-content-center">
-              <div class="d-flex justify-content-center">
-                <input type="number" value="<%=listProductInCart(item).quantity%>" id="Quantity<%=item%>" onChange="AdjustQuantity(<%=item%>,<%=listProductInCart(item).id%>,<%=listProductInCart(item).size%>)" min="1" max="<%=listProductInCart(item).LimitQuantity%>">
+            <% next %>
+          </div>
+          <div class="col-4" id="SubTotalElement"> 
+            <form class="row">
+              <div class="col">
+                <label for="inputPassword2" class="visually-hidden">Promo Code</label>
+                  <input type="text" class="form-control" id="promocode" placeholder="Promocode">
               </div>
-              <div class="d-flex justify-content-center">
-                <i style="color:var(--red)"><%=listProductInCart(item).LimitQuantity%> product<% if (listProductInCart(item).LimitQuantity > 1) then Response.Write("s") %> left</i>
+              <div class="col-4">
+                <button type="submit" class="btn btn-primary mb-3">Apply</button>
+              </div>
+            </form>
+            <!-- Tính giá tiền của tất cả sản phẩm trong giỏ hàng -->
+            <div class="d-flex justify-content-between mb-5">
+              <h5 class="text-uppercase">Total price:</h5>
+              <div style="justify-content:center">
+                <p id="SubTotal"></p>
               </div>
             </div>
-            <!-- Xoá sản phẩm khỏi giỏ hàng -->
-            <div class="d-flex justify-content-center col btn-delete">
-            <i class="lni lni-close" onClick="DeleteProductInCart(<%=item%>,<%=listProductInCart(item).id%>,<%=listProductInCart(item).size%>)"></i>
-            </div>
+            <div class="row">
+              <button type="button" class="btn btn-outline-dark btn-lg" data-mdb-ripple-color="dark">Purchase</button>
             </div>
           </div>
-          <hr class="my-4">
-        <% next %>
+        <% end if %>
       </div>
-      <!-- Cột đặt mua-->
-      <div id="view-2" class="col-4">
-                 <div class="mb-5">
-                    <div class="form-outline">
-                      <input type="text" id="form3Examplea2" class="form-control form-control-lg" />
-                      <label class="form-label" for="form3Examplea2">Enter your code</label>
-                    </div>
-                  </div>
-                  <hr class="my-4">
-                  
-                  <!-- Tính giá tiền của tất cả sản phẩm trong giỏ hàng -->
-                  <div class="d-flex justify-content-between mb-5">
-                    <h5 class="text-uppercase">Total price:</h5>
-                    <div id="SubTotalElement " style="justify-content:center">
-                      <p id="SubTotal"></p>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <button type="button" class="btn btn-outline-dark btn-lg"
-                      data-mdb-ripple-color="dark">Purchase</button>
-                  </div>
+
+      <div id="NothingInCart" class='mt-3 text-center text-body-secondary'>
+        <p style="text-align:center">Nothing in your cart</p>
       </div>
-      <% end if %>
-      </div>
+
     </div>
     
     <script>
       var localhostAddress = window.location.origin
+
       $("#NothingInCart").hide();
+
       function checkNullInCart() {
         if ($(".CartItem").length === 0) {
           $("#SubTotalElement").hide();
@@ -163,6 +155,10 @@ end if
           $("#view-2").hide();
         }
       }
+
+      checkNullInCart()
+
+
       function DeleteProductInCart(ItemId,ProductId,Size) {
         console.log("Deleted")
         var element = document.getElementById("InCartItem"+ItemId);
@@ -192,6 +188,7 @@ end if
         GetSubTotal()
         checkNullInCart()
       }
+
       function GetSubTotal() {
         var count = <%=listProductInCart.Count%>
         var subTotal = 0
@@ -206,7 +203,6 @@ end if
       }
       
       GetSubTotal()
-      checkNullInCart()
     </script>
     <!--#include file="../UIcomponents/footer.asp"-->
   </body>

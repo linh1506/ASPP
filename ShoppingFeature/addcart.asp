@@ -122,7 +122,7 @@ else
                 if Err.Number > 0 then
                     Response.Write(Err.Description)
                 else
-                    response.write("Add successfully")
+                    response.write("Đã thêm vào Giỏ")
                 end if
             else
             'false
@@ -136,12 +136,12 @@ else
         'false
 
             'The product is not exists
-            response.write("The product is not exists, please try again")
+            response.write("The product does not exists, please try again")
 
         end if
     else
         'false
-        response.write("Not found size")
+        response.write("Chưa chọn size")
     end if
 end if
 

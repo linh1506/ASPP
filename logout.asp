@@ -1,4 +1,4 @@
 <%
     Session.Contents.RemoveAll()
-    Response.redirect("login.asp")
+    Response.redirect("/login.asp")
 %>

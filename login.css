@@ -1,13 +1,196 @@
-.loginform {
-    width: 30%;
-    position: relative;
-    height: 290px;
+@import url(/fonts.css);
+@import url(/palette.css);
+body,html {
+    margin: 0;
+    padding: 0;
 }
-.label-long {
-    width: 30%;
+html{
+    max-width: 100vw;
 }
-.signup {
+body{
+    width: 100%;
+    background-color: var(--secondary);
+}
+@media screen and (-webkit-device-pixel-ratio:1.25) {
+    .store-title{
+    font-size: 1.5rem;
+    padding: 1.6rem .6rem;
+    }
+    .form-component{
+        max-height: 60%;
+        font-size: 1rem;
+    }
+}
+@media screen and (-webkit-device-pixel-ratio:1.00) {
+    .store-title{
+    font-size: 3rem;
+    padding: 3rem 1rem;
+    }
+}
+.store-title{
+    font-family: Josefin;
+    color: var(--primary);
+    text-align: center;
+    margin: 0;
+    width: fit-content;
+    border: 7px solid var(--primary);
+    margin-left: auto;
+    margin-right: auto;
+    transform: translateY(0vh);
+    margin-bottom: 2.5rem;
+    margin-top: 1rem;
+}
+@media screen and (min-width:992px) {
+    .container-custom{
+        margin-right: 10vw;
+        margin-left: 10vw;
+        position: relative;
+        width: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .form-group{
+        display: flex;
+        align-items: center;
+        /* justify-content: space-between; */
+        width: 100%;
+        height: 50%;
+        float:right;
+        clip-path: inset( 0 0 0 50% round 20px);
+        transition: all .3s ease;
+        /* margin-right: 10vw;
+        margin-left: auto; */
+        /* v;pm */
+        /* margin-left: 10vw;
+        margin-right: auto; */
+    }
+}
+.form-background{
     position: absolute;
-    right: 0px;
-    bottom: 0px;
+    z-index: -1;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    /* top:20vh; */
+    height: 100%;
+    align-items: center;
+    margin: auto;
+}
+.text-login{
+    width: 50%;
+}
+.text-signup{
+    width: 50%;
+}
+.form-group{
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    background-color: var(--secondary);
+}
+.form-component{
+    width: 50%;
+    min-width: 40vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+@media screen and (max-width:1200px) {
+    .form-component form{
+        width: 66%;
+    }
+}
+@media screen and (min-width:1200px) {
+    .form-component form{
+        width: 50%;
+    }
+}
+.form-component form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+    background-color: #474747;
+    padding: 2rem 3rem;
+    border-radius: 10px;
+    transition: all .3s ease;
+    /* border: 10px solid var(--primary); */
+}
+.form-control{
+    background-color: #f5f5f51a;
+    /* background-color: #474747; */
+    /* border: 1px solid; */
+    font-family: quicksand;
+    border: none;
+    color: var(--primary);
+}
+.form-control:focus{
+    background-color: #f5f5f51a;
+    border: none;
+    outline: none;
+    color: var(--primary);
+}
+.input-control{
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+     border-radius: 20px;
+}
+label{
+    font-family: Josefin;
+    color: var(--primary);
+    font-size: 1.5rem;
+}
+.change-mode{
+    font-family: quicksand;
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    margin-bottom: 2rem;
+    background-color: var(--whiteLowContrast);
+    border: none;
+    width: 16vw;
+    height: 5vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+    border-radius: 5px;
+    z-index: 5;
+}
+input[type=submit]{
+    color: var(--primary);
+    border: 0;
+    font-family: quicksand;
+    background-color: var(--secondary);
+    transition: all .2s ease;
+}
+input[type=submit]:hover{
+    background-color: var(--primary);
+    color: var(--secondary);
+}
+.change-mode *{
+    margin: 0;
+    transition: all .3s ease;
+}
+.change-mode button{
+    background-color: var(--secondary);
+    border-radius: 5px;
+    border: none;
+    color: var(--primary);
+}
+.change-mode button:hover{
+    background-color: var(--secondary);
+    filter: brightness(150%);
+    color: var(--primary);
+}
+.jamText{
+    color: var(--primary);
+    font-family: Josefin;
+    font-size: 3rem;
 }

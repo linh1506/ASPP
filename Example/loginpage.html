@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="../bootstrap-5.2.0-dist/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <title>login</title>
+  </head>
+  <body>
+    <h1 class="store-title">ODGB</h1>
+    <div class="change-mode">
+        <p>Chưa có tài khoản ?</p>
+        <button onclick="Reveal()" class="btn ">
+          Tạo tài khoản
+        </button>
+      </div>
+    <div class="container-custom">
+      <div class="form-background">
+        <div class="text-login jamText ">Đăng nhập vào ODBG<br>Dễ dàng thanh toán</div>
+        <div class="text-signup jamText">Đăng ký hội viên ODBG<br>Để hưởng nhiều ưu đãi!!!</div>
+      </div>
+      <div class="form-group overflow-hidden">
+            <div class="form-component signup">
+              <form method="post">
+                <input
+                  type="text"
+                  class="form-control input-control"
+                  id="name"
+                  name="name"
+                  placeholder="Tên Người Dùng"
+                />
+                <!--Address-->
+                <input
+                  type="text"
+                  class="form-control input-control"
+                  id="address"
+                  name="address"
+                  placeholder="Địa Chỉ"
+                />
+                <!--Email address-->
+                <input
+                  type="text"
+                  class="form-control input-control"
+                  id="email"
+                  name="email"
+                  placeholder="Email"
+                />
+                <!--Phone-->
+                <input
+                  type="text"
+                  class="form-control input-control"
+                  id="phone"
+                  name="phone"
+                  placeholder="Số Điện Thoại"
+                />
+                <!--Password1-->
+                <input
+                  type="password"
+                  class="form-control input-control"
+                  id="pass1"
+                  name="pass1"
+                  placeholder="Mật Khẩu"
+                />
+                <!--Password2-->
+                <input
+                  type="password"
+                  class="form-control input-control"
+                  id="pass2"
+                  name="pass2"
+                  placeholder="Vui lòng xác nhận lại mật khẩu"
+                />
+                <br />
+                <input type="submit" class="btn btn-success" />
+              </form>
+            </div>
+            <div class="form-component login">
+              <form method="post">
+                <div class="input-group flex-nowrap">
+                  <input
+                    type="text"
+                    class="form-control input-control"
+                    name="email"
+                    placeholder="Email"
+                  />
+                </div>
+                <div class="input-group flex-nowrap">
+                  <input
+                    type="password"
+                    class="form-control input-control"
+                    name="password"
+                    placeholder="Mật khẩu"
+                  />
+                </div>
+                <br />
+                <input type="submit" class="btn right" />
+              </form>
+            </div>
+          </div>
+    </div>
+    <script>
+      const Reveal = () => {
+        if($(".form-group").css('clip-path')==='inset(0px 0px 0px 50% round 20px)')
+          { $('.change-mode p').text('Đã có tài khoản?')
+            $('.change-mode button').text('Đăng nhập')
+            $(".form-group").css('clip-path','inset(0px 50% 0px 0px round 20px)')
+          }  
+        else
+        { $('.change-mode p').text('Chưa có tài khoản?')
+          $('.change-mode button').text('Tạo tài khoản')
+          $(".form-group").css('clip-path','inset(0px 0px 0px 50% round 20px)');
+        }
+      };
+    </script>
+    <script src="/Jquery/jquery-3.6.1.min.js"></script>
+  </body>
+</html>
