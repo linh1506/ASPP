@@ -34,7 +34,9 @@
     
     Function NewestBanner
         Dim folderPath
-        folderPath = "C:\inetpub\wwwroot\ODBG\Images\Banner"
+        ' folderPath = "E:\ASP\ASPP\Images\Banner"
+        folderPath = Server.MapPath("Images\Banner")
+
         Set fso = Server.CreateObject("Scripting.FileSystemObject")
         Set folder = fso.GetFolder(folderPath)
         Set files = folder.Files
@@ -63,14 +65,14 @@
     End Sub
 
     dim path,Banner
-    path = "C:\inetpub\wwwroot\ODBG\Images\Banner"
+    path = Server.MapPath("Images\Banner")
     FlushFolder path
     Banner = GetFirstFilePath(path)
 
     Set SlideImages = Server.CreateObject("Scripting.Dictionary")
         seq = 0
         Dim folderDirectory
-        folderDirectory = "C:\inetpub\wwwroot\ODBG\Images\Gallery"
+        folderDirectory = Server.MapPath("Images\Gallery")
         Set fso = Server.CreateObject("Scripting.FileSystemObject")
         ' set folder = fso.GetFolder(folderDirectory)
         set files = fso.GetFolder(folderDirectory).Files
@@ -81,7 +83,7 @@
 
     Set Gallery = Server.CreateObject("Scripting.Dictionary")
         seq = 0
-        folderDirectory = "C:\inetpub\wwwroot\ODBG\Images\Gallery"
+        folderDirectory = Server.MapPath("Images\Gallery")
         Set fso = Server.CreateObject("Scripting.FileSystemObject")
         ' set folder = fso.GetFolder(folderDirectory)
         set files = fso.GetFolder(folderDirectory).Files

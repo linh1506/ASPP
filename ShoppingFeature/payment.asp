@@ -73,12 +73,11 @@ if(not isnull(Session("Id")) and Session("Id") <> "") then
 end if
 %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta charset='utf-8' /> <meta HTTP-EQUIV="Pragma" CONTENT="no-cache"> <meta HTTP-EQUIV="Expires" CONTENT="-1"> <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link
       rel="stylesheet"
       href="../bootstrap-5.2.0-dist/css/bootstrap.min.css"
@@ -152,15 +151,15 @@ end if
             <table>
                 <tr>
                     <td><label for="name">FullName:</label></td>
-                    <td><input type="text" id="name" requied value="<%=fullname%>"></td>
+                    <td><input type="text" id="name" requied value="<%=trim(fullname)%>"></td>
                 </tr>
                 <tr>
                     <td><label for="address">Address:</label></td>
-                    <td><input type="text" id="address" requied value="<%=address%>"></td>
+                    <td><input type="text" id="address" requied value="<%=trim(address)%>"></td>
                 </tr>
                 <tr>
                     <td><label for="phone">Phone:</label></td>
-                    <td><input type="text" id="phone" requied value="<%=phone%>"></td>
+                    <td><input type="text" id="phone" requied value="<%=trim(phone)%>"></td>
                 </tr>
             </table>
         </div>
