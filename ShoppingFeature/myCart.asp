@@ -5,8 +5,8 @@
 Set listProductInCart = Server.CreateObject("Scripting.Dictionary")
 dim view1,view2
 if (not isempty(Session("Mycart"))) then 
-    view1 = "d-none"
-    view2 = "d-block"
+    view1 = "none-div"
+    view2 = "display-div"
     dim cart
     Session("Mycart") = filterAvailable(Session("Mycart"))
     cart = Session("Mycart")
@@ -40,8 +40,8 @@ if (not isempty(Session("Mycart"))) then
       listProductInCart.add seq,product
     Next
     Else
-      view1 = "d-block"
-      view2 = "d-none"
+      view1 = "display-div"
+      view2 = "none-div"
 end if
 %>
 <!DOCTYPE html>
@@ -67,7 +67,7 @@ end if
     
     <!--#include file="../UIcomponents/ShoppingHeader.asp"-->
     <!--#include file="../UIcomponents/notification.asp"-->
-
+    
     <nav style="z-index:1" class = 'navbar sticky-top navbar-light navbar-custom flex-row'>
       <div class="d-flex flex-row container-custom">
           <a class ="nav-link active" href="#"  onclick="history.go(-1); return false;"><i style="font-size:20px" class="lni lni-arrow-left"></i></a>
@@ -78,6 +78,7 @@ end if
     </nav>
 
     <div class="container">
+     
       <div class="row">
         <!-- Cột danh sách sản phẩm trong giỏ hàng -->
         <% if (not listProductInCart.Count = 0) then %>
@@ -111,7 +112,17 @@ end if
               </div>
             <% next %>
           </div>
-          <div class="col-4" id="SubTotalElement"> 
+          <div class="col-4" id="SubTotalElement">
+            <form class="row" action="/ShoppingFeature/applyPromotion.asp" method="post">
+              <div class="col">
+                <label for="inputPassword2" class="visually-hidden">Promo Code</label>
+                  <input type="text" class="form-control" name="promocode" id="promocode" 
+                  value="<%if not isempty(Session("PromotionCode")) then response.Write(Session("PromotionCode"))%>" placeholder="Promocode">
+              </div>
+              <div class="col-4">
+                <button type="submit" class="btn btn-primary mb-3">Apply</button>
+              </div>
+            </form>
             <!-- Tính giá tiền của tất cả sản phẩm trong giỏ hàng -->
             <div class="d-flex justify-content-between mb-5">
               <h5 class="text-uppercase">Total price:</h5>
@@ -141,6 +152,8 @@ end if
         if ($(".CartItem").length === 0) {
           $("#SubTotalElement").hide();
           $("#NothingInCart").show();
+          $("#view-1").show();
+          $("#view-2").hide();
         }
       }
 
@@ -157,12 +170,15 @@ end if
               notification(''+this.responseText,"var(--bs-orange)")
             }
         };
+        var dem = $(".v").length;
+        if($(".v").length === 0)
+        {
+        }
         xmlhttp.open("GET", localhostAddress + "/ShoppingFeature/deleteItemInCart.asp?idProduct="+ProductId+"&size="+Size, true);
         xmlhttp.send();
         GetSubTotal()
         checkNullInCart()
       }
-
       function AdjustQuantity(ItemId,ProductId,Size) {
         var element = document.getElementById("Quantity"+ItemId);
         var Quantity = element.value
