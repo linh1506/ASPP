@@ -162,7 +162,8 @@
                     <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'products')" id="OpenManageProduct">Manage Products</button>
                     <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'customers')" id="OpenManageCustomer">Manage Customers</button>
                     <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'promotions')" id="OpenManagePromotion">Manage Promotions</button>
-                    <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'brands')" id="OpenManageBrand">Manage Brands</button>    
+                    <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'brands')" id="OpenManageBrand">Manage Brands</button>
+                    <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'gallery')" id="OpenManageGallery">Store's Gallery</button>  
                 </div>
             </nav>
         </aside>
@@ -481,6 +482,27 @@
                             </div>
                         <%end if%>
                     </div>
+                    <div class="tabcontent" id="gallery">
+                        <div class="mx-5 mt-5">
+                            <!--#include virtual="models/gallery.asp"-->
+                            <h2>Thư viện ảnh:</h2>
+                            <div class="goto_uploader">
+                                <%
+                                    Response.Write "<h4 class='goto_uploader__header'>Banner Location: </h4>" & Banner & "<br>"
+                                %>
+                                <a class="btn --btn-hv-red" href='/Images/BannerUpload.asp'>Thay Đổi Ảnh Banner</a>
+                            </div> 
+                            <div class="goto_uploader">
+                                <h4 class='goto_uploader__header'>Store's carousel:</h4>
+                                <%  Response.Write SlideImages.Count
+                                    for each item in SlideImages
+                                        Response.Write SlideImages(item)&"<br>"
+                                    next
+                                %>
+                                <a class="btn --btn-hv-red" href='/Images/GalleryUpload.asp'>Quản lý Ảnh SlideShow</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -516,6 +538,10 @@
                 case 4
                 %>
                 document.getElementById("OpenManageBrand").click();
+                <%
+                case 5
+                %>
+                  document.getElementById("OpenManageGallery").click();
                 <%
                 case else
                 %>

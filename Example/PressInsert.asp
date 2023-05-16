@@ -10,20 +10,32 @@
 <body>
     <button onclick="Press()">Vailon</button>
     <%
-' Declare an array with size 10
-Dim myArray(2)
+    Function GetFirstFilePath(folderPath)
+        Dim relativePath
+        relativePath = ""
+        Set fso = Server.CreateObject("Scripting.FileSystemObject")
+        Set folder = fso.GetFolder(folderPath)
+        Set files = folder.Files
+        for each f1 in files
+            relativePath = Replace(f1.Path, Server.MapPath("/"), "/")
+            relativePath = Mid(relativePath, 2)
+            exit for
+        next
+        Set files = Nothing
+        Set folder = Nothing
+        Set fso = Nothing
 
-' Put 3 values into the array
-myArray(0) = "value1"
-myArray(1) = "value2"
-myArray(2) = "value3"
+        GetFirstFilePath = relativePath
+    End Function
+    
+    dim path,firstFilePath
+    path = "C:\inetpub\wwwroot\ODBG\Resources\aspuploader\filemanagerfolder\guest"
 
-' Re-dimension the array to size 3
+    firstFilePath = GetFirstFilePath(path)
 
-' The array now has a size of 3
-Response.Write "Array size: " & UBound(myArray) + 1
-Response.Write myArray(2)
-%>
+    Response.Write "First File Path: " & firstFilePath
+    %>
+    <img src="\Resources\aspuploader\filemanagerfolder\guest\2023-05-15 17-56-53.3ae5ba9d-4b48-32dc-5f36-8bcc0317859e.Screenshot 2023-03-25 223541.png " alt="" srcset="">
 
 </body>
 </html>

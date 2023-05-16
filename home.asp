@@ -23,18 +23,20 @@
     <!--#include file="./UIcomponents/ShoppingHeader.asp"-->
     <!--#include file="./UIcomponents/product_card.asp"-->
     <!--#include file="./UIcomponents/category_card.asp"-->
+    <!--#include file="./models/gallery.asp"-->
       <div class="container-fluid-custom">
-        <div class="shop-banner"><img src="/Resources/banner3.png" alt=""></div>
+        <div class="shop-banner"><img src="<%=Banner%>" alt=""></div>
+        <% if Gallery.Count >0 Then %>
         <div class="swiper slideshow">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/92a774157325607.63768ffc717ea.jpg" alt=""></div>
-                <div class="swiper-slide"><img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/c5f87e147486429.62c39ec35694d.jpg" alt=""></div>
-                <div class="swiper-slide"><img src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/26fe78134261997.61d2c6bb27ecc.jpg" alt=""></div>
-                <div class="swiper-slide"><img src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/b7f369150879029.630261a7c5e2f.jpg" alt=""></div>
+              <% for each item in Gallery %>
+                <div class="swiper-slide"><img src="<%= Gallery(item) %>" alt=""></div>
+              <% next %>
             </div>
             <div class="swiper-button-next slide_btn"></div>
             <div class="swiper-button-prev slide_btn"></div>
         </div>
+        <%End if%>
       </div>
       <div class="container">
         <div class="category-display">

@@ -1,0 +1,30 @@
+@import url(/palette.css);
+@import url(/fonts.css);
+body{
+    background-color: var(--primary);
+    font-family: quicksand;
+}
+.demo {
+    margin-top: 2rem;
+    text-align: left; 
+    width: auto;
+    padding: 3rem 2rem; 
+    border-radius: 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    }
+    .demo table{
+        padding: 1rem .5rem;
+    }
+    table a:not(.override){
+        text-decoration: none !important;
+        color: var(--primary) !important;
+    }
+    .uploader{
+        background-color: var(--secondary);
+        color: var(--primary);
+        transition: all .2s ease;
+    }
+    .uploader:hover{
+        background-color: var(--accent);
+        color: var(--primary);
+    }

@@ -1,42 +1,37 @@
 <%
-' SELECT j.[key], j.[value] FROM PRODUCT t CROSS APPLY OPENJSON(t.PRODUCT_IMAGE) j where ID = ?
-Dim conn, cmd, sql, recordsAffected
-Set conn = Server.CreateObject("ADODB.Connection")
-conn.Open "your_connection_string"
+    ' Import necessary ADODB components
+    Set conn = Server.CreateObject("ADODB.Connection")
+    Set rs = Server.CreateObject("ADODB.Recordset")
 
-sql = "INSERT INTO your_table (column1, column2) VALUES ('value1', 'value2')"
-Set cmd = Server.CreateObject("ADODB.Command")
-cmd.ActiveConnection = conn
-cmd.CommandText = sql
-cmd.CommandType = adCmdText
+    ' Connect to the SQL Server database
+    conn.Open "Provider=SQLOLEDB;Data Source=your_server;Initial Catalog=your_database;User ID=your_username;Password=your_password"
 
-cmd.Execute recordsAffected
+    ' Function to insert relative paths into the database
+    Sub InsertRelativePaths(folderPath)
+        ' Get all files in the specified folder
+        Set fso = Server.CreateObject("Scripting.FileSystemObject")
+        Set folder = fso.GetFolder(folderPath)
+        Set files = folder.Files
+        
+        ' Loop through each file and insert its relative path into the database
+        For Each file In files
+            relativePath = Replace(file.Path, Server.MapPath("/"), "/")
+            sql = "INSERT INTO YourTableName (FilePath) VALUES ('" & Replace(relativePath, "'", "''") & "')"
+            conn.Execute(sql)
+        Next
+        
+        ' Clean up objects
+        Set files = Nothing
+        Set folder = Nothing
+        Set fso = Nothing
+    End Sub
 
-If recordsAffected > 0 Then
-    Response.Write "Insert query succeeded!"
-Else
-    Response.Write "Insert query failed!"
-End If
+    ' Call the function with the folder path
+    InsertRelativePaths "your_folder_path"
 
-conn.Close
-Set conn = Nothing
-' ds
-Dim conn, cmd, param
-Set conn = Server.CreateObject("ADODB.Connection")
-conn.Open "your_connection_string"
-
-Set cmd = Server.CreateObject("ADODB.Command")
-cmd.ActiveConnection = conn
-cmd.CommandText = "INSERT INTO your_table (column1, column2) VALUES (?, ?)"
-
-Set param1 = cmd.CreateParameter("param1", adVarChar, adParamInput, 50, "value1")
-Set param2 = cmd.CreateParameter("param2", adInteger, adParamInput, , 123)
-
-cmd.Parameters.Append param1
-cmd.Parameters.Append param2
-
-cmd.Execute
-
-conn.Close
-Set conn = Nothing
+    ' Clean up objects
+    rs.Close
+    Set rs = Nothing
+    conn.Close
+    Set conn = Nothing
 %>

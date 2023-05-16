@@ -58,6 +58,7 @@
     <link rel="stylesheet" href='../UIcomponents/header.css'>
     <link rel="stylesheet" href='../UIcomponents/notification.css'>
     <script src="../Jquery/jquery-3.6.1.min.js"></script>
+    <script src="/Resources/ckeditor/ckeditor.js"></script>
   </head>
   <body>
     <!--#include file="../UIcomponents/header.asp"-->
@@ -204,6 +205,9 @@
             });
         </script>
         <script>
+            window.onload = function() {
+                CKEDITOR.replace( 'description' );
+            };
             // Add button click handler
             // $(".addButton").click(function() {
             // var index = $("#inputContainer").children().length + 1

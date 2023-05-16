@@ -99,3 +99,11 @@ UPDATE CATEGORY SET img='https://t4.ftcdn.net/jpg/04/14/84/53/360_F_414845314_oW
 
 update BRAND set img ='https://i.imgur.com/bVpqXMP.jpeg' where id = 1
 update BRAND set img ='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRn1R9MYiBJEW9NH4IPLpy9fWqTc-WnDp1PAANWI04&s' where id = 3
+
+-- 15.5.23
+use DB_ODBG
+go 
+create table Gallery(
+	id int identity,
+	link nvarchar(max)
+)

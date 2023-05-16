@@ -1,5 +1,9 @@
 @import url(/palette.css);
 @import url(/fonts.css);
+
+body{
+    background-color: var(--primary) !important;
+}
 .nav-sidebar{
     font-family: quicksand;
 }
@@ -101,4 +105,43 @@ tr td{
 } */
 table{
     margin-top: .3rem;
+}
+iframe{
+    width: 800px;
+    height: 600px;
+}
+.goto_uploader{
+    padding: 1rem 1rem;
+    margin: 2rem 0;
+    width: clamp(400px 60% 992px);
+    box-sizing: border-box;
+    border: none;
+    border-radius: 10px;
+    transition: all .3s ease;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    color: green;
+    
+    font-style: italic;
+}
+.goto_uploader:hover{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 1.2rem 1.2rem;
+}
+.goto_uploader>.goto_uploader__header{
+    color: var(--secondary);
+    font-style: normal;
+    text-decoration: none;
+}
+.--btn-hv-red{
+    margin-top: .5rem;
+    background-color: var(--secondary);
+    color: var(--primary);
+    transition: all .2s ease;
+    font-style: normal;
+    text-decoration: none;
+}
+.--btn-hv-red:hover{
+    color: var(--primary);
+    background-color: var(--accent);
+
 }
