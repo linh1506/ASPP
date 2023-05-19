@@ -78,19 +78,19 @@
             </form>
 </div>
     <script>
-    function ValidationEvent(){
-        var time = document.getElementById("expired").value;
-        var timec = new Date(time);
-        const currentdate = new Date()
-        if (timec < currentdate )
-        {
-            notification("Thời gian hết hạn không hợp lệ","var(--bs-orange)")
-            return false;
+        function ValidationEvent(){
+            var time = document.getElementById("expired").value;
+            var timec = new Date(time);
+            const currentdate = new Date()
+            if (timec < currentdate )
+            {
+                notification("Thời gian hết hạn không hợp lệ","var(--bs-orange)")
+                return false;
+            }
+            else { 
+            return true;
+            }
         }
-        else { 
-        return true;
-        }
-    }
 
     </script>
 </body>
