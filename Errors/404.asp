@@ -26,8 +26,6 @@
     <link rel="stylesheet" href="/Resources/web-font-files/lineicons.css">
 </head>
 <body>
-    <!--#include file="../models/category.asp"-->
-    <!--#include file="../models/brands.asp"-->
     <!--#include file="../UIcomponents/ShoppingHeader.asp"-->
     <div class="page"> 
         <h1 id="pageheader" >ERROR 404: Something definitely went Wrong <span>🤮</span></h1>

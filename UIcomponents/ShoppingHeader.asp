@@ -64,7 +64,7 @@
                 <a href="../logout.asp" title = 'Đăng xuất' class='extbtn' ><i class = 'lni lni-enter '></i></a>
                 <%
                         End if
-                        Response.codepage = 1252      
+                        Response.codepage = 1252
                 %>
             </div>
         </div>
