@@ -84,7 +84,7 @@
         const currentdate = new Date()
         if (timec < currentdate )
         {
-            notification("Thời gian hết hạn không hợp lệ    ","var(--bs-orange)")
+            notification("Thời gian hết hạn không hợp lệ","var(--bs-orange)")
             return false;
         }
         else { 

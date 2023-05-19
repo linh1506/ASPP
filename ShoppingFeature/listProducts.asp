@@ -11,24 +11,18 @@
     <link rel="stylesheet" href='../UIcomponents/ShoppingHeader.css'>
     <link rel="stylesheet" href='../UIcomponents/notification.css'>
     <link rel="stylesheet" href="../Resources/web-font-files/lineicons.css">
+    <link rel="stylesheet" href="listProducts.css">
 </head>
 <body>
     <!--#include file="../UIcomponents/ShoppingHeader.asp"-->
+    <br>
     <div class="container">
-        <div id ="prd" class="row row-cols-1 row-cols-md-6 g-4">
-            <div class="col">
-                <div class="card">
-                    <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/044.webp" class="card-img-top" alt="Skyscrapers" />
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">
-                            This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <h3>Tất cả sản phẩm</h3>
     </div>
+    <br>
+    <div id="prd" class="container container-list">
+    </div>
+    
 <script>
     var localhostAddress = window.location.origin;
     function getList() {
@@ -40,17 +34,18 @@
                 console.log(obj);
                 let htmlResult = "";
                 obj.list.forEach(item => {
-                    htmlResult += "
-                    <div class="'col'">\
-                        <div class="'card'">\
-                            <img src='"+item.img+"'/>\
-                        <div class="'card-body'">\
-                            <h5 class="'card-title'">"+item.name+"</h5>\
-                        <p class="'card-text'">"+item.price+"</p>\
+                    htmlResult += "\
+                    <div>\
+                        <div class=\"ic\">\
+                            <a href=\"productDetail.asp?id="+item.id+"\">\
+                                <img class=\"img-card\" src="+item.img+">\
+                            </a>\
                         </div>\
+                        <div class=\"cd\">\
+                            <h3>"+item.name+"</h3>\
+                            <h5>"+item.price+" đ</h5>\
                         </div>\
-                    </div>\    
-                    " ; 
+                    </div>";
                 });
                 $('#prd').append(htmlResult);
             }
