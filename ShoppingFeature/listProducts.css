@@ -26,9 +26,10 @@ body{
     flex-wrap: wrap;
 }
 .container-list > div {
-    width: 47vh;
+    width: 45vh;
 	height: 60vh;
-    margin: 5px 16px 5px 0px;
+    max-width: 47vh;
+    margin: 1vh 5vh 1vh 0vh;
     text-align: center;
     font-size: 30px;
     border-radius: 5px;
