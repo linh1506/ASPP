@@ -162,14 +162,14 @@ body{
   background-color: var(--secondary);
   color: var(--primary);
 }
-.purchase__options--black:hover {
+.purchase__options--black:hover:enabled {
   filter: brightness(120%);
 }
 .purchase__options--red {
   background-color: var(--accent);
   color: var(--primary);
 }
-.purchase__options--red:hover {
+.purchase__options--red:hover:enabled {
   filter: brightness(120%);
 }
 .product__detail {
@@ -296,5 +296,8 @@ input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+button:disabled,button[disabled]{
+  background-color: #646464;
 }
 

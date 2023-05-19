@@ -135,8 +135,8 @@
                     </div>
                 </div>
                 <div class="product__purchase_options">
-                    <a href=""  class="purchase__options purchase__options--red">Mua Ngay</a>
-                    <button onclick="addCart()" class="purchase__options purchase__options--black"><p>Thêm vào Giỏ Hàng</p><span><i class='lni lni-cart'></i></span></button>
+                    <a href=""  class="purchase__options purchase__options--red" <%if product.Status = false then%>style="background-color: #646464;pointer-events: none;" <%end if%>>Mua Ngay</a>
+                    <button onclick="addCart()" class="purchase__options purchase__options--black"  <%if product.Status = false then%>disabled <%end if%> ><p>Thêm vào Giỏ Hàng</p><span><i class='lni lni-cart'></i></span></button>
                 </div>
                 <div class="product__detail">
                     <h4>Nhãn hiệu: <%=findBrand(brandId)%></h4>
