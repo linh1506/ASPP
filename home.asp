@@ -81,7 +81,7 @@
                 'IN ra danh sách product mới
                 for each item in featuredProduct
                   %> 
-                    <a class="new-product" href="/ShoppingFeature/productDetail.asp?id=<%=featuredProduct(item).Id%>">
+                    <a class="new-product" href="/Security/productPageHandler.asp?id=<%=featuredProduct(item).Id%>">
                     <%displayProduct featuredProduct(item)%>
                     </a>
                   <%next%>
