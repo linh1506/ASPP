@@ -8,7 +8,7 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active nav-custom" aria-current="page" href="/">SẢN PHẨM</a>
+                    <a class="nav-link active nav-custom" aria-current="page" href="../ShoppingFeature/listProducts.asp">SẢN PHẨM</a>
                 </li>
                 <li class="nav-item">
                     <div class="dropdown-custom">
