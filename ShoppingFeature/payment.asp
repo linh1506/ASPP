@@ -134,24 +134,6 @@ end if
     <!--#include file="./notifyDeleteItemsNotAvailable.asp"-->
     <!--#include file="../UIcomponents/ShoppingHeader.asp"-->
     <!--#include file="../UIcomponents/notification.asp"-->
-
-    <%
-      if not isnull(Session("Success")) and Session("Success") <> "" then
-    %>
-      <script>
-        notification(''+<%=Session("Success")%>,"var(--bs-green)")
-      </script>
-    <%
-      end if
-      if not isnull(Session("Error")) and Session("Error") <> "" then
-    %>
-      <script>
-        notification(''+<%=Session("Error")%>,"var(--bs-orange)")
-      </script>
-    <%
-      end if
-    %>
-
     <nav style="z-index:1" class = 'navbar sticky-top navbar-light navbar-custom flex-row'>
     <div class="d-flex flex-row container-custom">
         <a class ="nav-link active" id="gohome" href="#"  onclick="history.go(-1); return false;"><i style="font-size:20px" class="lni lni-arrow-left"></i></a>
