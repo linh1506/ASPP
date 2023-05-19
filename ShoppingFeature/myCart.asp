@@ -49,10 +49,7 @@ end if
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta charset='utf-8' /> <meta HTTP-EQUIV="Pragma" CONTENT="no-cache"> <meta HTTP-EQUIV="Expires" CONTENT="-1"> <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <link
-      rel="stylesheet"
-      href="../bootstrap-5.2.0-dist/css/bootstrap.min.css"
-    />
+    <link rel="stylesheet" href="../bootstrap-5.2.0-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="myCart.css">
     <link rel="stylesheet" href='../UIcomponents/ShoppingHeader.css'>
     <link rel="stylesheet" href='../UIcomponents/notification.css'>
@@ -110,28 +107,7 @@ end if
               </div>
             <% next %>
           </div>
-          <div class="col-4 mt-5" id="SubTotalElement">
-            <div class="row">
-              <div class="col">
-                <h2>Promo Code:</h2>
-              </div>
-              <div class="col">
-                <select class="form-select form-select-lg mb-3" id="promoValue" name="promoValue" onChange="payment()">
-                  <% 
-                    cmdPrep.commandText = "SELECT * FROM PROMOTION WHERE IS_ACTIVE = 1 order by DISCOUNT_VALUE DESC"
-                    set result = cmdPrep.execute
-                    do while not result.EOF
-                  %>
-                  <option value="<%=result("DISCOUNT_VALUE")%>"><%=result("COUPON_CODE")%></option>
-                  <% 
-                    result.movenext
-                    loop
-                    result.close
-                  %>
-                </select>
-              </div>
-            </div>
-            <hr class="my-4">
+          <div class="col-4" id="SubTotalElement"> 
             <!-- Tính giá tiền của tất cả sản phẩm trong giỏ hàng -->
             <div class="d-flex justify-content-between mb-5">
                 <h5 class="text-uppercase">Total price:</h5>

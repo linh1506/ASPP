@@ -51,11 +51,12 @@
     <title>Add Promotion</title>
 </head>
 <body>
+    <!--#include file="../UIcomponents/notification.asp"-->
     <div class="container">
         <div>
             <h2>Add Promotion</h2>
         </div>
-            <form method="post">
+            <form method="post" name ="hehe" onsubmit="return ValidationEvent()">
             <div class="form-group">
                 <label for="name">Name</label>
                 ' <input type="text" required class="form-control" id="name" name="name">
@@ -66,7 +67,7 @@
             </div>
             <div class="form-group">
                 <label for="discount">Discount</label>
-                <input type="number" step="0.1" class="form-control" id="discount"  name="discount" min="0" max="1">
+                <input type="number" required step="0.1" class="form-control" id="discount"  name="discount" min="0" max="1">
             </div>
             <div class="form-group">
                 <label for="expired">Expired at</label>
@@ -75,7 +76,22 @@
             <br>
             <button type="submit" class="btn btn-success">Submit</button>
             </form>
-            
 </div>
+    <script>
+    function ValidationEvent(){
+        var time = document.getElementById("expired").value;
+        var timec = new Date(time);
+        const currentdate = new Date()
+        if (timec < currentdate )
+        {
+            notification("Thời gian hết hạn không hợp lệ","var(--bs-orange)")
+            return false;
+        }
+        else { 
+        return true;
+        }
+    }
+
+    </script>
 </body>
 </html>

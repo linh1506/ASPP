@@ -1,0 +1,54 @@
+@import url(../palette.css);
+/* @font-face {
+    font-family: Josefin;
+    src: url(../Resources/JosefinSans-Bold.ttf);
+}
+@font-face {
+    font-family: quicksand;
+    src: url(../Resources/QuickSand/Quicksand-SemiBold.ttf);
+} */
+@import url(../fonts.css);
+*{
+    font-family: quicksand;
+}
+body{
+    background-color: var(--whiteLowContrast);
+}
+.container-list{
+    width: 75%;
+    margin-right: 2%;
+    /* display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: var(--darkblue);
+    padding: 10px;
+    gap:1vh; */
+    display: flex;
+    flex-wrap: wrap;
+}
+.container-list > div {
+    width: 47vh;
+	height: 60vh;
+    margin: 5px 16px 5px 0px;
+    text-align: center;
+    font-size: 30px;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    overflow: hidden;
+} 
+.ic{
+    width: 100%;
+    height: 75%;
+}
+.img-card{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.cd{
+    margin-top: 2vh;
+    background-color: white;
+}
+.cd > h5 {
+    color: var(--accent);
+}
