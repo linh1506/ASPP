@@ -225,7 +225,7 @@ end if
       function payment() {
           var promoValue = document.querySelector('select[name="promoValue"]').value;
           var subtotal = parseFloat(document.getElementById("SubTotal").innerText.replace("đ", ""));
-          var discount = promoValue * subtotal;
+          var discount = Math.ceil(promoValue * subtotal);
           var total = subtotal - discount;
           document.getElementById("Discount").innerText = "- " +  discount+"đ";
           document.getElementById("LastTotal").innerText = total+"đ";
