@@ -119,6 +119,7 @@
                         %> product__Status--red'><span>&#x2022;</span> <h4>Hết Hàng</h4><%
                     End if
                 %></div>
+                <div class="product__price product__price--red"><%=product.Price%> VNĐ</div>
                 <div class="product__quantity">
                     <h4>Quantity</h4>
                     <div class="product__quantity-selector-group">
