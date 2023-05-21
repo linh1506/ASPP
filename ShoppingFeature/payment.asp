@@ -350,10 +350,12 @@ end if
           data: dataPurchase,
           timeout: 600000,
           success: function (data) {
-            console.log(data)
+            console.log(data),
+            alert("Purchase was successfully")
+            window.location.href = localhostAddress;
           },
           error: function (e) {
-
+            
           }
         });
       }
