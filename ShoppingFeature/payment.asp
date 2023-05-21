@@ -328,27 +328,35 @@ end if
     <!--#include file="../UIcomponents/footer.asp"-->
 
     <script>
-        function payment() {
-          var name = document.getElementById("name").value.trim();
-          var phone = document.getElementById("phone").value.trim()
-          var address = document.getElementById("address").value.trim()
-          if(name.length == 0 || phone.length ==0|| address.length == 0){
-              notification('Please enter enough information to continue',"var(--bs-orange)")
-              return;
-            }
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-              alert("Your purchase has been acknowledged, thank you and keep shopping!")
-              document.getElementById("gohome").click()
-            }
-            else{
-                notification(this.responseText,"var(--bs-orange)")
-            }
-        };
-        xmlhttp.open("GET", "", true);
-        xmlhttp.send();
-    }
+      var localhostAddress = window.location.origin
+      function payment() {
+        var name = $("#name").val().trim();
+        var phone = $("#phone").val().trim();    
+        var address = $("#address").val().trim();
+
+        var dataPurchase = {
+          name: name,
+          phone: phone,
+          address: address,
+          discountCode: "<%=discountCode%>",
+          id: <% if (IsNull(Session("ID")) or Session("Id") = "") then %> <%=0%> <%else%> <%=Session("ID")%> <%end if%>
+        }
+
+        console.log(dataPurchase)
+
+        $.ajax({
+          type: "POST",
+          url: localhostAddress + "/ShoppingFeature/postPurchase.asp",
+          data: dataPurchase,
+          timeout: 600000,
+          success: function (data) {
+            console.log(data)
+          },
+          error: function (e) {
+
+          }
+        });
+      }
     </script>
   </body>
 </html>
