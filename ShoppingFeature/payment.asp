@@ -301,7 +301,7 @@ end if
             subTotal += (parseInt(document.getElementById("PriceItem"+item).innerHTML) * parseInt(document.getElementById("Quantity"+item).value))
           }
         }
-        var discouptPrice = subTotal * <%=discountValue%>
+        var discouptPrice = Math.ceil(subTotal * <%=discountValue%>)
         document.getElementById("Discount").innerHTML = "- " + discouptPrice + "đ"
       }
 
@@ -315,7 +315,7 @@ end if
             subTotal += (parseInt(document.getElementById("PriceItem"+item).innerHTML) * parseInt(document.getElementById("Quantity"+item).value))
           }
         }
-        var lastPrice = subTotal * (1 - <%=discountValue%>)
+        var lastPrice = Math.floor(subTotal * (1 - <%=discountValue%>))
         document.getElementById("LastTotal").innerHTML = lastPrice + "đ"
       }
       

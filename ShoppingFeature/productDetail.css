@@ -124,6 +124,15 @@ body{
 .product__Status--red {
   color: var(--bs-orange);
 }
+.product__price{
+  font-family: quicksand;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+}
+.product__price--red{
+  color: var(--accent);
+}
 .product__purchase_options {
   display: flex;
   flex-direction: column;
