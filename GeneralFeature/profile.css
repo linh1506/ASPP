@@ -1,0 +1,46 @@
+@import url(/palette.css);
+@import url(/fonts.css);
+html{
+    padding: 0;
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+}
+body{
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    background-color: var(--secondary);
+    font-family: quicksand;
+}
+.account__settings{
+    background-color: var(--primary);
+    width: 50%;
+    margin: 2rem auto;
+    border-radius:  10px;
+    padding: 2rem;
+    box-shadow: rgba(199, 199, 199, 0.336) 0px 22px 70px 4px;
+    animation: fadein 1s ease-out;
+}
+form{
+    padding: 0 .5rem;
+}
+button[type=submit]{
+    margin-top: .5rem;
+}
+.account__settings #show span i {
+ vertical-align: middle;
+}
+#show{
+    background-color: none;
+    margin: 1.2rem 0;
+    font-size: 1.2rem;
+}
+#change__password{
+    display: none;
+}
+@keyframes fadein {
+    from{opacity: 0;}
+    to{opacity: 100%;}
+}

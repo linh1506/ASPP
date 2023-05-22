@@ -5,10 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta charset='utf-8' /> <meta HTTP-EQUIV="Pragma" CONTENT="no-cache"> <meta HTTP-EQUIV="Expires" CONTENT="-1"> <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <link
-      rel="stylesheet"
-      href="./bootstrap-5.2.0-dist/css/bootstrap.min.css"
-    />
+    <link rel="stylesheet" href="./bootstrap-5.2.0-dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/Resources/swiper-9.2.4/package/swiper-bundle.min.css">
     <link rel="stylesheet" href="./UIcomponents/ShoppingHeader.css">
     <link rel="stylesheet" href="./home.css">
