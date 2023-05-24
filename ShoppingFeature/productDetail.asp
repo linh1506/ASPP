@@ -130,7 +130,7 @@
                     <div class='product__quantity-list'>
                         <%
                         for each item in listSizes
-                            %><div class="product__quantity-remain">Size <%=listSizes(item).Size%> còn <span class="quantity__remaining-number"><%=listSizes(item).Quantity%></span> sản phẩm</div><%
+                            %><div class="product__quantity-remain">Size <%=listSizes(item).Size%> còn <span id="size<%=listSizes(item).Size%>" class="quantity__remaining-number"><%=listSizes(item).Quantity%></span> sản phẩm</div><%
                         next
                         %>
                     </div>
@@ -246,18 +246,43 @@
         xmlhttp.send();
     }
 
+
+    function getQuantityInStock(size) {
+        
+    }
+
     function purchaseNow() {
         if ($('.selected').length == 1) {
             var sizeSelected = $(".selected .value").html()
-            sizeSelected = parseInt(sizeSelected)
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    window.location.href = (localhostAddress + '/ShoppingFeature/myCart.asp')
+            var quantityRequired = getQuantity()
+            
+            $.ajax({
+                url: localhostAddress + "/ShoppingFeature/getQuantityBySize.asp?id=<%=requested_id%>&size="+sizeSelected,
+                method: 'GET',
+                success: function(response) {
+
+                    var quantityInStock = parseInt(response)
+
+                    if (quantityRequired > quantityInStock) {
+                        notification('Số lượng không đủ để bán','var(--bs-orange)')
+                    }
+                    else {
+                        sizeSelected = parseInt(sizeSelected)
+                        var xmlhttp = new XMLHttpRequest();
+                        xmlhttp.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+                                window.location.href = (localhostAddress + '/ShoppingFeature/myCart.asp')
+                            }
+                        };
+                        xmlhttp.open("GET", localhostAddress + "/ShoppingFeature/addcart.asp?idproduct=" + <%=product.Id%> + "&size=" + sizeSelected + "&quantity=" + getQuantity(), true);
+                        xmlhttp.send();
+                    }
+
+                },
+                error: function(xhr, status, error) {
+                    notification('Sản phẩm hiện nay không còn','var(--bs-orange)')
                 }
-            };
-            xmlhttp.open("GET", localhostAddress + "/ShoppingFeature/addcart.asp?idproduct=" + <%=product.Id%> + "&size=" + sizeSelected + "&quantity=" + getQuantity(), true);
-            xmlhttp.send();
+            });  
         }
         else  if ($('.selected').length == 0){
             notification('Chưa chọn size','var(--bs-orange)')

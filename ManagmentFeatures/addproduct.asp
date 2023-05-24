@@ -1,6 +1,6 @@
+<!--#include file="../connect.asp"-->
 <!--#include file="../Security/security.asp"-->
 
-<!--#include file="../connect.asp"-->
 <!DOCTYPE html>
 <html>
   <head>

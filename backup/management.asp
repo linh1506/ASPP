@@ -1,5 +1,5 @@
-<!--#include file="./Security/security.asp"-->
 <!--#include file="connect.asp"-->
+<!--#include file="./Security/security.asp"-->
 <!--#include file="./models/products.asp" -->
 <!--#include file="./models/customersDTO.asp" -->
 <!--#include file="./models/promotions.asp" -->

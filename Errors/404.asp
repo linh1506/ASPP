@@ -1,10 +1,10 @@
+<!--#include file="../connect.asp"-->
 <%
   Dim errorcode
   errorcode = Request.QueryString("code")
 %>
 <!DOCTYPE html>
 <html lang="en">
-<!--#include file="../connect.asp"-->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

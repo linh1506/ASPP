@@ -1,6 +1,6 @@
+<!--#include file="../connect.asp"-->
 <!--#include file="../Security/security.asp"-->
 
-<!--#include file="../connect.asp"-->
 <%
     If (isnull(Session("email")) OR TRIM(Session("email")) = "") Then
         response.redirect("../login.asp")
