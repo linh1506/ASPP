@@ -31,7 +31,7 @@
         phone = Request.Form("phone")
         address = Request.Form("address")
         if (Request.ServerVariables("REQUEST_METHOD") = "POST") then 
-            cmdPrep.commandText = "UPDATE USERS SET NAME='" & name & "', PHONE='" & phone & "',ADDRESS='" & address & "' WHERE ID = '" & id & "'"
+            cmdPrep.commandText = "UPDATE USERS SET NAME=N'" & name & "', PHONE='" & phone & "',ADDRESS=N'" & address & "' WHERE ID = '" & id & "'"
             cmdPrep.execute
             Session("Name") = name 
             Session("Success") = "Change Successfully"
@@ -47,6 +47,7 @@
         cust.Status = Result("STATUS")
         Result.Close
         set Result = nothing
+        response.codepage = 65001
 %>  
     <div class="account__settings">
         <h1>Account Information:</h1>
