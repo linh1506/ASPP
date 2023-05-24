@@ -1,3 +1,4 @@
+<!--#include file="./connect.asp"-->
 <!DOCTYPE html>
 <html>
   <head>
@@ -16,7 +17,6 @@
   </head>
   <body>
     <!--#include file="./UIcomponents/pageLoader.asp"-->
-    <!--#include file="./connect.asp"-->
     <!--#include file="./UIcomponents/ShoppingHeader.asp"-->
     <!--#include file="./UIcomponents/product_card.asp"-->
     <!--#include file="./UIcomponents/category_card.asp"-->

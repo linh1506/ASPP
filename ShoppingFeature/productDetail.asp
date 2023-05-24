@@ -136,7 +136,7 @@
                     </div>
                 </div>
                 <div class="product__purchase_options">
-                    <a href=""  class="purchase__options purchase__options--red" <%if product.Status = false then%>style="background-color: #646464;pointer-events: none;" <%end if%>>Mua Ngay</a>
+                    <button onclick="purchaseNow()" class="purchase__options purchase__options--red" <%if product.Status = false then%>style="background-color: #646464;pointer-events: none;" <%end if%>>Mua Ngay</button>
                     <button onclick="addCart()" class="purchase__options purchase__options--black"  <%if product.Status = false then%>disabled <%end if%> ><p>Thêm vào Giỏ Hàng</p><span><i class='lni lni-cart'></i></span></button>
                 </div>
                 <div class="product__detail">
@@ -229,6 +229,7 @@
         return $('.product__quantity-selector').val()
     }
     var localhostAddress = window.location.origin
+
     function addCart() {
         var sizeSelected = $(".selected .value").html()
         sizeSelected = parseInt(sizeSelected)
@@ -243,6 +244,24 @@
         };
         xmlhttp.open("GET", localhostAddress + "/ShoppingFeature/addcart.asp?idproduct=" + <%=product.Id%> + "&size=" + sizeSelected + "&quantity=" + getQuantity(), true);
         xmlhttp.send();
+    }
+
+    function purchaseNow() {
+        if ($('.selected').length == 1) {
+            var sizeSelected = $(".selected .value").html()
+            sizeSelected = parseInt(sizeSelected)
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    window.location.href = (localhostAddress + '/ShoppingFeature/myCart.asp')
+                }
+            };
+            xmlhttp.open("GET", localhostAddress + "/ShoppingFeature/addcart.asp?idproduct=" + <%=product.Id%> + "&size=" + sizeSelected + "&quantity=" + getQuantity(), true);
+            xmlhttp.send();
+        }
+        else  if ($('.selected').length == 0){
+            notification('Chưa chọn size','var(--bs-orange)')
+        }
     }
 </script>
 <script>
