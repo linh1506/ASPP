@@ -1,5 +1,5 @@
-<!--#include file="../Security/security.asp"-->
 <!--#include file="../connect.asp"-->
+<!--#include file="../Security/security.asp"-->
 <%
     name = Request.form("name")
     code = Request.form("code")

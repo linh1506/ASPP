@@ -243,6 +243,7 @@ end if
           if (this.readyState == 4 && this.status == 200) {
             window.location.href = "/ShoppingFeature/payment.asp";
           }
+          
         };
         xhr.open("POST", "setPromoCodeToSession.asp?promoCode="+promoText, true);
         xhr.send();

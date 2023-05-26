@@ -67,7 +67,6 @@
         cust.Status = Result("STATUS")
         Result.Close
         set Result = nothing
-        response.codepage = 65001
 %>  
     <div class="container-custom">
         <div class="account__settings">
