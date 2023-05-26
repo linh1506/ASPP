@@ -1,4 +1,4 @@
-<% Response.codepage = 65001 %>
+<% 'Response.codepage = 65001 %>
 <!--#include file="../models/category.asp"-->
 <!--#include file="../models/brands.asp"-->
 <!--#include file="../models/products.asp"-->
@@ -64,7 +64,6 @@
                 <a href="../logout.asp" title = 'Đăng xuất' class='extbtn' ><i class = 'lni lni-enter '></i></a>
                 <%
                         End if
-                        Response.codepage = 1252
                 %>
             </div>
         </div>
