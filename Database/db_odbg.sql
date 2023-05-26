@@ -176,3 +176,22 @@ DROP CONSTRAINT d_Status
 
 ALTER TABLE ORDERS
 ALTER COLUMN STATUS INT 
+
+--26/5/23
+DELETE FROM ORDER_ITEMS
+DELETE FROM ORDERS
+DELETE FROM PROMOTION
+
+
+SELECT OBJECT_NAME(f.parent_object_id) AS table_name,
+       COL_NAME(fc.parent_object_id, fc.parent_column_id) AS constraint_column,
+       OBJECT_NAME (f.referenced_object_id) AS referenced_object,
+       COL_NAME(fc.referenced_object_id, fc.referenced_column_id) AS referenced_column,
+       f.name AS foreign_key_name
+FROM sys.foreign_keys AS f
+INNER JOIN sys.foreign_key_columns AS fc ON f.OBJECT_ID = fc.constraint_object_id
+WHERE OBJECT_NAME(f.parent_object_id) = 'orders' AND COL_NAME(fc.parent_object_id, fc.parent_column_id) = 'promotion_id';
+
+ALTER TABLE ORDERS 
+DROP CONSTRAINT FK__ORDERS__PROMOTIO__3E52440B
+
