@@ -352,7 +352,7 @@ end if
           success: function (data) {
             console.log(data),
             alert("Purchase was successfully")
-            window.location.href = localhostAddress;
+            // window.location.href = localhostAddress;
           },
           error: function (e) {
             

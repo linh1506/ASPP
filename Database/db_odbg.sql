@@ -135,6 +135,7 @@ ADD UNIT_PRICE INT
 
 GO
 
+
 CREATE PROC spAddOrders
 	@Total bigint,
 	@CreatedBy int,
@@ -183,6 +184,7 @@ DELETE FROM ORDERS
 DELETE FROM PROMOTION
 
 
+-- chạy lệnh này
 SELECT OBJECT_NAME(f.parent_object_id) AS table_name,
        COL_NAME(fc.parent_object_id, fc.parent_column_id) AS constraint_column,
        OBJECT_NAME (f.referenced_object_id) AS referenced_object,
@@ -192,6 +194,34 @@ FROM sys.foreign_keys AS f
 INNER JOIN sys.foreign_key_columns AS fc ON f.OBJECT_ID = fc.constraint_object_id
 WHERE OBJECT_NAME(f.parent_object_id) = 'orders' AND COL_NAME(fc.parent_object_id, fc.parent_column_id) = 'promotion_id';
 
+--copy kết quả lệnh trên paste vào đây
 ALTER TABLE ORDERS 
 DROP CONSTRAINT FK__ORDERS__PROMOTIO__3E52440B
 
+ALTER TABLE ORDERS
+DROP COLUMN PROMOTION_ID
+
+ALTER TABLE ORDERS
+ADD PROMOTION_VALUE FLOAT
+
+DROP PROC spAddOrders
+
+GO
+CREATE PROC spAddOrders
+	@Total bigint,
+	@CreatedBy int,
+	@PromotionValue float,
+	@Address NVARCHAR(MAX),
+	@Phone char(14),
+	@Name NVARCHAR(31)
+AS
+	BEGIN
+		DECLARE @Result INT
+		Set nocount on
+		INSERT INTO ORDERS VALUES (@Total, GETDATE(), @CreatedBy, @Address, @Phone, @Name, 0, @PromotionValue)
+		SELECT @@IDENTITY as Orders
+		set nocount off
+	END
+
+	select * from orders
+	SELECT * FROM PROMOTION WHERE COUPON_CODE = ''
