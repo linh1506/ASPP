@@ -236,7 +236,9 @@ end if
 
       function sendPromoCode() {
         var promoSelect = document.getElementById("promoValue");
-        var promoText = promoSelect.options[promoSelect.selectedIndex].innerText;
+        var promoText =""
+        if(promoSelect.options[promoSelect.selectedIndex])
+          promoText = promoSelect.options[promoSelect.selectedIndex].innerText;
 
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
