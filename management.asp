@@ -528,7 +528,7 @@
                         <h1 class='content-header'>Quản lý đơn hàng</h1>
                         <!-- <%if (totalRowOrders = 0) then%>
                             <h5>Khum còn cái gì để hiện</h5>
-                        <%else%> -->
+                        <%else%> 
                             <div>
                                 <table class="table table-striped">
                                     <thead class="thead-light">
@@ -601,7 +601,13 @@
                                     </ul>
                                 </nav>
                             </div>
-                        <!-- <%end if%> -->
+                         <%end if%> -->
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+                            <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
+                            <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
+                            <li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
