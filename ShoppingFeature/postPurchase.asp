@@ -10,20 +10,35 @@
 
     address = trim(Request.Form("address"))
 
-    discountCode = trim(Request.Form("discountCode"))
+    discountCode = (Request.Form("discountCode"))
 
     id = CLng(Request.Form("id"))
 
-    dim cmdPrep
-    set cmdPrep = Server.CreateObject("ADODB.Command")
-    cmdPrep.ActiveConnection = connDB
-    cmdPrep.CommandType = 1
-    cmdPrep.commandText = "SELECT * FROM PROMOTION WHERE COUPON_CODE ='" & discountCode & "' and IS_ACTIVE = 1" 
-    set result = cmdPrep.execute
-    if not result.EOF then
-        discountValue = result("DISCOUNT_VALUE")
-    else
-        discountValue = 0
+    ' discountCode = ""
+        
+    ' name = "Son"
+
+    ' phone =  "Son"
+
+    ' address = "Son"
+
+    ' id = 1
+
+    if (discountCode = "") then
+
+            discountValue = 0
+    Else
+        
+        dim cmdPrep
+        set cmdPrep = Server.CreateObject("ADODB.Command")
+        cmdPrep.ActiveConnection = connDB
+        cmdPrep.CommandType = 1
+        cmdPrep.commandText = "SELECT * FROM PROMOTION WHERE COUPON_CODE ='" & discountCode & "' and IS_ACTIVE = 1" 
+        set result = cmdPrep.execute
+        if not result.EOF then
+            discountValue = result("DISCOUNT_VALUE")
+        end if
+
     end if
 
     ' Tính tiền
@@ -32,14 +47,14 @@
     cart = Session("Mycart")
     total = CLng(subTotal(cart, discountValue))
 
-    cmdPrep.commandText = "SELECT ID FROM PROMOTION WHERE COUPON_CODE = '" & discountCode & "'"
-    set result = cmdPrep.execute
-    if not result.EOF then
-        discountId = CLng(result("ID"))
-    end if
+    ' cmdPrep.commandText = "SELECT ID FROM PROMOTION WHERE COUPON_CODE = '" & discountCode & "'"
+    ' set result = cmdPrep.execute
+    ' if not result.EOF then
+    '     discountId = CLng(result("ID"))
+    ' end if
 
-    result.close()
-    set result = Nothing
+    ' result.close()
+    ' set result = Nothing
 
     Set cmd = Server.CreateObject("ADODB.Command")
 
@@ -49,7 +64,7 @@
     .CommandType = 4
     .Parameters("@Total") = total
     .Parameters("@CreatedBy") = id
-    .Parameters("@IdPromotion") = CLng(discountId)
+    .Parameters("@PromotionValue") = discountValue
     .Parameters("@Address") = address
     .Parameters("@Phone") = phone
     .Parameters("@Name") = name
@@ -63,4 +78,6 @@
     Session.Contents.Remove("Mycart")
 
     Response.Write("OK")
+    Response.Write(idOrder)
+
 %>

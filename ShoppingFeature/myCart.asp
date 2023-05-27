@@ -113,10 +113,14 @@ end if
                 <h2>Promo Code:</h2>
               </div>
               <div class="col">
-                <select class="form-select form-select-lg mb-3" id="promoValue" name="promoValue" onChange="payment()">
+                <%
+                  cmdPrep.commandText = "SELECT * FROM PROMOTION WHERE IS_ACTIVE = 1 order by DISCOUNT_VALUE DESC"
+                  set result = cmdPrep.execute
+                %>
+                <select class="form-select form-select-lg mb-3" 
+                  <%if result.EOF then %> onClick="outOfPromotionCode()" <%end if%>
+                  id="promoValue" name="promoValue" onChange="payment()">
                   <% 
-                    cmdPrep.commandText = "SELECT * FROM PROMOTION WHERE IS_ACTIVE = 1 order by DISCOUNT_VALUE DESC"
-                    set result = cmdPrep.execute
                     do while not result.EOF
                   %>
                   <option value="<%=result("DISCOUNT_VALUE")%>"><%=result("COUPON_CODE")%></option>
@@ -163,6 +167,19 @@ end if
     
     <script>
       var localhostAddress = window.location.origin
+
+      <%
+        cmdPrep.commandText = "SELECT * FROM PROMOTION WHERE IS_ACTIVE = 1 order by DISCOUNT_VALUE DESC"
+        set result = cmdPrep.execute
+        if result.EOF then
+      %>
+      function outOfPromotionCode(){
+        notification('out of promotion code now',"var(--bs-orange)")
+      }
+      <% 
+        end if
+        result.close
+      %>
 
       $("#NothingInCart").hide();
 
