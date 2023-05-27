@@ -1,6 +1,8 @@
 <%
 
     Function insertOrderItems(cart, orderID)
+    dim cmdPrep
+    set cmdPrep = Server.CreateObject("ADODB.Command")
     cmdPrep.ActiveConnection = connDB
     cmdPrep.CommandType = 1
         For i = 0 To UBound(cart)-1
