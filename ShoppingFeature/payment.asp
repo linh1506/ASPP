@@ -58,19 +58,18 @@ end if
 dim fullname
 dim phone
 dim address
-if(not isnull(Session("Id")) and Session("Id") <> "") then
-    dim id
-    id = Session("Id")
-    cmdPrep.commandText = "select * from USERS WHERE id = ?"
-    cmdPrep.Parameters(0)=id
-    set result = cmdPrep.execute
-    if not result.EOF then
-        fullname = result("NAME")
-        phone = result("PHONE")
-        address = result("ADDRESS")
-    end if
-    result.close()
+
+dim id
+id = Session("Id")
+cmdPrep.commandText = "select * from USERS WHERE id = ?"
+cmdPrep.Parameters(0)=id
+set result = cmdPrep.execute
+if not result.EOF then
+  fullname = result("NAME")
+  phone = result("PHONE")
+  address = result("ADDRESS")
 end if
+  result.close()
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -326,7 +325,6 @@ end if
     </script>
     
     <!--#include file="../UIcomponents/footer.asp"-->
-
     <script>
       var localhostAddress = window.location.origin
       function payment() {
@@ -334,12 +332,17 @@ end if
         var phone = $("#phone").val().trim();    
         var address = $("#address").val().trim();
 
+        if(name == "" || phone == "" || address == "")
+        {
+          notification('empty info delivery',"var(--bs-orange)")
+          return;
+        }
         var dataPurchase = {
           name: name,
           phone: phone,
           address: address,
           discountCode: "<%=discountCode%>",
-          id: <% if (IsNull(Session("ID")) or Session("Id") = "") then %> <%=0%> <%else%> <%=Session("ID")%> <%end if%>
+          id:  <%=Session("Id")%> 
         }
 
         console.log(dataPurchase)
@@ -352,7 +355,7 @@ end if
           success: function (data) {
             console.log(data),
             alert("Purchase was successfully")
-            // window.location.href = localhostAddress;
+            window.location.href = localhostAddress;
           },
           error: function (e) {
             
