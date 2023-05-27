@@ -4,6 +4,10 @@
 <%
 Set listProductInCart = Server.CreateObject("Scripting.Dictionary")
 dim view1,view2
+dim cmdPrep, result
+set cmdPrep = Server.CreateObject("ADODB.Command")
+cmdPrep.ActiveConnection = connDB
+cmdPrep.CommandType = 1
 if (not isempty(Session("Mycart"))) then 
     view1 = "none-div"
     view2 = "display-div"
@@ -16,12 +20,6 @@ if (not isempty(Session("Mycart"))) then
       'Get id of each item
       dim idProduct
       idProduct = cart(i)(0)
-
-      dim cmdPrep, result
-      set cmdPrep = Server.CreateObject("ADODB.Command")
-      cmdPrep.ActiveConnection = connDB
-      cmdPrep.CommandType = 1
-        
       cmdPrep.commandText = "SELECT ID , NAME , IS_AVAILABLE, PRICE , JSON_VALUE(PRODUCT_IMAGE, '$.""0""') AS IMG FROM PRODUCT WHERE ID=" & idProduct
       set result = cmdPrep.execute
       set product = New product_cart
@@ -64,7 +62,7 @@ end if
     
     <!--#include file="../UIcomponents/ShoppingHeader.asp"-->
     <!--#include file="../UIcomponents/notification.asp"-->
-
+    
     <nav style="z-index:1" class = 'navbar sticky-top navbar-light navbar-custom flex-row'>
       <div class="d-flex flex-row container-custom">
           <a class ="nav-link active" href="#"  onclick="history.go(-1); return false;"><i style="font-size:20px" class="lni lni-arrow-left"></i></a>
@@ -109,25 +107,49 @@ end if
               </div>
             <% next %>
           </div>
-          <div class="col-4" id="SubTotalElement"> 
-            <form class="row">
+          <div class="col-4 mt-5" id="SubTotalElement">
+            <div class="row">
               <div class="col">
-                <label for="inputPassword2" class="visually-hidden">Promo Code</label>
-                  <input type="text" class="form-control" id="promocode" placeholder="Promocode">
+                <h2>Promo Code:</h2>
               </div>
-              <div class="col-4">
-                <button type="submit" class="btn btn-primary mb-3">Apply</button>
-              </div>
-            </form>
-            <!-- Tính giá tiền của tất cả sản phẩm trong giỏ hàng -->
-            <div class="d-flex justify-content-between mb-5">
-              <h5 class="text-uppercase">Total price:</h5>
-              <div style="justify-content:center">
-                <p id="SubTotal"></p>
+              <div class="col">
+                <select class="form-select form-select-lg mb-3" id="promoValue" name="promoValue" onChange="payment()">
+                  <% 
+                    cmdPrep.commandText = "SELECT * FROM PROMOTION WHERE IS_ACTIVE = 1 order by DISCOUNT_VALUE DESC"
+                    set result = cmdPrep.execute
+                    do while not result.EOF
+                  %>
+                  <option value="<%=result("DISCOUNT_VALUE")%>"><%=result("COUPON_CODE")%></option>
+                  <% 
+                    result.movenext
+                    loop
+                    result.close
+                  %>
+                </select>
               </div>
             </div>
+            <hr class="my-4">
+            <!-- Tính giá tiền của tất cả sản phẩm trong giỏ hàng -->
+            <div class="d-flex justify-content-between mb-5">
+                <h5 class="text-uppercase">Total price:</h5>
+                <div id="SubTotalElement" style="justify-content:center">
+                    <p id="SubTotal"></p>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between mb-5">
+                <h5 class="text-uppercase">Discount price:</h5>
+                <div id="DiscountElement" style="justify-content:center">
+                    <p id="Discount"></p>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between mb-5">
+                <h5 class="text-uppercase">Last total price:</h5>
+                <div id="LastTotalElement" style="justify-content:center">
+                    <p id="LastTotal"></p>
+                </div>
+            </div>
             <div class="row">
-              <button type="button" class="btn btn-outline-dark btn-lg" data-mdb-ripple-color="dark">Purchase</button>
+              <button type="button" onClick="sendPromoCode()" class="btn btn-outline-dark btn-lg" data-mdb-ripple-color="dark">Purchase</button>
             </div>
           </div>
         <% end if %>
@@ -183,6 +205,7 @@ end if
         xmlhttp.open("GET", localhostAddress + "/ShoppingFeature/adjustQuantity.asp?idProduct="+ProductId+"&size="+Size+"&quantity="+Quantity, true);
         xmlhttp.send();
         GetSubTotal()
+        payment()
         checkNullInCart()
       }
 
@@ -198,8 +221,32 @@ end if
         }
         document.getElementById("SubTotal").innerHTML = subTotal + "đ"
       }
+
+      function payment() {
+          var promoValue = document.querySelector('select[name="promoValue"]').value;
+          var subtotal = parseFloat(document.getElementById("SubTotal").innerText.replace("đ", ""));
+          var discount = Math.ceil(promoValue * subtotal);
+          var total = subtotal - discount;
+          document.getElementById("Discount").innerText = "- " +  discount+"đ";
+          document.getElementById("LastTotal").innerText = total+"đ";
+      }
       
       GetSubTotal()
+      payment()
+
+      function sendPromoCode() {
+        var promoSelect = document.getElementById("promoValue");
+        var promoText = promoSelect.options[promoSelect.selectedIndex].innerText;
+
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            window.location.href = "/ShoppingFeature/payment.asp";
+          }
+        };
+        xhr.open("POST", "setPromoCodeToSession.asp?promoCode="+promoText, true);
+        xhr.send();
+      }
     </script>
     <!--#include file="../UIcomponents/footer.asp"-->
   </body>

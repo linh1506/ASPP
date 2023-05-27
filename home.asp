@@ -1,3 +1,4 @@
+<!--#include file="./connect.asp"-->
 <!DOCTYPE html>
 <html>
   <head>
@@ -5,10 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta charset='utf-8' /> <meta HTTP-EQUIV="Pragma" CONTENT="no-cache"> <meta HTTP-EQUIV="Expires" CONTENT="-1"> <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <link
-      rel="stylesheet"
-      href="./bootstrap-5.2.0-dist/css/bootstrap.min.css"
-    />
+    <link rel="stylesheet" href="./bootstrap-5.2.0-dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/Resources/swiper-9.2.4/package/swiper-bundle.min.css">
     <link rel="stylesheet" href="./UIcomponents/ShoppingHeader.css">
     <link rel="stylesheet" href="./home.css">
@@ -19,22 +17,23 @@
   </head>
   <body>
     <!--#include file="./UIcomponents/pageLoader.asp"-->
-    <!--#include file="./connect.asp"-->
     <!--#include file="./UIcomponents/ShoppingHeader.asp"-->
     <!--#include file="./UIcomponents/product_card.asp"-->
     <!--#include file="./UIcomponents/category_card.asp"-->
+    <!--#include file="./models/gallery.asp"-->
       <div class="container-fluid-custom">
-        <div class="shop-banner"><img src="/Resources/banner3.png" alt=""></div>
+        <div class="shop-banner"><img src="<%=Banner%>" alt=""></div>
+        <% if Gallery.Count >0 Then %>
         <div class="swiper slideshow">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/92a774157325607.63768ffc717ea.jpg" alt=""></div>
-                <div class="swiper-slide"><img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/c5f87e147486429.62c39ec35694d.jpg" alt=""></div>
-                <div class="swiper-slide"><img src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/26fe78134261997.61d2c6bb27ecc.jpg" alt=""></div>
-                <div class="swiper-slide"><img src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/b7f369150879029.630261a7c5e2f.jpg" alt=""></div>
+              <% for each item in Gallery %>
+                <div class="swiper-slide"><img src="<%= Gallery(item) %>" alt=""></div>
+              <% next %>
             </div>
             <div class="swiper-button-next slide_btn"></div>
             <div class="swiper-button-prev slide_btn"></div>
         </div>
+        <%End if%>
       </div>
       <div class="container">
         <div class="category-display">
@@ -79,7 +78,7 @@
                 'IN ra danh sách product mới
                 for each item in featuredProduct
                   %> 
-                    <a class="new-product" href="/ShoppingFeature/productDetail.asp?id=<%=featuredProduct(item).Id%>">
+                    <a class="new-product" href="/Security/productPageHandler.asp?id=<%=featuredProduct(item).Id%>">
                     <%displayProduct featuredProduct(item)%>
                     </a>
                   <%next%>

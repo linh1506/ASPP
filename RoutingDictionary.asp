@@ -15,6 +15,14 @@
             Parent = "Management"
             CurrentPage = "Add promotion code"
             ParentUrl = "../management.asp"
+        case "bannerupload"
+            Parent = "Management"
+            CurrentPage = "Upload Store's Banner"
+            ParentUrl = "/management.asp"
+        case "galleryupload"
+            Parent = "Management"
+            CurrentPage = "Upload Store's Gallery"
+            ParentUrl = "/management.asp"
     end select
 
         'Readable version

@@ -1,0 +1,29 @@
+{
+
+		"Open Script":{
+			"prefix": "os",
+			"body": ["<%\n\t$1\n%>",],
+			"description": "create scripts"
+		},
+		"Include File":{
+			"prefix": "inc",
+			"body": ["<!--#include file=\"$1\"-->",],
+			"description": "include file"
+		},
+		"Reverse Open Script":{
+			"prefix": "ros",
+			"body": ["%>\n\t$1\n<%",],
+			"description": "exit out of current script batch and resume"
+		},
+		"Inline Open Script":{
+			"prefix": "ios",
+			"body": ["<%$1%>",],
+			"description": "create scripts"
+		},
+		"Inline Reverse Open Script":{
+			"prefix": "iros",
+			"body": ["%>$1<%",],
+			"description": "exit out of current script batch and resume"
+		},
+
+}

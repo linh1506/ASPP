@@ -20,11 +20,55 @@
         <h3>Tất cả sản phẩm</h3>
     </div>
     <br>
+    <div>
+        Which brand is your choice ?
+        <br>
+        <select name="filterBrand" id="filterBrand">
+            <option value="0">All</option>
+            <%
+                dim cmdPrep
+                Set cmdPrep = Server.CreateObject("ADODB.Command")
+                cmdPrep.ActiveConnection = connDB
+                cmdPrep.CommandType = 1
+                cmdPrep.Prepared = True
+                cmdPrep.CommandText = "SELECT * FROM BRAND"
+                Set Result = cmdPrep.execute 
+                do while not Result.EOF
+            %>
+                    <option value="<%=Result("ID")%>"><%=Result("NAME")%></option>
+            <%
+                    Result.MoveNext
+                loop
+                Result.Close
+                set Result = nothing
+            %>
+        </select>
+    </div>
     <div id="prd" class="container container-list">
     </div>
     
 <script>
     var localhostAddress = window.location.origin;
+
+    function render(object) {
+        let htmlResult = "";
+            object.list.forEach(item => {
+                htmlResult += "\
+                <div class=\"itemProduct\">\
+                    <div class=\"ic\">\
+                        <a href=\"productDetail.asp?id="+item.id+"\">\
+                            <img class=\"img-card\" src="+item.img+">\
+                        </a>\
+                    </div>\
+                    <div class=\"cd\">\
+                        <h3>"+item.name+"</h3>\
+                        <h5>"+item.price+" đ</h5>\
+                    </div>\
+                </div>";
+            });
+        $('#prd').append(htmlResult);
+    }
+
     function getList() {
         $.ajax({
             url: localhostAddress + "/ShoppingFeature/showAllProducts.asp",
@@ -32,27 +76,31 @@
             success: function (result) {
                 var obj = result
                 console.log(obj);
-                let htmlResult = "";
-                obj.list.forEach(item => {
-                    htmlResult += "\
-                    <div>\
-                        <div class=\"ic\">\
-                            <a href=\"productDetail.asp?id="+item.id+"\">\
-                                <img class=\"img-card\" src="+item.img+">\
-                            </a>\
-                        </div>\
-                        <div class=\"cd\">\
-                            <h3>"+item.name+"</h3>\
-                            <h5>"+item.price+" đ</h5>\
-                        </div>\
-                    </div>";
-                });
-                $('#prd').append(htmlResult);
+                render(obj);
+            }
+        })
+    }
+    function filter(brandId, categoryId) {
+        $.ajax({
+            url: localhostAddress + "/ShoppingFeature/showAllProducts.asp?brandid=" + brandId,
+            method: "GET",
+            success: function (result) {
+                var obj = result
+                console.log(obj);
+                $(".itemProduct").remove();
+                render(obj);
             }
         })
     }
     $(function () {
         getList();
+    });
+    $(document).ready(function() {
+        $("#filterBrand").change(function() {
+            var selectedOption = $(this).children("option:selected").val();
+            console.log(selectedOption);
+            filter(selectedOption, 0);
+         });
     });
 </script>
 </body>

@@ -1,6 +1,6 @@
+<!--#include file="../connect.asp"-->
 <!--#include file="../Security/security.asp"-->
 
-<!--#include file="../connect.asp"-->
 <!DOCTYPE html>
 <html>
   <head>
@@ -13,6 +13,7 @@
     <link rel="stylesheet" href='../UIcomponents/header.css'>
     <link rel="stylesheet" href='../UIcomponents/notification.css'>
     <script src="../Jquery/jquery-3.6.1.min.js"></script>
+    <script src="/Resources/ckeditor/ckeditor.js"></script>
   </head>
   <body>
     <!--#include file="../UIcomponents/header.asp"-->
@@ -114,6 +115,9 @@
             <button type="submit" class="btn btn-success submit-btn" style="display:block;">Submit</button>
         </form>
         <script>
+            window.onload = function() {
+                CKEDITOR.replace( 'description' );
+            };
             function removeRow(button) {
                 var index = document.querySelectorAll(".size-quantity-inputs").length;
                 console.log(index);

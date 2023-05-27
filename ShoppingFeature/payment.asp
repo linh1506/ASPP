@@ -46,7 +46,7 @@ end if
 'lay gia tri giam gia
 dim discountValue,discountCode
 discountCode = Session("PromotionCode")
-cmdPrep.commandText = "SELECT * FROM PROMOTION WHERE COUPON_CODE ='" &discountCode&"'" 
+cmdPrep.commandText = "SELECT * FROM PROMOTION WHERE COUPON_CODE ='" &discountCode&"' and IS_ACTIVE = 1" 
 set result = cmdPrep.execute
 if not result.EOF then
   discountValue = result("DISCOUNT_VALUE")
@@ -73,12 +73,11 @@ if(not isnull(Session("Id")) and Session("Id") <> "") then
 end if
 %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta charset='utf-8' /> <meta HTTP-EQUIV="Pragma" CONTENT="no-cache"> <meta HTTP-EQUIV="Expires" CONTENT="-1"> <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link
       rel="stylesheet"
       href="../bootstrap-5.2.0-dist/css/bootstrap.min.css"
@@ -152,15 +151,15 @@ end if
             <table>
                 <tr>
                     <td><label for="name">FullName:</label></td>
-                    <td><input type="text" id="name" requied value="<%=fullname%>"></td>
+                    <td><input type="text" id="name" requied value="<%=trim(fullname)%>"></td>
                 </tr>
                 <tr>
                     <td><label for="address">Address:</label></td>
-                    <td><input type="text" id="address" requied value="<%=address%>"></td>
+                    <td><input type="text" id="address" requied value="<%=trim(address)%>"></td>
                 </tr>
                 <tr>
                     <td><label for="phone">Phone:</label></td>
-                    <td><input type="text" id="phone" requied value="<%=phone%>"></td>
+                    <td><input type="text" id="phone" requied value="<%=trim(phone)%>"></td>
                 </tr>
             </table>
         </div>
@@ -302,7 +301,7 @@ end if
             subTotal += (parseInt(document.getElementById("PriceItem"+item).innerHTML) * parseInt(document.getElementById("Quantity"+item).value))
           }
         }
-        var discouptPrice = subTotal * <%=discountValue%>
+        var discouptPrice = Math.ceil(subTotal * <%=discountValue%>)
         document.getElementById("Discount").innerHTML = "- " + discouptPrice + "đ"
       }
 
@@ -316,7 +315,7 @@ end if
             subTotal += (parseInt(document.getElementById("PriceItem"+item).innerHTML) * parseInt(document.getElementById("Quantity"+item).value))
           }
         }
-        var lastPrice = subTotal * (1 - <%=discountValue%>)
+        var lastPrice = Math.floor(subTotal * (1 - <%=discountValue%>))
         document.getElementById("LastTotal").innerHTML = lastPrice + "đ"
       }
       
@@ -329,27 +328,37 @@ end if
     <!--#include file="../UIcomponents/footer.asp"-->
 
     <script>
-        function payment() {
-          var name = document.getElementById("name").value.trim();
-          var phone = document.getElementById("phone").value.trim()
-          var address = document.getElementById("address").value.trim()
-          if(name.length == 0 || phone.length ==0|| address.length == 0){
-              notification('Please enter enough information to continue',"var(--bs-orange)")
-              return;
-            }
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-              alert("Your purchase has been acknowledged, thank you and keep shopping!")
-              document.getElementById("gohome").click()
-            }
-            else{
-                notification(this.responseText,"var(--bs-orange)")
-            }
-        };
-        xmlhttp.open("GET", "", true);
-        xmlhttp.send();
-    }
+      var localhostAddress = window.location.origin
+      function payment() {
+        var name = $("#name").val().trim();
+        var phone = $("#phone").val().trim();    
+        var address = $("#address").val().trim();
+
+        var dataPurchase = {
+          name: name,
+          phone: phone,
+          address: address,
+          discountCode: "<%=discountCode%>",
+          id: <% if (IsNull(Session("ID")) or Session("Id") = "") then %> <%=0%> <%else%> <%=Session("ID")%> <%end if%>
+        }
+
+        console.log(dataPurchase)
+
+        $.ajax({
+          type: "POST",
+          url: localhostAddress + "/ShoppingFeature/postPurchase.asp",
+          data: dataPurchase,
+          timeout: 600000,
+          success: function (data) {
+            console.log(data),
+            alert("Purchase was successfully")
+            window.location.href = localhostAddress;
+          },
+          error: function (e) {
+            
+          }
+        });
+      }
     </script>
   </body>
 </html>

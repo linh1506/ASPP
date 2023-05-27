@@ -1,10 +1,10 @@
+<!--#include file="../connect.asp"-->
 <%
   Dim errorcode
   errorcode = Request.QueryString("code")
 %>
 <!DOCTYPE html>
 <html lang="en">
-<!--#include file="../connect.asp"-->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,8 +26,6 @@
     <link rel="stylesheet" href="/Resources/web-font-files/lineicons.css">
 </head>
 <body>
-    <!--#include file="../models/category.asp"-->
-    <!--#include file="../models/brands.asp"-->
     <!--#include file="../UIcomponents/ShoppingHeader.asp"-->
     <div class="page"> 
         <h1 id="pageheader" >ERROR 404: Something definitely went Wrong <span>🤮</span></h1>

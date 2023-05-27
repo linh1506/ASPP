@@ -1,5 +1,5 @@
-<!--#include file="../Security/security.asp"-->
 <!--#include file="../connect.asp"-->
+<!--#include file="../Security/security.asp"-->
 <%
     if (Request.ServerVariables("REQUEST_METHOD") = "POST") THEN
         name = Request.form("nameBrand")

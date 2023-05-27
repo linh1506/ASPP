@@ -1,11 +1,19 @@
 @import url(/palette.css);
+
 @font-face {
-    font-family: quicksand;
-    src: url(/Resources/QuickSand/Quicksand-SemiBold.ttf);
+  font-family: quicksand;
+  src: url(/Resources/QuickSand/Quicksand-SemiBold.ttf);
 }
-@media (min-width: 1200px), (min-width: 960px) and (-webkit-device-pixel-ratio: 1.25) {
+
+@media (min-width: 1200px),
+(min-width: 960px) and (-webkit-device-pixel-ratio: 1.25) {
   /* Add Styles Here */
 }
+
+body {
+  overflow-x: hidden;
+}
+
 body {
   width: 100%;
   min-height: 100vh;
@@ -13,62 +21,73 @@ body {
   background: var(--whiteLowContrast);
   margin: 0;
   padding: 0;
-  display:grid;
-  grid-template-rows:auto 1fr auto;
-  grid-template-columns:100%;
-  min-height:100vh;
-  min-height:100svh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
 }
-.navbar-custom{
+
+.navbar-custom {
   height: 10vh;
   background-color: var(--primary);
 }
-.container-custom{
+
+.container-custom {
   height: 100%;
   align-items: center;
 }
-.lni-arrow-left{
+
+.lni-arrow-left {
   color: var(--secondary);
   font-weight: bold;
   margin-left: 3vw;
   transition: all .2s;
 }
-.page-address{
+
+.page-address {
   margin-left: 2em;
   display: flex;
   flex-direction: row;
-  gap :.5rem;
+  gap: .5rem;
   align-items: center;
 }
-  .address{
-      font-family: quicksand;
-      font: 600;
-      font-size: 1.3rem;
-      color: var(--secondary);
-      text-decoration: none;
-      transition: all .2s ease;
-  }
-.ft{
+
+.address {
+  font-family: quicksand;
+  font: 600;
+  font-size: 1.3rem;
+  color: var(--secondary);
+  text-decoration: none;
+  transition: all .2s ease;
+}
+
+.ft {
   font-size: 20px;
 }
-.img{
+
+.img {
   width: 100px;
   height: 100px;
 }
-.btn-purchase{
-  background-color:var(--secondary);
+
+.btn-purchase {
+  background-color: var(--secondary);
   color: var(--primary);
 }
-.btn-purchase::hover{
-  background-color:var(--secondary);
+
+.btn-purchase::hover {
+  background-color: var(--secondary);
   color: var(--primary);
   border: 3px solid black;
   border-radius: 5px;
 }
-.btn-delete{
+
+.btn-delete {
   cursor: pointer;
 }
-#NothingInCart{
+
+#NothingInCart {
   font-family: quicksand;
   font-size: 1.2rem;
 }

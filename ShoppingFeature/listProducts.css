@@ -26,9 +26,9 @@ body{
     flex-wrap: wrap;
 }
 .container-list > div {
-    width: 45vh;
+    width: 42vh;
 	height: 60vh;
-    max-width: 47vh;
+    max-width: 43vh;
     margin: 1vh 5vh 1vh 0vh;
     text-align: center;
     font-size: 30px;
@@ -40,6 +40,7 @@ body{
 .ic{
     width: 100%;
     height: 75%;
+    border-bottom: var(--whiteLowContrast) 1px solid;
 }
 .img-card{
     width: 100%;
