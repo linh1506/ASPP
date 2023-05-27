@@ -69,7 +69,7 @@
         set Result = nothing
 %>  
     <div class="container-custom">
-        <div class="account__settings">
+        <div id='account' class="account__settings">
             <h1>Account Information:</h1>
             <form action="" method="POST">
                 Email: <%=cust.Email%><br>
@@ -88,6 +88,10 @@
                 <button class="btn btn-danger" type="submit">change password</button>
             </form>
             </div>
+        </div>
+
+        <div id='orders' class="orders account__settings">
+            <h1>My Orders</h1>
         </div>
     </div>
 <%end if%>
