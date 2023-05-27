@@ -1,3 +1,4 @@
+<% 'Response.codepage = 65001 %>
 <!--#include file="../models/category.asp"-->
 <!--#include file="../models/brands.asp"-->
 <!--#include file="../models/products.asp"-->
