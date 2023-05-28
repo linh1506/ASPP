@@ -44,6 +44,25 @@
             %>
         </select>
     </div>
+    <div>
+        Which category is your choice ?
+        <br>
+        <select name="filterCategory" id="filterCategory">
+            <option value="0">All</option>
+            <%
+                cmdPrep.CommandText = "SELECT * FROM CATEGORY"
+                Set Result = cmdPrep.execute 
+                do while not Result.EOF
+            %>
+                    <option value="<%=Result("ID")%>"><%=Result("NAME")%></option>
+            <%
+                    Result.MoveNext
+                loop
+                Result.Close
+                set Result = nothing
+            %>
+        </select>
+    </div>
     <div id="prd" class="container container-list">
     </div>
     
@@ -82,7 +101,7 @@
     }
     function filter(brandId, categoryId) {
         $.ajax({
-            url: localhostAddress + "/ShoppingFeature/showAllProducts.asp?brandid=" + brandId,
+            url: localhostAddress + "/ShoppingFeature/showAllProducts.asp?brandid=" + brandId + "&categoryid=" + categoryId,
             method: "GET",
             success: function (result) {
                 var obj = result
@@ -97,10 +116,21 @@
     });
     $(document).ready(function() {
         $("#filterBrand").change(function() {
-            var selectedOption = $(this).children("option:selected").val();
-            console.log(selectedOption);
-            filter(selectedOption, 0);
-         });
+            var brandSelected = $(this).children("option:selected").val();
+            console.log("Brand " + brandSelected);
+            var categorySelected = $("#filterCategory").children("option:selected").val();
+            console.log("Category " + categorySelected);
+
+            filter(brandSelected, categorySelected);
+        });
+        $("#filterCategory").change(function() {
+            var categorySelected = $(this).children("option:selected").val();
+            console.log("Category " + categorySelected);
+            var brandSelected = $("#filterBrand").children("option:selected").val();
+            console.log("Brand " + brandSelected);
+
+            filter(brandSelected, categorySelected);
+        });
     });
 </script>
 </body>
