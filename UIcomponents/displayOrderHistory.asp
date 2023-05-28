@@ -1,5 +1,5 @@
 <%  
-    set userOrder = getUserOrderList
+    set userOrder = getOrderHistory
     for each item in userOrder
 %>      <div class="order">
             <div class="order__header">
@@ -37,8 +37,3 @@
             </div>
         </div>
     <%next%>
-    <style>
-</style>
-    <script>
-
-    </script>

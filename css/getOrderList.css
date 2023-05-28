@@ -11,6 +11,7 @@
   max-width: 100%;
   text-overflow: ellipsis;
   transition: all 0.2s ease;
+  scroll-behavior: smooth;
 }
 .order:hover {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
@@ -21,6 +22,30 @@
 }
 .order__date {
   font-style: italic;
+}
+.order__detail {
+  display: none;
+}
+.order__customer {
+  position: relative;
+  padding: 1em 2em;
+  box-sizing: border-box;
+  background-color: rgba(228, 227, 227, 0.925);
+  border-radius: 5px;
+}
+.order__customer p {
+  margin: 0;
+}
+.order__customer .payment-icon {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin-top: auto;
+  margin-bottom: auto;
+  right: 5%;
+  font-size: 3em;
+  width: fit-content;
+  height: fit-content;
 }
 .order__status {
   font-size: 3.6em;
@@ -39,9 +64,13 @@
 .order__status--red {
   color: var(--red);
 }
+.order__pricing p {
+  width: fit-content;
+  color: #00FF00;
+}
 .order__statusText {
   margin: 0;
-  font-size: 1.1em;
+  font-size: 1.2em;
   padding-bottom: 1em;
 }
 .order__itemSize {
@@ -52,6 +81,7 @@
 }
 .order ul {
   margin: 0;
+  margin-top: 0.5em;
   list-style-type: none;
 }
 .order ul li {
@@ -59,4 +89,24 @@
   display: flex;
   font-size: 1.2em;
   flex-wrap: wrap;
+  align-items: center;
+}
+.order ul li p {
+  margin: 0;
+}
+
+.badge {
+  display: grid;
+  place-items: center;
+  font-size: 1em;
+}
+.badge--red {
+  background-color: var(--accent);
+}
+.badge--green {
+  background-color: #228B22;
+}
+
+.list-group-item {
+  background-color: transparent;
 }

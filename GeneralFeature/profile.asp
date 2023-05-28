@@ -25,16 +25,16 @@
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li>
-                <a href="#" class="sidebar-item nav-link link-dark active" aria-current="page"><i class="lni lni-restaurant"></i> <p>My account</p> </a>
+                <a href="#" class="sidebar-item nav-link link-dark" aria-current="page" onclick="displayTab(0)" ><i class="lni lni-restaurant"></i> <p>My account</p> </a>
             </li>
             <li>
                 <a href="/ShoppingFeature/myCart.asp" class="sidebar-item nav-link link-dark"><i class="lni lni-cart-full"></i> <p>My Cart</p></a>
             </li>
             <li>
-                <a href="#" class="sidebar-item nav-link link-dark"><i class="lni lni-ticket"></i> <p>Orders</p></a>
+                <a href="#" class="sidebar-item nav-link link-dark active" onclick="displayTab(1)"><i class="lni lni-ticket"></i> <p>Orders</p></a>
             </li>
             <li>
-                <a href="#" class="sidebar-item nav-link link-dark"><i class="lni lni-library"></i> <p>Purchase history</p></a>
+                <a href="#" class="sidebar-item nav-link link-dark" onclick="displayTab(2)"><i class="lni lni-library"></i> <p>Purchase history</p></a>
             </li>
         </ul>
   </div>
@@ -92,9 +92,18 @@
             </div>
         </div>
 
-        <div id='orders' class="orderList account__settings">
-            <h1>My Orders</h1>
-            <!--#include virtual="/UIcomponents/displayTrackOrder.asp"-->
+        <div id='orders' class="order_wrapper account__settings">
+            <div class="orderList">
+                <h1>My Orders</h1>
+                <!--#include virtual="/UIcomponents/displayTrackOrder.asp"-->
+            </div>
+        </div>
+
+        <div id='history' class="order_wrapper account__settings">
+            <div class="orderList">
+                <h1>My Purchase History</h1>
+                <!--#include virtual="/UIcomponents/displayOrderHistory.asp"-->
+            </div>
         </div>
     </div>
 <%end if%>
@@ -114,6 +123,30 @@
       $('.sidebar-item').removeClass("active")
       $(this).addClass("active");
     })
+    //Script for order items
+    $(".showbtn").click(function () {
+        $(this).toggleClass('rotate');
+        $(this).closest(".order__header").next().next().slideToggle(300)
+    })
+    $(document).ready(function() {
+        $('.account__settings').hide()
+        $('.account__settings:eq(1)').show()
+      $(".current_format").each(function() {
+        var text = $(this).text();
+        var formattedText = formatCurrencyVND(text);
+        $(this).text(formattedText);
+      });
+
+      function formatCurrencyVND(amount) {
+        return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(amount)
+      }
+    });
+</script>
+<script>
+    const displayTab = (tab) => {
+        $('.account__settings').hide()
+        $('.account__settings:eq('+tab+')').show()
+    }
 </script>
 <script src="../bootstrap-5.2.0-dist/js/bootstrap.min.js"></script>
 </body>

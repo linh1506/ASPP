@@ -19,13 +19,18 @@
     End Function
     
     Public Function getUserOrderList
-        dim seq
+        dim seq,sql
+        if userId = 1 then
+            sql = "select * from ORDERS where CREATED_BY = 1 and STATUS not in(2) and RECEIVER_PHONE = "&session("trackerPhone")&" and ID ="&session("trackerId")
+        else
+            sql = "select * from ORDERS where CREATED_BY = "&userId&" and STATUS not in(2)"
+        end if
         set OrderList = Server.CreateObject("Scripting.Dictionary")
         Set cmdPrep = Server.CreateObject("ADODB.Command")
         cmdPrep.ActiveConnection = connDB
         cmdPrep.CommandType = 1
         cmdPrep.Prepared = True
-        cmdPrep.commandText = "select * from ORDERS where CREATED_BY = "&userId&" and STATUS not in(2,3)"
+        cmdPrep.commandText = sql
         Set result = cmdPrep.execute
         seq = 0 
         do While not result.EOF
@@ -46,6 +51,35 @@
         set getUserOrderList = OrderList
     End Function
 
+    Public Function getOrderHistory
+        dim seq,sql
+        sql = "select * from ORDERS where CREATED_BY = "&userId&" and STATUS = 2"
+        set OrderList = Server.CreateObject("Scripting.Dictionary")
+        Set cmdPrep = Server.CreateObject("ADODB.Command")
+        cmdPrep.ActiveConnection = connDB
+        cmdPrep.CommandType = 1
+        cmdPrep.Prepared = True
+        cmdPrep.commandText = sql
+        Set result = cmdPrep.execute
+        seq = 0 
+        do While not result.EOF
+            seq=seq+1
+            set order = new orders
+            order.Id = result("ID")
+            order.Amount = result("AMOUNT")
+            order.CreateAt = result("CREATED_AT")
+            order.Address =result("RECEIVER_ADDRESS")
+            order.Phone = result("RECEIVER_PHONE")
+            order.Name = result("RECEIVER_NAME")
+            order.Status = result("STATUS")
+            order.PromoValue = result("PROMOTION_VALUE")
+            OrderList.add seq,order
+            result.MoveNext
+        Loop
+        set result = nothing
+        set getOrderHistory = OrderList
+    End Function
+
     Public Function getOrderItems(orderId)
         dim seq
         set OrderItems = Server.CreateObject("Scripting.Dictionary")
@@ -53,7 +87,7 @@
         cmdPrep.ActiveConnection = connDB
         cmdPrep.CommandType = 1
         cmdPrep.Prepared = True
-        cmdPrep.commandText = "SELECT o.*, p.Name AS ProductName FROM (SELECT ORDER_ITEMS.PRODUCT_ID, ORDER_ITEMS.QUANTITY, ORDER_ITEMS.SIZE,ORDER_ITEMS.UNIT_PRICE FROM ORDER_ITEMS JOIN ORDERS ON ORDER_ITEMS.ORDER_ID = ORDERS.ID WHERE ORDERS.Created_By = "&userId&" and ORDERS.STATUS not in(2,3) and ORDERS.ID = "&orderId&") as o JOIN product p ON o.PRODUCT_ID = p.ID;"
+        cmdPrep.commandText = "SELECT o.*, p.Name AS ProductName FROM (SELECT ORDER_ITEMS.PRODUCT_ID, ORDER_ITEMS.QUANTITY, ORDER_ITEMS.SIZE,ORDER_ITEMS.UNIT_PRICE FROM ORDER_ITEMS JOIN ORDERS ON ORDER_ITEMS.ORDER_ID = ORDERS.ID WHERE ORDERS.Created_By = "&userId&" and ORDERS.ID = "&orderId&") as o JOIN product p ON o.PRODUCT_ID = p.ID;" 'remove and ORDERS.STATUS not in(2,3)
         Set result = cmdPrep.execute
         seq = 0 
         do While not result.EOF
@@ -95,8 +129,4 @@
                 getOrderStatusText = "Order Cancelled, please contact us for more info"
         end select
     End Function    
-
-    Sub LoggedInUser_DisplayOrder
-        ' Do Something...
-    End Sub
 %>
