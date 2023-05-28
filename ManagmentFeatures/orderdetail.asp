@@ -1,6 +1,9 @@
 <!--#include file="../connect.asp"-->
 <!--#include file="../models/order_items.asp" -->
-<%
+<%  
+    If (isnull(Session("email")) OR TRIM(Session("email")) = "") Then
+        response.redirect("../login.asp")
+    else
     dim id
     id = Request.QueryString("id")
     If (isnull(id) OR trim(id) = "") then 
@@ -34,6 +37,7 @@
         Result.Close
         set Result = nothing
     End If
+    end if
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -124,6 +128,10 @@
                             <p><%=Result("AMOUNT")%></p>
                         </div>
                     </div>
+                    <%  
+                        Result.close
+                        set Result = nothing
+                    %>
                 </div>
             </div>
         </div>
