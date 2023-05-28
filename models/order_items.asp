@@ -2,6 +2,7 @@
     Class order_items
     
         Private p_Id
+        Private p_ProductName
         Private p_ProductID
         Private p_OrderID
         Private p_CreateAt
@@ -15,6 +16,13 @@
         End Property
         Public Property Let Id(Value)
             p_Id = Value
+        End Property
+
+        Public Property Get ProductName()
+            ProductName = p_ProductName
+        End Property
+        Public Property Let ProductName(Value)
+            p_ProductName = Value
         End Property
 
         Public Property Get ProductID()

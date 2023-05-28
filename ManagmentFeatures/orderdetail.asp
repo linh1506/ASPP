@@ -12,7 +12,7 @@
         cmdPrep.ActiveConnection = connDB
         cmdPrep.CommandType = 1
         cmdPrep.Prepared = True
-        cmdPrep.commandText = "select * from ORDER_ITEMS where ORDER_ID = ?"
+        cmdPrep.commandText = "select * from ORDER_ITEMS inner join PRODUCT on ORDER_ITEMS.PRODUCT_ID = PRODUCT.ID where ORDER_ID = ?"
         cmdPrep.Parameters(0)=id
         set Result = cmdPrep.execute
         seq = 0
@@ -20,6 +20,7 @@
         seq = seq + 1
         set orderitem = New order_items
         orderitem.Id = Result("ID")
+        orderitem.ProductName = Result("NAME")
         orderitem.ProductID = Result("PRODUCT_ID")
         orderitem.OrderID = Result("ORDER_ID")
         orderitem.CreateAt = Result("CREATED_AT")
@@ -57,7 +58,7 @@
           </div>
       </div>
     </nav>
-    <div style="padding: 0 10% 0 10%" class="container">
+    <div class="container">
         <div class="container-sm" >
             <div class="row">
                 <div class="col-8">
@@ -86,8 +87,10 @@
                     <br>
                     <% for each item in listOrderItems %>
                         <div class="row mb-4 d-flex justify-content-between align-items-center">
-                            <div class="col-3">
-                                <h6 class="text-black mb-0"><%=listOrderItems(item).ProductID%></h6>
+                            <div class="col-2">
+                                <a style="color:black ; text-decoration:none" href="../ShoppingFeature/productDetail.asp?id=<%=listOrderItems(item).ProductID%>">
+                                    <h6 class="text-black mb-0"><%=listOrderItems(item).ProductName%></h6>
+                                </a>
                             </div>
                             <div class="col">
                                 <h6 class="text-black mb-0">Size: <%=listOrderItems(item).Size%></h6>
@@ -101,7 +104,7 @@
                             <div class="col-2">
                                 <h6 class="text-black mb-0"><%=listOrderItems(item).UnitPrice%> VNĐ</h6>
                             </div>
-                            <div class="col-2">
+                            <div class="col-3">
                                 <h6 class="text-black mb-0">= <%=listOrderItems(item).TotalPrice%> VNĐ</h6>
                             </div>
                         </div>
