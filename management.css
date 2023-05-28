@@ -145,3 +145,19 @@ iframe{
     background-color: var(--accent);
 
 }
+.confirm{
+    color:var(--bs-primary)
+}
+.transit{
+    color:var(--bs-warning)   
+}
+.delivered{
+    color:var(--bs-success)
+}
+.cancel{
+    color:var(--bs-danger)
+}
+.btnAction{
+    background-color: transparent;
+    border: none;
+}

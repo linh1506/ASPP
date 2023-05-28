@@ -4,6 +4,7 @@
 <!--#include file="./models/customersDTO.asp" -->
 <!--#include file="./models/promotions.asp" -->
 <!--#include file="./models/brands.asp" -->
+<!--#include file="./models/orders.asp" -->
 <%
     ' ham lam tron so nguyen
     function Ceil(Number)
@@ -165,8 +166,10 @@
     <link rel="stylesheet" href="./Resources/web-font-files/lineicons.css">
     <script src="./Jquery/jquery-3.6.1.min.js"></script>
     <script src="/Resources/AdminLTE/dist/js/adminlte.min.js"></script>
+    <script src="/bootstrap-5.2.0-dist/js/bootstrap.min.js                                                                                                              "></script>
     <link rel="stylesheet" href="/management.css">
     <link rel="stylesheet" href="/UIcomponents/ManagementHeader.css">
+    <link rel="stylesheet" href="./bootstrap-5.2.0-dist/css/bootstrap.min.css"/>
   </head>
   <body>
     <!--#include file="./UIcomponents/pageLoader.asp"-->
@@ -526,21 +529,23 @@
                     </div>
                     <div class="tabcontent" id="order">
                         <h1 class='content-header'>Quản lý đơn hàng</h1>
-                        <!-- <%if (totalRowOrders = 0) then%>
+                        <%if (totalRowsOrders = 0) then%>
                             <h5>Khum còn cái gì để hiện</h5>
-                        <%else%> 
-                            <div>
-                                <table class="table table-striped">
+                        <%else%>
+                            <div class="text-center">
+                                <table class="table table-hover table-bordered">
                                     <thead class="thead-light">
                                         <tr>
                                             <th scope="col">#</th>
                                             <th scope="col">Tên khách hàng</th>
+                                            <th scope="col">Số điện thoại</th>
                                             <th scope="col">Địa chỉ</th>
                                             <th scope="col">Thời gian</th>
-                                            <th scope="col">Mã giảm giá</th>
+                                            <th scope="col">Số tiền giảm</th>
                                             <th scope="col">Tổng giá</th>
                                             <th scope="col">Trạng thái</th>
                                             <th scope="col">Thao tác</th>
+                                            <th scope="col">Chi tiết</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -550,39 +555,73 @@
                                             cmdPrep.ActiveConnection = connDB
                                             cmdPrep.CommandType = 1
                                             cmdPrep.Prepared = True
-                                            cmdPrep.commandText = "select * from ORDERS order by id DESC offset "& CLng(offsetOrders) &" rows fetch next "& CLng(limit) &" row only"
+                                            cmdPrep.commandText = "select * from ORDERS order by id offset "& CLng(offsetOrders) &" rows fetch next "& CLng(limit) &" row only"
+                                            'offset "& CLng(offsetOrders) &" rows fetch next "& CLng(limit) &" row only
                                             set Result = cmdPrep.execute
                                             seq = 0
                                             do while not Result.EOF
                                                 seq = seq + 1
                                                 set order = New orders
-                                                promotion.Id = Result("ID")
-                                                promotion.Name = Result("NAME")
-                                                promotion.CouponCode = Result("COUPON_CODE")
-                                                promotion.Is_Active = Result("IS_ACTIVE")
-                                                promotion.Expired_At = Result("EXPIRED_AT")
-                                                promotion.Discount_Value = Result("DISCOUNT_VALUE")
-                                                listPromotions.add seq,order
+                                                order.Id = Result("ID")
+                                                order.Name = Result("RECEIVER_NAME")
+                                                order.Phone = Result("RECEIVER_PHONE")
+                                                order.Address = Result("RECEIVER_ADDRESS")
+                                                order.CreateAt = Result("CREATED_AT")
+                                                order.PromoValue = Result("PROMOTION_VALUE")
+                                                order.Amount = Result("AMOUNT")
+                                                order.Status = Result("STATUS")
+                                                listOrders.add seq,order
                                                 Result.MoveNext
                                             Loop
                                             Result.Close
                                             set Result = nothing
                                         %>
-                                        <% for each item in listPromotions %>
+                                        <% for each item in listOrders %>
                                         <tr>
-                                            <td><%=listPromotions(item).Id%></td>
-                                            <td><%=listPromotions(item).Name%></td>
-                                            <td><%=listPromotions(item).CouponCode%></td>
-                                            <td><%=listPromotions(item).Discount_Value%></td>
-                                            <td><%=listPromotions(item).Expired_At%></td>
+                                            <td><%=listOrders(item).Id%></td>
+                                            <td><%=listOrders(item).Name%></td>
+                                            <td><%=listOrders(item).Phone%></td>
+                                            <td><%=listOrders(item).Address%></td>
+                                            <td><%=listOrders(item).CreateAt%></td>
+                                            <td><%=listOrders(item).PromoValue%></td>
+                                            <td><%=listOrders(item).Amount%></td>
                                             <td>
-                                                <button id="PromotionStatus<%=listPromotions(item).Id%>" onClick="TogglePromotionStatus(<%=listPromotions(item).Id%>)" class="btn btn-<% if (listPromotions(item).Is_Active = True ) then %>success<% else %>danger<% end if %>">
-                                                    <% if (listPromotions(item).Is_Active = True ) then %>
-                                                        Enable
-                                                    <% else %> 
-                                                    Disable
-                                                    <% end if %>
+                                                <% 
+                                                    if listOrders(item).Status = 0 then
+                                                        %> <p id="OrderStatus<%=listOrders(item).Id%>" class="confirm">Đang nhận đơn</p> <%
+                                                    elseif listOrders(item).Status = 1 then
+                                                        %> <p id="OrderStatus<%=listOrders(item).Id%>" class="transit">Đơn hàng đang giao</p> <%
+                                                    elseif listOrders(item).Status = 2 then
+                                                        %> <p id="OrderStatus<%=listOrders(item).Id%>" class="delivered">Đơn hàng đã giao</p> <%
+                                                    elseif listOrders(item).Status = 3 then
+                                                        %> <p id="OrderStatus<%=listOrders(item).Id%>" class="cancel">Đơn hàng đã huỷ</p> <%
+                                                    end if
+                                                %>
+                                            </td>
+                                            <td>
+                                                <button class="btnAction" 
+                                                <% 
+                                                if (listOrders(item).Status = 2 or listOrders(item).Status = 3) then
+                                                    %>disabled
+                                                <%
+                                                end if
+                                                %> 
+                                                id="ActionToggle<%=listOrders(item).Id%>" onClick="ToggleOrderStatus(<%=listOrders(item).Id%>)">
+                                                    <i class="lni lni-spinner-arrow" style="margin:0;padding:0;font-size:1.5em"></i>
                                                 </button>
+                                                <button class="btnAction"
+                                                <% 
+                                                if (listOrders(item).Status = 2 or listOrders(item).Status = 3) then
+                                                    %>disabled
+                                                <%
+                                                end if
+                                                %> 
+                                                id="ActionCancel<%=listOrders(item).Id%>" onClick="CancelOrder(<%=listOrders(item).Id%>)">
+                                                    <i class="lni lni-cross-circle" style="margin:0;padding:0;font-size:1.5em"></i>
+                                                </button>
+                                            </td>
+                                            <td class="text-center">
+                                                <i class = "lni lni-chevron-right-circle" style="margin:0;padding:0;font-size:1.5em"></i>
                                             </td>
                                         </tr>
                                         <% Next %>
@@ -590,10 +629,10 @@
                                 </table>
                                 <nav aria-label="Page Navigation">
                                     <ul class="pagination pagination-sm">
-                                        <% if (pagesPromotions > 1) then 
-                                            for i= 1 to pagesPromotions
+                                        <% if (pagesOrders > 1) then 
+                                            for i= 1 to pagesOrders
                                         %>
-                                            <li class="page-item <%=checkPage(Clng(i)=Clng(pagePromotions),"active")%>"><a class="page-link" href="management.asp?type=3&page=<%=i%>"><%=i%></a></li>
+                                            <li class="page-item <%=checkPage(Clng(i)=Clng(pagePromotions),"active")%>"><a class="page-link" href="management.asp?type=5&page=<%=i%>"><%=i%></a></li>
                                         <%
                                             next
                                             end if
@@ -601,13 +640,7 @@
                                     </ul>
                                 </nav>
                             </div>
-                         <%end if%> -->
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-                            <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
-                            <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
-                            <li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
-                        </ul>
+                        <%end if%> 
                     </div>
                 </div>
             </div>
@@ -651,7 +684,7 @@
                 <%
                 case else
                 %>
-                document.getElementById("OpenManageProduct").click();
+                document.getElementById("OpenManageOrder").click();
                 <%
             end select
         %>
@@ -704,6 +737,45 @@
                 }
             };
             xmlhttp.open("GET", localhostAddress + "/ManagmentFeatures/EditStatusPromotion.asp?id=" + id, true);
+            xmlhttp.send();
+        }
+        function ToggleOrderStatus(id) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    if (this.responseText == "1") {
+                        document.getElementById("OrderStatus" + id).className = "transit";
+                        console.log(document.getElementById("OrderStatus" + id));
+                        document.getElementById("OrderStatus" + id).innerHTML = "Đơn hàng đang giao";
+                    } else if (this.responseText == "2" ){
+                        document.getElementById("OrderStatus" + id).className = "delivered";
+                        document.getElementById("OrderStatus" + id).innerHTML = "Đơn hàng đã giao";
+                        document.getElementById("ActionToggle" + id).disabled = true;
+                        document.getElementById("ActionCancel" + id).disabled = true;
+                    } else if (this.responseText == "3" ){
+                        document.getElementById("OrderStatus" + id).className = "cancel";
+                        document.getElementById("OrderStatus" + id).innerHTML = "Đơn hàng đã huỷ";
+                        document.getElementById("ActionToggle" + id).disabled = true;
+                        document.getElementById("ActionCancel" + id).disabled = true;
+                    }
+                }
+            };
+            xmlhttp.open("GET", localhostAddress + "/ManagmentFeatures/toggleOrderstatus.asp?id=" + id, true);
+            xmlhttp.send();
+        }
+        function CancelOrder(id) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    if (this.responseText == "3" ){
+                        document.getElementById("OrderStatus" + id).className = "cancel";
+                        document.getElementById("OrderStatus" + id).innerHTML = "Đơn hàng đã huỷ";
+                        document.getElementById("ActionToggle" + id).disabled = true;
+                        document.getElementById("ActionCancel" + id).disabled = true;
+                    }
+                }
+            };
+            xmlhttp.open("GET", localhostAddress + "/ManagmentFeatures/cancelOrder.asp?id=" + id, true);
             xmlhttp.send();
         }
     </script>
