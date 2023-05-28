@@ -131,7 +131,7 @@
                 pageBrands = pagesBrands
             end if
 
-        Case 5
+        Case 6
             pageProducts = 1
             pageUsers = 1
             pagePromotions = 1
@@ -147,6 +147,7 @@
             pageUsers = 1
             pagePromotions = 1
             pageBrands = 1
+            pageOrders = 1
     End Select
 
     offsetProducts = (Clng(pageProducts) * Clng(limit)) - Clng(limit)
@@ -158,20 +159,21 @@
 %>
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="/Resources/AdminLTE/dist/css/adminlte.min.css">
-    <link rel="stylesheet" href="./Resources/web-font-files/lineicons.css">
-    <script src="./Jquery/jquery-3.6.1.min.js"></script>
-    <script src="/Resources/AdminLTE/dist/js/adminlte.min.js"></script>
-    <script src="/bootstrap-5.2.0-dist/js/bootstrap.min.js                                                                                                              "></script>
-    <link rel="stylesheet" href="/management.css">
-    <link rel="stylesheet" href="/UIcomponents/ManagementHeader.css">
-    <link rel="stylesheet" href="./bootstrap-5.2.0-dist/css/bootstrap.min.css"/>
-  </head>
-  <body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="/Resources/AdminLTE/dist/css/adminlte.min.css">
+        <link rel="stylesheet" href="./Resources/web-font-files/lineicons.css">
+        <script src="./Jquery/jquery-3.6.1.min.js"></script>
+        <script src="/Resources/AdminLTE/dist/js/adminlte.min.js"></script>
+        <script src="/bootstrap-5.2.0-dist/js/bootstrap.min.js                                                                                                              "></script>
+        <link rel="stylesheet" href="/management.css">
+        <link rel="stylesheet" href="/UIcomponents/ManagementHeader.css">
+        <link rel="stylesheet" href="./bootstrap-5.2.0-dist/css/bootstrap.min.css"/>
+        <title>Quản lý cửa hàng</title>
+    </head>
+    <body>
     <!--#include file="./UIcomponents/pageLoader.asp"-->
     <div class="wrapper">
         <!--#include file="./UIcomponents/ManagementHeader.asp"-->
@@ -447,10 +449,10 @@
                     </div>
                     <div id="brands" class="tabcontent">
                         <h1 class='content-header'>Manage Brands</h1>
-                        <form action="./ManagmentFeatures/addBrand.asp" method="POST">
+                        <!-- <form action="./ManagmentFeatures/addBrand.asp" method="POST">
                             <input type="text" name="nameBrand">
                             <button type="submit" class="btn btn-outline-primary">Add Brand</button>
-                        </form>
+                        </form> -->
                         <%if (totalRowsBrands = 0) then%>
                             <h5>THERE'S NO ONE AT ALL</h5>
                         <%else%>
@@ -532,16 +534,19 @@
                         <%if (totalRowsOrders = 0) then%>
                             <h5>Khum còn cái gì để hiện</h5>
                         <%else%>
+                            <form class="form-inline">
+                            <div class="form-group mx-sm-3 mb-2">
+                                <input type="text" class="form-control" id="search" placeholder="Nhập mã hoá đơn">
+                            </div>
+                            <button type="submit" class="btn btn-primary mb-2">Tìm kiếm</button>
+                            </form>
                             <div class="text-center">
                                 <table class="table table-hover table-bordered">
                                     <thead class="thead-light">
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">Tên khách hàng</th>
                                             <th scope="col">Số điện thoại</th>
-                                            <th scope="col">Địa chỉ</th>
                                             <th scope="col">Thời gian</th>
-                                            <th scope="col">Số tiền giảm</th>
                                             <th scope="col">Tổng giá</th>
                                             <th scope="col">Trạng thái</th>
                                             <th scope="col">Thao tác</th>
@@ -555,7 +560,7 @@
                                             cmdPrep.ActiveConnection = connDB
                                             cmdPrep.CommandType = 1
                                             cmdPrep.Prepared = True
-                                            cmdPrep.commandText = "select * from ORDERS order by id offset "& CLng(offsetOrders) &" rows fetch next "& CLng(limit) &" row only"
+                                            cmdPrep.commandText = "select * from ORDERS order by id DESC offset "& CLng(offsetOrders) &" rows fetch next "& CLng(limit) &" row only"
                                             'offset "& CLng(offsetOrders) &" rows fetch next "& CLng(limit) &" row only
                                             set Result = cmdPrep.execute
                                             seq = 0
@@ -579,11 +584,8 @@
                                         <% for each item in listOrders %>
                                         <tr>
                                             <td><%=listOrders(item).Id%></td>
-                                            <td><%=listOrders(item).Name%></td>
                                             <td><%=listOrders(item).Phone%></td>
-                                            <td><%=listOrders(item).Address%></td>
                                             <td><%=listOrders(item).CreateAt%></td>
-                                            <td><%=listOrders(item).PromoValue%></td>
                                             <td><%=listOrders(item).Amount%></td>
                                             <td>
                                                 <% 
@@ -621,7 +623,7 @@
                                                 </button>
                                             </td>
                                             <td class="text-center">
-                                                <i class = "lni lni-chevron-right-circle" style="margin:0;padding:0;font-size:1.5em"></i>
+                                                <a style="color:black" href="./ManagmentFeatures/orderdetail.asp?id=<%=listOrders(item).Id%>"><i class = "lni lni-chevron-right-circle" style="margin:0;padding:0;font-size:1.5em"></i></a>
                                             </td>
                                         </tr>
                                         <% Next %>
@@ -629,10 +631,10 @@
                                 </table>
                                 <nav aria-label="Page Navigation">
                                     <ul class="pagination pagination-sm">
-                                        <% if (pagesOrders > 1) then 
+                                        <% if (pagesOrders>1) then 
                                             for i= 1 to pagesOrders
                                         %>
-                                            <li class="page-item <%=checkPage(Clng(i)=Clng(pagePromotions),"active")%>"><a class="page-link" href="management.asp?type=5&page=<%=i%>"><%=i%></a></li>
+                                            <li class="page-item <%=checkPage(Clng(i)=Clng(pageOrders),"active")%>"><a class="page-link" href="management.asp?type=6&page=<%=i%>"><%=i%></a></li>
                                         <%
                                             next
                                             end if
@@ -682,9 +684,13 @@
                 %>
                   document.getElementById("OpenManageGallery").click();
                 <%
+                case 6
+                %>
+                  document.getElementById("OpenManageOrder").click();
+                <%
                 case else
                 %>
-                document.getElementById("OpenManageOrder").click();
+                    document.getElementById("OpenManageProduct").click();
                 <%
             end select
         %>
