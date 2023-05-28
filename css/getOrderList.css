@@ -1,0 +1,62 @@
+@import url(/palette.css);
+@import url(/fonts.css);
+.order {
+  background-color: var(--white);
+  width: 100% t;
+  padding: 1.5em 3.5em;
+  border-radius: 10px;
+  margin-bottom: 1em;
+  font-size: 1.2em;
+  font-family: quicksand;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  transition: all 0.2s ease;
+}
+.order:hover {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+.order__header {
+  display: flex;
+  align-items: center;
+}
+.order__date {
+  font-style: italic;
+}
+.order__status {
+  font-size: 3.6em;
+  vertical-align: middle;
+  line-height: 1em;
+}
+.order__status--blue {
+  color: var(--azure);
+}
+.order__status--orange {
+  color: var(--orange);
+}
+.order__status--green {
+  color: var(--green);
+}
+.order__status--red {
+  color: var(--red);
+}
+.order__statusText {
+  margin: 0;
+  font-size: 1.1em;
+  padding-bottom: 1em;
+}
+.order__itemSize {
+  margin-left: auto;
+}
+.order h4 {
+  margin: 0;
+}
+.order ul {
+  margin: 0;
+  list-style-type: none;
+}
+.order ul li {
+  width: 100%;
+  display: flex;
+  font-size: 1.2em;
+  flex-wrap: wrap;
+}

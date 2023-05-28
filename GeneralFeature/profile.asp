@@ -1,5 +1,6 @@
 <!--#include file="../connect.asp"-->
 <!--#include file="../models/customers.asp"-->
+<!--#include virtual="/ShoppingFeature/getOrderList.asp"-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +11,7 @@
     <link rel="stylesheet" href="/UIcomponents/ShoppingHeader.css">
     <link rel="stylesheet" href="/Resources/web-font-files/lineicons.css">
     <link rel="stylesheet" href="/GeneralFeature/profile.css">
+    <link rel="stylesheet" href="/css/getOrderList.css">
     <title>Document</title>
 </head>
 <body>
@@ -69,7 +71,7 @@
         set Result = nothing
 %>  
     <div class="container-custom">
-        <div id='account' class="account__settings">
+        <div id='account' class="accinfo account__settings">
             <h1>Account Information:</h1>
             <form action="" method="POST">
                 Email: <%=cust.Email%><br>
@@ -90,8 +92,9 @@
             </div>
         </div>
 
-        <div id='orders' class="orders account__settings">
+        <div id='orders' class="orderList account__settings">
             <h1>My Orders</h1>
+            <!--#include virtual="/UIcomponents/displayTrackOrder.asp"-->
         </div>
     </div>
 <%end if%>

@@ -1,4 +1,3 @@
-<!--#include virtual="/connect.asp"-->
 <!--#include virtual="/models/orders.asp"-->
 <!--#include virtual="/models/order_item.asp"-->
 <%  
@@ -70,22 +69,34 @@
         set result = nothing
         set getOrderItems = OrderItems
     End Function
+    
+    Public Function getOrderStatus(status)
+        select case status
+            case 0  'Dang nhan don
+                getOrderStatus = " order__status--blue"
+            case 1 'Dang giao hang
+                getOrderStatus = " order__status--orange"
+            case 2 'Giao hang thanh cong
+                getOrderStatus = " order__status--green"
+            case 3 'Don hang bi huy
+                getOrderStatus = " order__status--red"
+        end select
+    End Function
 
-    Sub DisplayOrder
+    Public Function getOrderStatusText(status)
+        select case status
+            case 0  'Dang nhan don
+                getOrderStatusText = "Order Received"
+            case 1 'Dang giao hang
+                getOrderStatusText = "Delivering"
+            case 2 'Giao hang thanh cong
+                getOrderStatusText = "Order Delivered"
+            case 3 'Don hang bi huy
+                getOrderStatusText = "Order Cancelled, please contact us for more info"
+        end select
+    End Function    
+
+    Sub LoggedInUser_DisplayOrder
         ' Do Something...
     End Sub
 %>
-<%  
-    set userOrder = getUserOrderList
-    for each item in userOrder
-        %><div class="noee"><%
-        Response.Write userOrder(item).Id &" "&userOrder(item).address&"<br>"
-        set userOrderItem = getOrderItems(userOrder(item).Id)
-            for each product in userOrderItem
-                Response.Write "<br>"&userOrderItem(product).name&" "&userOrderItem(product).size
-            next
-        Response.Write "<hr>"
-        %></div><%
-    next
-%>
-<%="<br>herrrr"%>

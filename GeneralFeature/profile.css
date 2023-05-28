@@ -16,13 +16,14 @@ body {
 }
 .container-custom{
     margin-left: 280px;
+    max-width: calc(108%-280px);
 }
-@media screen and (min-width:992px) and (max-width:1240px) {
+@media screen and (min-width:992px) and (max-width:1540px) {
     .account__settings{
         width: clamp(50%,80%,80%);
     }
 }
-@media screen and (min-width:1240px) {
+@media screen and (min-width:1540px) {
     .account__settings{
         width: 50%;
     }
@@ -32,8 +33,9 @@ body {
   margin: 2rem auto;
   border-radius: 10px;
   padding: 2rem;
-  box-shadow: rgba(199, 199, 199, 0.336) 0px 22px 70px 4px;
-  animation: fadein 1s ease-out;
+  box-shadow: rgba(199, 199, 199, 0.171) 0px 22px 70px 3px;
+  /* animation: fadein 1s ease-out; */
+  animation: slidedown .3s ease-in;
 }
 form {
   padding: 0 0.5rem;
@@ -86,6 +88,10 @@ button[type="submit"] {
     opacity: 100%;
   }
 }
+@keyframes slidedown{
+  from{opacity: 0;transform: translateY(-8rem);}
+  to{opacity: 1;transform: translateY(0);}
+}
 @keyframes slidein {
   from {
     transform: translateX(-280px);
@@ -112,4 +118,11 @@ button[type="submit"] {
 }
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link{
   background-color: var(--accent);
+}
+.accinfo{
+  display: none;
+}
+.orderList{
+  font-size: .7rem;
+  /* display: none; */
 }
