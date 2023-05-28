@@ -178,7 +178,7 @@
     <div class="wrapper">
         <!--#include file="./UIcomponents/ManagementHeader.asp"-->
         <aside class='main-sidebar sidebar-dark-primary elevation-4'>
-            <a href="/" class="brand-link">
+            <a href="./home.asp" class="brand-link">
                 ODBG
             </a>
             <nav class="mt-2">
@@ -189,7 +189,7 @@
                     <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'promotions')" id="OpenManagePromotion">Manage Promotions</button>
                     <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'brands')" id="OpenManageBrand">Manage Brands</button>
                     <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'gallery')" id="OpenManageGallery">Store's Gallery</button>
-                    <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'order')" id="OpenManageOrder">Manage Orders</button>  
+                    <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'order')" id="OpenManageOrder">Orders Management</button>  
                 </div>
             </nav>
         </aside>
@@ -530,27 +530,27 @@
                         </div>
                     </div>
                     <div class="tabcontent" id="order">
-                        <h1 class='content-header'>Quản lý đơn hàng</h1>
+                        <h1 class='content-header'>Orders Management</h1>
                         <%if (totalRowsOrders = 0) then%>
-                            <h5>Khum còn cái gì để hiện</h5>
+                            <h5>Nothing here</h5>
                         <%else%>
                             <form class="form-inline">
                             <div class="form-group mx-sm-3 mb-2">
-                                <input type="text" class="form-control" id="search" placeholder="Nhập mã hoá đơn">
+                                <input type="text" class="form-control" id="search" placeholder="Input code order">
                             </div>
-                            <button type="submit" class="btn btn-primary mb-2">Tìm kiếm</button>
+                            <button type="submit" class="btn btn-primary mb-2">Search</button>
                             </form>
                             <div class="text-center">
                                 <table class="table table-hover table-bordered">
                                     <thead class="thead-light">
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">Số điện thoại</th>
-                                            <th scope="col">Thời gian</th>
-                                            <th scope="col">Tổng giá</th>
-                                            <th scope="col">Trạng thái</th>
-                                            <th scope="col">Thao tác</th>
-                                            <th scope="col">Chi tiết</th>
+                                            <th scope="col">Phone</th>
+                                            <th scope="col">Create at</th>
+                                            <th scope="col">Amount</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Actions</th>
+                                            <th scope="col">Order detail</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -590,13 +590,13 @@
                                             <td>
                                                 <% 
                                                     if listOrders(item).Status = 0 then
-                                                        %> <p id="OrderStatus<%=listOrders(item).Id%>" class="confirm">Đang nhận đơn</p> <%
+                                                        %> <p id="OrderStatus<%=listOrders(item).Id%>" class="confirm">Awaiting confirmation</p> <%
                                                     elseif listOrders(item).Status = 1 then
-                                                        %> <p id="OrderStatus<%=listOrders(item).Id%>" class="transit">Đơn hàng đang giao</p> <%
+                                                        %> <p id="OrderStatus<%=listOrders(item).Id%>" class="transit">Being transported</p> <%
                                                     elseif listOrders(item).Status = 2 then
-                                                        %> <p id="OrderStatus<%=listOrders(item).Id%>" class="delivered">Đơn hàng đã giao</p> <%
+                                                        %> <p id="OrderStatus<%=listOrders(item).Id%>" class="delivered">Order received</p> <%
                                                     elseif listOrders(item).Status = 3 then
-                                                        %> <p id="OrderStatus<%=listOrders(item).Id%>" class="cancel">Đơn hàng đã huỷ</p> <%
+                                                        %> <p id="OrderStatus<%=listOrders(item).Id%>" class="cancel">Order canceled</p> <%
                                                     end if
                                                 %>
                                             </td>

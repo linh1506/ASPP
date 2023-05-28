@@ -51,6 +51,8 @@
     <link rel="stylesheet" href='../UIcomponents/notification.css'>
     <link rel="stylesheet" href="../Resources/web-font-files/lineicons.css">
     <link rel="stylesheet" href="../ShoppingFeature/myCart.css">
+    <link rel="stylesheet" href="../management.css">
+    <script src="../Jquery/jquery-3.6.1.min.js"></script>
     <title>Chi tiết hoá đơn</title>
 </head>
 <body>
@@ -58,7 +60,7 @@
       <div class="d-flex flex-row container-custom">
           <a class ="nav-link active" href="#"  onclick="history.go(-1); return false;"><i style="font-size:20px" class="lni lni-arrow-left"></i></a>
           <div class="page-address">
-              <a href="#" class = "nav-link address">Quay lại</a>
+              <a href="#" class = "nav-link address">Go back</a>
           </div>
       </div>
     </nav>
@@ -76,7 +78,22 @@
                         set Result = cmdPrep.execute
                     %>
                     <div style="border-bottom:0.5px gray solid">
-                        <div><h3># <%=Result("ID")%></h3></div>
+                        <div class="row">
+                            <div class="col-6"><h3># <%=Result("ID")%></h3></div>
+                            <div class="col-6">
+                                <% 
+                                    if Result("STATUS") = 0 then
+                                        %> <h4 class="confirm">Awaiting confirmation</h4> <%
+                                    elseif Result("STATUS") = 1 then
+                                        %> <h4 class="transit">Being transported</h4> <%
+                                    elseif Result("STATUS") = 2 then
+                                        %> <h4 class="delivered">Order received</h4> <%
+                                    elseif Result("STATUS") = 3 then
+                                        %> <h4 class="cancel">Order canceled</h4> <%
+                                    end if
+                                %>
+                            </div>
+                        </div>
                         <div><h6>Create at <%=FormatDateTime(Result("CREATED_AT"),2)%></h6></div>
                         <div class="row justify-content-start">
                             <div class="col-6">
@@ -109,23 +126,30 @@
                                 <h6 class="text-black mb-0"><%=listOrderItems(item).UnitPrice%> VNĐ</h6>
                             </div>
                             <div class="col-3">
-                                <h6 class="text-black mb-0">= <%=listOrderItems(item).TotalPrice%> VNĐ</h6>
+                                <h6 id="total" class="text-black mb-0"> = <%=listOrderItems(item).TotalPrice%> VNĐ</h6>
                             </div>
                         </div>
 
                     <% next %>
                 </div>
                 <div class="col-4">
+                    <!--<div class="d-flex justify-content-between mb-5">
+                        <h5>Price:</h5>
+                        <div id="SubTotalElement" style="justify-content:center">
+                            <p id="SubTotal"></p>
+                        </div>
+                    </div>-->
                     <div class="d-flex justify-content-between mb-5">
-                        <h5 class="text-uppercase">Discount:</h5>
+                        <h5>Discount:</h5>
                         <div style="justify-content:center color:red">
-                            <p> - <%=Result("PROMOTION_VALUE")%></p>
+                            <p> - <%=Result("PROMOTION_VALUE")%> VNĐ</p>
                         </div>
                     </div>
+                    <hr class="my-4">
                     <div class="d-flex justify-content-between mb-5">
-                        <h5 class="text-uppercase">Total price:</h5>
+                        <h5>Total price:</h5>
                         <div style="justify-content:center">
-                            <p><%=Result("AMOUNT")%></p>
+                            <p><%=Result("AMOUNT")%> VNĐ</p>
                         </div>
                     </div>
                     <%  
@@ -136,5 +160,7 @@
             </div>
         </div>
     </div>
+    <script>
+    </script>
 </body>
 </html>
