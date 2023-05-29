@@ -25,16 +25,20 @@
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li>
-                <a href="#" class="sidebar-item nav-link link-dark" aria-current="page" onclick="displayTab(0)" ><i class="lni lni-restaurant"></i> <p>My account</p> </a>
+                <a href="#" class="sidebar-item nav-link link-dark" aria-current="page" onclick="displayTab(0)" >
+                <i class="lni lni-restaurant"></i><p>My account</p></a>
             </li>
             <li>
-                <a href="/ShoppingFeature/myCart.asp" class="sidebar-item nav-link link-dark"><i class="lni lni-cart-full"></i> <p>My Cart</p></a>
+                <a href="/ShoppingFeature/myCart.asp" class="sidebar-item nav-link link-dark">
+                <i class="lni lni-cart-full"></i><p>My Cart</p></a>
             </li>
             <li>
-                <a href="#" class="sidebar-item nav-link link-dark active" onclick="displayTab(1)"><i class="lni lni-ticket"></i> <p>Orders</p></a>
+                <a href="#" class="sidebar-item nav-link link-dark active" onclick="displayTab(1)">
+                <i class="lni lni-ticket"></i><p>Orders</p></a>
             </li>
             <li>
-                <a href="#" class="sidebar-item nav-link link-dark" onclick="displayTab(2)"><i class="lni lni-library"></i> <p>Purchase history</p></a>
+                <a href="#" class="sidebar-item nav-link link-dark" onclick="displayTab(2)">
+                <i class="lni lni-library"></i><p>Purchase history</p></a>
             </li>
         </ul>
   </div>
@@ -78,7 +82,7 @@
                 Name: <input class="form-control"  type="text" value="<%=cust.Name%>" name="name">
                 Phone number: <input  class="form-control" type="text" value="<%=cust.Phone%>" name="phone"> 
                 Address: <input class="form-control"  type="text" value="<%=cust.Address%>" name="address">
-            <button class="btn btn-danger" type="submit">Submit</button>
+                <button class="btn btn-danger" type="submit">Submit</button>
             </form> 
 
             <button class="btn" id="show" >Change Password <span><i class="lni lni-chevron-down"></i></span></button>
@@ -87,8 +91,8 @@
                     old password: <input class="form-control"  type="text" name="password">
                     new password: <input class="form-control" type="text" name="passwordchange">
                     confirm password: <input class="form-control" type="text" name="passwordreenter"> 
-                <button class="btn btn-danger" type="submit">change password</button>
-            </form>
+                    <button class="btn btn-danger" type="submit">change password</button>
+                </form>
             </div>
         </div>
 
