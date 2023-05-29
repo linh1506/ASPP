@@ -301,7 +301,8 @@ end if
           }
         }
         var discouptPrice = Math.ceil(subTotal * <%=discountValue%>)
-        document.getElementById("Discount").innerHTML = "- " + discouptPrice + "đ"
+        var discountPercent = Math.ceil(discouptPrice/subTotal);
+        document.getElementById("Discount").innerText = "- " +  discouptPrice+"đ (- "+discountPercent+"%)";
       }
 
       function GetLastPrice() {
