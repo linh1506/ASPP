@@ -536,7 +536,7 @@
                         <%else%>
                             <form class="form-inline">
                             <div class="form-group mx-sm-3 mb-2">
-                                <input type="text" class="form-control" id="search" placeholder="Input code order">
+                                <input type="text" class="form-control" id="search" placeholder="Input order number">
                             </div>
                             <button type="submit" class="btn btn-primary mb-2">Search</button>
                             </form>
@@ -590,13 +590,13 @@
                                             <td>
                                                 <% 
                                                     if listOrders(item).Status = 0 then
-                                                        %> <p id="OrderStatus<%=listOrders(item).Id%>" class="confirm">Awaiting confirmation</p> <%
+                                                        %> <p id="OrderStatus<%=listOrders(item).Id%>" class="confirm">Processing</p> <%
                                                     elseif listOrders(item).Status = 1 then
-                                                        %> <p id="OrderStatus<%=listOrders(item).Id%>" class="transit">Being transported</p> <%
+                                                        %> <p id="OrderStatus<%=listOrders(item).Id%>" class="transit">Delivering</p> <%
                                                     elseif listOrders(item).Status = 2 then
-                                                        %> <p id="OrderStatus<%=listOrders(item).Id%>" class="delivered">Order received</p> <%
+                                                        %> <p id="OrderStatus<%=listOrders(item).Id%>" class="delivered">Delivered</p> <%
                                                     elseif listOrders(item).Status = 3 then
-                                                        %> <p id="OrderStatus<%=listOrders(item).Id%>" class="cancel">Order canceled</p> <%
+                                                        %> <p id="OrderStatus<%=listOrders(item).Id%>" class="cancel">Order cancelled</p> <%
                                                     end if
                                                 %>
                                             </td>
@@ -752,15 +752,15 @@
                     if (this.responseText == "1") {
                         document.getElementById("OrderStatus" + id).className = "transit";
                         console.log(document.getElementById("OrderStatus" + id));
-                        document.getElementById("OrderStatus" + id).innerHTML = "Đơn hàng đang giao";
+                        document.getElementById("OrderStatus" + id).innerHTML = "Delivering";
                     } else if (this.responseText == "2" ){
                         document.getElementById("OrderStatus" + id).className = "delivered";
-                        document.getElementById("OrderStatus" + id).innerHTML = "Đơn hàng đã giao";
+                        document.getElementById("OrderStatus" + id).innerHTML = "Delivered";
                         document.getElementById("ActionToggle" + id).disabled = true;
                         document.getElementById("ActionCancel" + id).disabled = true;
                     } else if (this.responseText == "3" ){
                         document.getElementById("OrderStatus" + id).className = "cancel";
-                        document.getElementById("OrderStatus" + id).innerHTML = "Đơn hàng đã huỷ";
+                        document.getElementById("OrderStatus" + id).innerHTML = "Order Cancelled";
                         document.getElementById("ActionToggle" + id).disabled = true;
                         document.getElementById("ActionCancel" + id).disabled = true;
                     }

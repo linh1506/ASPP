@@ -62,7 +62,7 @@
                     </div>\
                     <div class=\"cd\">\
                         <h3>"+item.name+"</h3>\
-                        <h5>"+item.price+" đ</h5>\
+                        <h5 class='cs'>"+item.price+"</h5>\
                     </div>\
                 </div>";
             });
@@ -100,7 +100,7 @@
             var selectedOption = $(this).children("option:selected").val();
             console.log(selectedOption);
             filter(selectedOption, 0);
-         });
+        });
     });
 </script>
 </body>

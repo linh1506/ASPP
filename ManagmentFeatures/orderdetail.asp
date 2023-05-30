@@ -52,8 +52,15 @@
     <link rel="stylesheet" href="../Resources/web-font-files/lineicons.css">
     <link rel="stylesheet" href="../ShoppingFeature/myCart.css">
     <link rel="stylesheet" href="../management.css">
+    <link rel="stylesheet" href="../fonts.css">
+    <link rel="stylesheet" href="../Resources/web-font-files/lineicons.css">
     <script src="../Jquery/jquery-3.6.1.min.js"></script>
     <title>Chi tiết hoá đơn</title>
+    <style>
+        *{
+          font-family:quicksand;
+        }
+    </style>
 </head>
 <body>
     <nav style="z-index:1" class = 'navbar sticky-top navbar-light navbar-custom flex-row'>
@@ -64,7 +71,7 @@
           </div>
       </div>
     </nav>
-    <div class="container">
+    <div style="padding: 0% 10%" class="container">
         <div class="container-sm" >
             <div class="row">
                 <div class="col-8">
@@ -77,36 +84,62 @@
                         cmdPrep.Parameters(0)=id
                         set Result = cmdPrep.execute
                     %>
-                    <div style="border-bottom:0.5px gray solid">
+                    <div>
                         <div class="row">
                             <div class="col-6"><h3># <%=Result("ID")%></h3></div>
                             <div class="col-6">
                                 <% 
                                     if Result("STATUS") = 0 then
-                                        %> <h4 class="confirm">Awaiting confirmation</h4> <%
+                                        %> <h4 class="confirm">Processing</h4> <%
                                     elseif Result("STATUS") = 1 then
-                                        %> <h4 class="transit">Being transported</h4> <%
+                                        %> <h4 class="transit">Delivering</h4> <%
                                     elseif Result("STATUS") = 2 then
-                                        %> <h4 class="delivered">Order received</h4> <%
+                                        %> <h4 class="delivered">Delivered</h4> <%
                                     elseif Result("STATUS") = 3 then
-                                        %> <h4 class="cancel">Order canceled</h4> <%
+                                        %> <h4 class="cancel">Order cancelled</h4> <%
                                     end if
                                 %>
                             </div>
                         </div>
-                        <div><h6>Create at <%=FormatDateTime(Result("CREATED_AT"),2)%></h6></div>
-                        <div class="row justify-content-start">
-                            <div class="col-6">
+                        <div><h6>Created at <%=FormatDateTime(Result("CREATED_AT"),2)%></h6></div>
+                            <div>
                             <h5>Customer name : <%=Result("RECEIVER_NAME")%></h5>
                             </div>
-                            <div class="col-6">
+                            <div>
                             <h5>Contact number : <%=Result("RECEIVER_PHONE")%></h5>
                             </div>
-                        </div>
-                        <div><h4>Delivered to : <%=Result("RECEIVER_ADDRESS")%></h4></div>
+                        <div><h5>Delivered to : <%=Result("RECEIVER_ADDRESS")%></h5></div>
                     </div>
                     <br>
-                    <% for each item in listOrderItems %>
+                </div>
+                <div class="col-4">
+                    <div class="d-flex justify-content-between mb-2">
+                        <h5>Price:</h5>
+                        <div id="SubTotalElement" style="justify-content:center">
+                            <p id="SubTotal"><% Response.Write(Result("PROMOTION_VALUE") + Result("AMOUNT") )%> VND</p>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <h5>Discount:</h5>
+                        <div style="justify-content:center color:red">
+                            <p id="Discount">- <%=Result("PROMOTION_VALUE")%> VND</p>
+                        </div>
+                    </div>
+                    <hr class="my-4">
+                    <div style="margin:0" class="d-flex justify-content-between mb-2">
+                        <h5>Total price:</h5>
+                        <div style="margin:0 ; justify-content:center">
+                            <p id="Amount"><%=Result("AMOUNT")%> VND</p>
+                        </div>
+                    </div>
+                    <%  
+                        Result.close
+                        set Result = nothing
+                    %>
+                </div>
+            </div>
+            <hr class="my-4">
+            <% for each item in listOrderItems %>
                         <div class="row mb-4 d-flex justify-content-between align-items-center">
                             <div class="col-2">
                                 <a style="color:black ; text-decoration:none" href="../ShoppingFeature/productDetail.asp?id=<%=listOrderItems(item).ProductID%>">
@@ -123,41 +156,13 @@
                                 <h6 class="text-black mb-0">X</h6>
                             </div>
                             <div class="col-2">
-                                <h6 class="text-black mb-0"><%=listOrderItems(item).UnitPrice%> VNĐ</h6>
+                                <h6 class="text-black mb-0"><%=listOrderItems(item).UnitPrice%> VND</h6>
                             </div>
                             <div class="col-3">
-                                <h6 id="total" class="text-black mb-0"> = <%=listOrderItems(item).TotalPrice%> VNĐ</h6>
+                                <h6 id="total" class="text-black mb-0"> = <%=listOrderItems(item).TotalPrice%> VND</h6>
                             </div>
                         </div>
-
-                    <% next %>
-                </div>
-                <div class="col-4">
-                    <!--<div class="d-flex justify-content-between mb-5">
-                        <h5>Price:</h5>
-                        <div id="SubTotalElement" style="justify-content:center">
-                            <p id="SubTotal"></p>
-                        </div>
-                    </div>-->
-                    <div class="d-flex justify-content-between mb-5">
-                        <h5>Discount:</h5>
-                        <div style="justify-content:center color:red">
-                            <p> - <%=Result("PROMOTION_VALUE")%> VNĐ</p>
-                        </div>
-                    </div>
-                    <hr class="my-4">
-                    <div class="d-flex justify-content-between mb-5">
-                        <h5>Total price:</h5>
-                        <div style="justify-content:center">
-                            <p><%=Result("AMOUNT")%> VNĐ</p>
-                        </div>
-                    </div>
-                    <%  
-                        Result.close
-                        set Result = nothing
-                    %>
-                </div>
-            </div>
+            <% next %>
         </div>
     </div>
     <script>
