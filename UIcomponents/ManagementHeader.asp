@@ -4,7 +4,7 @@
           <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="/"><span><i class='lni lni-cart'></i></span>Shopping</a>
+                <a class="nav-link" aria-current="page" href="../home.asp"><span><i class='lni lni-cart'></i></span>Shopping</a>
               </li>
               <%
                 if (Trim(Session("Role")) = "ADMIN") then

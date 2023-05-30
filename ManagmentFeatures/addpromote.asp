@@ -47,11 +47,20 @@
     <link rel="stylesheet" href='../UIcomponents/header.css'>
     <link rel="stylesheet" href='../UIcomponents/notification.css'>
     <link rel="stylesheet" href="./addpromote.css">
+    <link rel="stylesheet" href="../ShoppingFeature/myCart.css">
     <script src="../Jquery/jquery-3.6.1.min.js"></script>
     <title>Add Promotion</title>
 </head>
 <body>
     <!--#include file="../UIcomponents/notification.asp"-->
+    <nav style="z-index:1" class = 'navbar sticky-top navbar-light navbar-custom flex-row'>
+      <div class="d-flex flex-row container-custom">
+          <a class ="nav-link active" href="#"  onclick="history.go(-1); return false;"><i style="font-size:20px" class="lni lni-arrow-left"></i></a>
+          <div class="page-address">
+              <a href="#" class = "nav-link address">Go back</a>
+          </div>
+      </div>
+    </nav>
     <div class="container">
         <div>
             <h2>Add Promotion</h2>

@@ -4,6 +4,7 @@
 <!--#include file="./models/customersDTO.asp" -->
 <!--#include file="./models/promotions.asp" -->
 <!--#include file="./models/brands.asp" -->
+<!--#include file="./models/orders.asp" -->
 <%
     ' ham lam tron so nguyen
     function Ceil(Number)
@@ -67,6 +68,12 @@
     Set CountResult = Nothing
     pagesBrands = Ceil(totalRowsBrands/limit)
 
+    strSQL = "SELECT COUNT(ID) AS count FROM ORDERS"
+    Set CountResult = connDB.execute(strSQL)
+    totalRowsOrders = CLng(CountResult("count"))
+    Set CountResult = Nothing
+    pagesOrders = Ceil(totalRowsOrders/limit)
+
     typeOfPage = Request.QueryString("type")
     if (trim(typeOfPage) = "") or (isnull(typeOfPage)) then
         ' type of page de trong thi set 1
@@ -86,6 +93,7 @@
             pageUsers = 1
             pagePromotions = 1
             pageBrands = 1
+            pageOrders = 1
 
             if (CInt(pageProducts) > pagesProducts) then
                 pageProducts = pagesProducts
@@ -95,6 +103,7 @@
             pageUsers = page
             pagePromotions = 1
             pageBrands = 1
+            pageOrders = 1
 
             if (CInt(pageUsers) > pagesUsers) then
                 pageUsers = pagesUsers
@@ -105,6 +114,7 @@
             pageUsers = 1
             pagePromotions = page
             pageBrands = 1
+            pageOrders = 1
 
             if (CInt(pagePromotions) > pagesPromotions) then
                 pagePromotions = pagesPromotions
@@ -115,45 +125,60 @@
             pageUsers = 1
             pagePromotions = 1
             pageBrands = page
+            pageOrders = 1
 
             if (CInt(pageBrands) > pagesBrands) then
                 pageBrands = pagesBrands
             end if
 
+        Case 6
+            pageProducts = 1
+            pageUsers = 1
+            pagePromotions = 1
+            pageBrands = 1
+            pageOrders = page
+
+            if (CInt(pageOrders) > pagesOrders) then
+                pageOrders = pagesOrders
+            end if
 
         Case Else
             pageProducts = 1
             pageUsers = 1
             pagePromotions = 1
             pageBrands = 1
+            pageOrders = 1
     End Select
 
     offsetProducts = (Clng(pageProducts) * Clng(limit)) - Clng(limit)
     offsetPromotions = (Clng(pagePromotions) * Clng(limit)) - Clng(limit)
     offsetUsers = (Clng(pageUsers) * Clng(limit)) - Clng(limit)
     offsetBrands = (Clng(pageBrands) * Clng(limit)) - Clng(limit)
-
+    offsetOrders = (Clng(pageOrders) * Clng(limit)) - Clng(limit)
     
 %>
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="/Resources/AdminLTE/dist/css/adminlte.min.css">
-    <link rel="stylesheet" href="./Resources/web-font-files/lineicons.css">
-    <script src="./Jquery/jquery-3.6.1.min.js"></script>
-    <script src="/Resources/AdminLTE/dist/js/adminlte.min.js"></script>
-    <link rel="stylesheet" href="/management.css">
-    <link rel="stylesheet" href="/UIcomponents/ManagementHeader.css">
-  </head>
-  <body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="/Resources/AdminLTE/dist/css/adminlte.min.css">
+        <link rel="stylesheet" href="./Resources/web-font-files/lineicons.css">
+        <script src="./Jquery/jquery-3.6.1.min.js"></script>
+        <script src="/Resources/AdminLTE/dist/js/adminlte.min.js"></script>
+        <script src="/bootstrap-5.2.0-dist/js/bootstrap.min.js                                                                                                              "></script>
+        <link rel="stylesheet" href="/management.css">
+        <link rel="stylesheet" href="/UIcomponents/ManagementHeader.css">
+        <link rel="stylesheet" href="./bootstrap-5.2.0-dist/css/bootstrap.min.css"/>
+        <title>Quản lý cửa hàng</title>
+    </head>
+    <body>
     <!--#include file="./UIcomponents/pageLoader.asp"-->
     <div class="wrapper">
         <!--#include file="./UIcomponents/ManagementHeader.asp"-->
         <aside class='main-sidebar sidebar-dark-primary elevation-4'>
-            <a href="/" class="brand-link">
+            <a href="./home.asp" class="brand-link">
                 ODBG
             </a>
             <nav class="mt-2">
@@ -163,7 +188,8 @@
                     <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'customers')" id="OpenManageCustomer">Manage Customers</button>
                     <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'promotions')" id="OpenManagePromotion">Manage Promotions</button>
                     <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'brands')" id="OpenManageBrand">Manage Brands</button>
-                    <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'gallery')" id="OpenManageGallery">Store's Gallery</button>  
+                    <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'gallery')" id="OpenManageGallery">Store's Gallery</button>
+                    <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'order')" id="OpenManageOrder">Orders Management</button>  
                 </div>
             </nav>
         </aside>
@@ -423,10 +449,10 @@
                     </div>
                     <div id="brands" class="tabcontent">
                         <h1 class='content-header'>Manage Brands</h1>
-                        <form action="./ManagmentFeatures/addBrand.asp" method="POST">
+                        <!-- <form action="./ManagmentFeatures/addBrand.asp" method="POST">
                             <input type="text" name="nameBrand">
                             <button type="submit" class="btn btn-outline-primary">Add Brand</button>
-                        </form>
+                        </form> -->
                         <%if (totalRowsBrands = 0) then%>
                             <h5>THERE'S NO ONE AT ALL</h5>
                         <%else%>
@@ -503,6 +529,121 @@
                             </div>
                         </div>
                     </div>
+                    <div class="tabcontent" id="order">
+                        <h1 class='content-header'>Orders Management</h1>
+                        <%if (totalRowsOrders = 0) then%>
+                            <h5>Nothing here</h5>
+                        <%else%>
+                            <form class="form-inline">
+                            <div class="form-group mx-sm-3 mb-2">
+                                <input type="text" class="form-control" id="search" placeholder="Input order number">
+                            </div>
+                            <button type="submit" class="btn btn-primary mb-2">Search</button>
+                            </form>
+                            <div class="text-center">
+                                <table class="table table-hover table-bordered">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Phone</th>
+                                            <th scope="col">Create at</th>
+                                            <th scope="col">Amount</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Actions</th>
+                                            <th scope="col">Order detail</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%
+                                            Set listOrders = Server.CreateObject("Scripting.Dictionary")
+                                            Set cmdPrep = Server.CreateObject("ADODB.Command")
+                                            cmdPrep.ActiveConnection = connDB
+                                            cmdPrep.CommandType = 1
+                                            cmdPrep.Prepared = True
+                                            cmdPrep.commandText = "select * from ORDERS order by id DESC offset "& CLng(offsetOrders) &" rows fetch next "& CLng(limit) &" row only"
+                                            'offset "& CLng(offsetOrders) &" rows fetch next "& CLng(limit) &" row only
+                                            set Result = cmdPrep.execute
+                                            seq = 0
+                                            do while not Result.EOF
+                                                seq = seq + 1
+                                                set order = New orders
+                                                order.Id = Result("ID")
+                                                order.Name = Result("RECEIVER_NAME")
+                                                order.Phone = Result("RECEIVER_PHONE")
+                                                order.Address = Result("RECEIVER_ADDRESS")
+                                                order.CreateAt = Result("CREATED_AT")
+                                                order.PromoValue = Result("PROMOTION_VALUE")
+                                                order.Amount = Result("AMOUNT")
+                                                order.Status = Result("STATUS")
+                                                listOrders.add seq,order
+                                                Result.MoveNext
+                                            Loop
+                                            Result.Close
+                                            set Result = nothing
+                                        %>
+                                        <% for each item in listOrders %>
+                                        <tr>
+                                            <td><%=listOrders(item).Id%></td>
+                                            <td><%=listOrders(item).Phone%></td>
+                                            <td><%=listOrders(item).CreateAt%></td>
+                                            <td class="current_format"><%=listOrders(item).Amount%></td>
+                                            <td>
+                                                <% 
+                                                    if listOrders(item).Status = 0 then
+                                                        %> <p id="OrderStatus<%=listOrders(item).Id%>" class="confirm">Processing</p> <%
+                                                    elseif listOrders(item).Status = 1 then
+                                                        %> <p id="OrderStatus<%=listOrders(item).Id%>" class="transit">Delivering</p> <%
+                                                    elseif listOrders(item).Status = 2 then
+                                                        %> <p id="OrderStatus<%=listOrders(item).Id%>" class="delivered">Delivered</p> <%
+                                                    elseif listOrders(item).Status = 3 then
+                                                        %> <p id="OrderStatus<%=listOrders(item).Id%>" class="cancel">Order cancelled</p> <%
+                                                    end if
+                                                %>
+                                            </td>
+                                            <td>
+                                                <button class="btnAction" style="color:var()"
+                                                <% 
+                                                if (listOrders(item).Status = 2 or listOrders(item).Status = 3) then
+                                                    %>disabled
+                                                <%
+                                                end if
+                                                %> 
+                                                id="ActionToggle<%=listOrders(item).Id%>" onClick="ToggleOrderStatus(<%=listOrders(item).Id%>)">
+                                                    <i class="lni lni-spinner-arrow" style="margin:0;padding:0;font-size:1.5em"></i>
+                                                </button>
+                                                <button class="btnAction"
+                                                <% 
+                                                if (listOrders(item).Status = 2 or listOrders(item).Status = 3) then
+                                                    %>disabled
+                                                <%
+                                                end if
+                                                %> 
+                                                id="ActionCancel<%=listOrders(item).Id%>" onClick="CancelOrder(<%=listOrders(item).Id%>)">
+                                                    <i class="lni lni-cross-circle" style="margin:0;padding:0;font-size:1.5em"></i>
+                                                </button>
+                                            </td>
+                                            <td class="text-center">
+                                                <a style="color:black" href="./ManagmentFeatures/orderdetail.asp?id=<%=listOrders(item).Id%>"><i class = "lni lni-chevron-right-circle" style="margin:0;padding:0;font-size:1.5em"></i></a>
+                                            </td>
+                                        </tr>
+                                        <% Next %>
+                                    </tbody>
+                                </table>
+                                <nav aria-label="Page Navigation">
+                                    <ul class="pagination pagination-sm">
+                                        <% if (pagesOrders>1) then 
+                                            for i= 1 to pagesOrders
+                                        %>
+                                            <li class="page-item <%=checkPage(Clng(i)=Clng(pageOrders),"active")%>"><a class="page-link" href="management.asp?type=6&page=<%=i%>"><%=i%></a></li>
+                                        <%
+                                            next
+                                            end if
+                                        %>
+                                    </ul>
+                                </nav>
+                            </div>
+                        <%end if%> 
+                    </div>
                 </div>
             </div>
         </div>
@@ -543,9 +684,13 @@
                 %>
                   document.getElementById("OpenManageGallery").click();
                 <%
+                case 6
+                %>
+                  document.getElementById("OpenManageOrder").click();
+                <%
                 case else
                 %>
-                document.getElementById("OpenManageProduct").click();
+                    document.getElementById("OpenManageProduct").click();
                 <%
             end select
         %>
@@ -600,6 +745,55 @@
             xmlhttp.open("GET", localhostAddress + "/ManagmentFeatures/EditStatusPromotion.asp?id=" + id, true);
             xmlhttp.send();
         }
+        function ToggleOrderStatus(id) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    if (this.responseText == "1") {
+                        document.getElementById("OrderStatus" + id).className = "transit";
+                        console.log(document.getElementById("OrderStatus" + id));
+                        document.getElementById("OrderStatus" + id).innerHTML = "Delivering";
+                    } else if (this.responseText == "2" ){
+                        document.getElementById("OrderStatus" + id).className = "delivered";
+                        document.getElementById("OrderStatus" + id).innerHTML = "Delivered";
+                        document.getElementById("ActionToggle" + id).disabled = true;
+                        document.getElementById("ActionCancel" + id).disabled = true;
+                    } else if (this.responseText == "3" ){
+                        document.getElementById("OrderStatus" + id).className = "cancel";
+                        document.getElementById("OrderStatus" + id).innerHTML = "Order Cancelled";
+                        document.getElementById("ActionToggle" + id).disabled = true;
+                        document.getElementById("ActionCancel" + id).disabled = true;
+                    }
+                }
+            };
+            xmlhttp.open("GET", localhostAddress + "/ManagmentFeatures/toggleOrderstatus.asp?id=" + id, true);
+            xmlhttp.send();
+        }
+        function CancelOrder(id) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    if (this.responseText == "3" ){
+                        document.getElementById("OrderStatus" + id).className = "cancel";
+                        document.getElementById("OrderStatus" + id).innerHTML = "Order cancelled";
+                        document.getElementById("ActionToggle" + id).disabled = true;
+                        document.getElementById("ActionCancel" + id).disabled = true;
+                    }
+                }
+            };
+            xmlhttp.open("GET", localhostAddress + "/ManagmentFeatures/cancelOrder.asp?id=" + id, true);
+            xmlhttp.send();
+        }
+        $(document).ready(function() {
+        $(".current_format").each(function() {
+            var text = $(this).text();
+            var formattedText = formatCurrencyVND(text);
+            $(this).text(formattedText);
+        });
+        function formatCurrencyVND(amount) {
+        return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(amount)
+        }
+    });
     </script>
   </body>
 </html>
