@@ -586,7 +586,7 @@
                                             <td><%=listOrders(item).Id%></td>
                                             <td><%=listOrders(item).Phone%></td>
                                             <td><%=listOrders(item).CreateAt%></td>
-                                            <td><%=listOrders(item).Amount%></td>
+                                            <td class="current_format"><%=listOrders(item).Amount%></td>
                                             <td>
                                                 <% 
                                                     if listOrders(item).Status = 0 then
@@ -601,7 +601,7 @@
                                                 %>
                                             </td>
                                             <td>
-                                                <button class="btnAction" 
+                                                <button class="btnAction" style="color:var()"
                                                 <% 
                                                 if (listOrders(item).Status = 2 or listOrders(item).Status = 3) then
                                                     %>disabled
@@ -784,6 +784,16 @@
             xmlhttp.open("GET", localhostAddress + "/ManagmentFeatures/cancelOrder.asp?id=" + id, true);
             xmlhttp.send();
         }
+        $(document).ready(function() {
+        $(".current_format").each(function() {
+            var text = $(this).text();
+            var formattedText = formatCurrencyVND(text);
+            $(this).text(formattedText);
+        });
+        function formatCurrencyVND(amount) {
+        return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(amount)
+        }
+    });
     </script>
   </body>
 </html>

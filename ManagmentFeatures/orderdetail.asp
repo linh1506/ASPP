@@ -63,6 +63,7 @@
     </style>
 </head>
 <body>
+
     <nav style="z-index:1" class = 'navbar sticky-top navbar-light navbar-custom flex-row'>
       <div class="d-flex flex-row container-custom">
           <a class ="nav-link active" href="#"  onclick="history.go(-1); return false;"><i style="font-size:20px" class="lni lni-arrow-left"></i></a>
@@ -86,22 +87,9 @@
                     %>
                     <div>
                         <div class="row">
-                            <div class="col-6"><h3># <%=Result("ID")%></h3></div>
-                            <div class="col-6">
-                                <% 
-                                    if Result("STATUS") = 0 then
-                                        %> <h4 class="confirm">Processing</h4> <%
-                                    elseif Result("STATUS") = 1 then
-                                        %> <h4 class="transit">Delivering</h4> <%
-                                    elseif Result("STATUS") = 2 then
-                                        %> <h4 class="delivered">Delivered</h4> <%
-                                    elseif Result("STATUS") = 3 then
-                                        %> <h4 class="cancel">Order cancelled</h4> <%
-                                    end if
-                                %>
-                            </div>
+                            <div class="col-12 d-flex justify-content-center"><h2># <%=Result("ID")%></h2></div>    
                         </div>
-                        <div><h6>Created at <%=FormatDateTime(Result("CREATED_AT"),2)%></h6></div>
+                        <div><h6 class="text-primary">Created at <%=FormatDateTime(Result("CREATED_AT"),2)%></h6></div>
                             <div>
                             <h5>Customer name : <%=Result("RECEIVER_NAME")%></h5>
                             </div>
@@ -111,8 +99,44 @@
                         <div><h5>Delivered to : <%=Result("RECEIVER_ADDRESS")%></h5></div>
                     </div>
                     <br>
+                    <div>
+                        <button class="btnAction" 
+                            <% 
+                                if (Result("STATUS") = 2 or Result("STATUS") = 3) then
+                                %>disabled
+                                <%
+                                end if
+                            %> 
+                            id="ActionToggle<%=Result("ID")%>" onClick="ToggleOrderStatus(<%=Result("ID")%>)">
+                            <i class="lni lni-spinner-arrow" style="margin:0;padding:0;font-size:2em"></i>
+                        </button>
+                        <button class="btnAction"
+                                <% 
+                                    if (Result("STATUS") = 2 or Result("STATUS") = 3) then
+                                    %>disabled
+                                    <%
+                                    end if
+                                    %> 
+                                    id="ActionCancel<%=Result("ID")%>" onClick="CancelOrder(<%=Result("ID")%>)">
+                                <i class="lni lni-cross-circle" style="margin:0;padding:0;font-size:2em"></i>
+                        </button>
+                    </div>
+                    <br>
                 </div>
                 <div class="col-4">
+                    <div class="col-6">
+                                <% 
+                                    if Result("STATUS") = 0 then
+                                        %> <h4 id="OrderStatus<%=Result("ID")%>" class="confirm">Processing</h4> <%
+                                    elseif Result("STATUS") = 1 then
+                                        %> <h4 id="OrderStatus<%=Result("ID")%>" class="transit">Delivering</h4> <%
+                                    elseif Result("STATUS") = 2 then
+                                        %> <h4 id="OrderStatus<%=Result("ID")%>" class="delivered">Delivered</h4> <%
+                                    elseif Result("STATUS") = 3 then
+                                        %> <h4 id="OrderStatus<%=Result("ID")%>" class="cancel">Order cancelled</h4> <%
+                                    end if
+                                %>
+                    </div>
                     <div class="d-flex justify-content-between mb-2">
                         <h5>Price:</h5>
                         <div id="SubTotalElement" style="justify-content:center">
@@ -136,11 +160,15 @@
                         Result.close
                         set Result = nothing
                     %>
+                    
                 </div>
             </div>
             <hr class="my-4">
             <% for each item in listOrderItems %>
                         <div class="row mb-4 d-flex justify-content-between align-items-center">
+                            <div class="col">
+                                <h6 class="mb-0">X<%=listOrderItems(item).Quantity%></h6>
+                            </div>
                             <div class="col-2">
                                 <a style="color:black ; text-decoration:none" href="../ShoppingFeature/productDetail.asp?id=<%=listOrderItems(item).ProductID%>">
                                     <h6 class="text-black mb-0"><%=listOrderItems(item).ProductName%></h6>
@@ -149,16 +177,9 @@
                             <div class="col">
                                 <h6 class="text-black mb-0">Size: <%=listOrderItems(item).Size%></h6>
                             </div>
-                            <div class="col">
-                                <h6 class="mb-0"><%=listOrderItems(item).Quantity%></h6>
-                            </div>
-                            <div class="col">
-                                <h6 class="text-black mb-0">X</h6>
-                            </div>
                             <div class="col-2">
                                 <h6 class="text-black mb-0 current_format"><%=listOrderItems(item).UnitPrice%></h6>
                             </div>
-                            <div class="col">=</div>
                             <div class="col-2">
                                 <h6 id="total" class="text-black mb-0 current_format"><%=listOrderItems(item).TotalPrice%></h6>
                             </div>
@@ -167,7 +188,8 @@
         </div>
     </div>
     <script>
-            $(document).ready(function() {
+    var localhostAddress = window.location.origin
+    $(document).ready(function() {
         $(".current_format").each(function() {
             var text = $(this).text();
             var formattedText = formatCurrencyVND(text);
@@ -175,8 +197,49 @@
         });
         function formatCurrencyVND(amount) {
         return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(amount)
+
+
         }
     });
+    function ToggleOrderStatus(id) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    if (this.responseText == "1") {
+                        document.getElementById("OrderStatus" + id).className = "transit";
+                        console.log(document.getElementById("OrderStatus" + id));
+                        document.getElementById("OrderStatus" + id).innerHTML = "Delivering";
+                    } else if (this.responseText == "2" ){
+                        document.getElementById("OrderStatus" + id).className = "delivered";
+                        document.getElementById("OrderStatus" + id).innerHTML = "Delivered";
+                        document.getElementById("ActionToggle" + id).disabled = true;
+                        document.getElementById("ActionCancel" + id).disabled = true;
+                    } else if (this.responseText == "3" ){
+                        document.getElementById("OrderStatus" + id).className = "cancel";
+                        document.getElementById("OrderStatus" + id).innerHTML = "Order Cancelled";
+                        document.getElementById("ActionToggle" + id).disabled = true;
+                        document.getElementById("ActionCancel" + id).disabled = true;
+                    }
+                }
+            };
+            xmlhttp.open("GET", localhostAddress + "/ManagmentFeatures/toggleOrderstatus.asp?id=" + id, true);
+            xmlhttp.send();
+        }
+        function CancelOrder(id) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    if (this.responseText == "3" ){
+                        document.getElementById("OrderStatus" + id).className = "cancel";
+                        document.getElementById("OrderStatus" + id).innerHTML = "Order cancelled";
+                        document.getElementById("ActionToggle" + id).disabled = true;
+                        document.getElementById("ActionCancel" + id).disabled = true;
+                    }
+                }
+            };
+            xmlhttp.open("GET", localhostAddress + "/ManagmentFeatures/cancelOrder.asp?id=" + id, true);
+            xmlhttp.send();
+        }
     </script>
 </body>
 </html>
