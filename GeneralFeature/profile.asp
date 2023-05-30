@@ -1,7 +1,9 @@
 <!--#include file="../connect.asp"-->
 <!--#include file="../models/customers.asp"-->
+<!--#include virtual="/ShoppingFeature/getOrderList.asp"-->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,6 +12,7 @@
     <link rel="stylesheet" href="/UIcomponents/ShoppingHeader.css">
     <link rel="stylesheet" href="/Resources/web-font-files/lineicons.css">
     <link rel="stylesheet" href="/GeneralFeature/profile.css">
+    <link rel="stylesheet" href="/css/getOrderList.css">
     <title>Document</title>
 </head>
 <body>
@@ -23,16 +26,20 @@
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li>
-                <a href="#" class="sidebar-item nav-link link-dark active" aria-current="page"><i class="lni lni-restaurant"></i> <p>My account</p> </a>
+                <a href="#" class="sidebar-item nav-link link-dark" aria-current="page" onclick="displayTab(0)" >
+                <i class="lni lni-restaurant"></i><p>My account</p></a>
             </li>
             <li>
-                <a href="/ShoppingFeature/myCart.asp" class="sidebar-item nav-link link-dark"><i class="lni lni-cart-full"></i> <p>My Cart</p></a>
+                <a href="/ShoppingFeature/myCart.asp" class="sidebar-item nav-link link-dark">
+                <i class="lni lni-cart-full"></i><p>My Cart</p></a>
             </li>
             <li>
-                <a href="#" class="sidebar-item nav-link link-dark"><i class="lni lni-ticket"></i> <p>Orders</p></a>
+                <a href="#" class="sidebar-item nav-link link-dark active" onclick="displayTab(1)">
+                <i class="lni lni-ticket"></i><p>Orders</p></a>
             </li>
             <li>
-                <a href="#" class="sidebar-item nav-link link-dark"><i class="lni lni-library"></i> <p>Purchase history</p></a>
+                <a href="#" class="sidebar-item nav-link link-dark" onclick="displayTab(2)">
+                <i class="lni lni-library"></i><p>Purchase history</p></a>
             </li>
         </ul>
   </div>
@@ -69,14 +76,14 @@
         set Result = nothing
 %>  
     <div class="container-custom">
-        <div id='account' class="account__settings">
+        <div id='account' class="accinfo account__settings">
             <h1>Account Information:</h1>
             <form action="" method="POST">
                 Email: <%=cust.Email%><br>
                 Name: <input class="form-control"  type="text" value="<%=cust.Name%>" name="name">
                 Phone number: <input  class="form-control" type="text" value="<%=cust.Phone%>" name="phone"> 
                 Address: <input class="form-control"  type="text" value="<%=cust.Address%>" name="address">
-            <button class="btn btn-danger" type="submit">Submit</button>
+                <button class="btn btn-danger" type="submit">Submit</button>
             </form> 
 
             <button class="btn" id="show" >Change Password <span><i class="lni lni-chevron-down"></i></span></button>
@@ -85,13 +92,23 @@
                     old password: <input class="form-control"  type="text" name="password">
                     new password: <input class="form-control" type="text" name="passwordchange">
                     confirm password: <input class="form-control" type="text" name="passwordreenter"> 
-                <button class="btn btn-danger" type="submit">change password</button>
-            </form>
+                    <button class="btn btn-danger" type="submit">change password</button>
+                </form>
             </div>
         </div>
 
-        <div id='orders' class="orders account__settings">
-            <h1>My Orders</h1>
+        <div id='orders' class="order_wrapper account__settings">
+            <div class="orderList">
+                <h1>My Orders</h1>
+                <!--#include virtual="/UIcomponents/displayTrackOrder.asp"-->
+            </div>
+        </div>
+
+        <div id='history' class="order_wrapper account__settings">
+            <div class="orderList">
+                <h1>My Purchase History</h1>
+                <!--#include virtual="/UIcomponents/displayOrderHistory.asp"-->
+            </div>
         </div>
     </div>
 <%end if%>
@@ -111,6 +128,29 @@
       $('.sidebar-item').removeClass("active")
       $(this).addClass("active");
     })
+    //Script for order items
+    $(".showbtn").click(function () {
+        $(this).toggleClass('rotate');
+        $(this).closest(".order__header").next().next().slideToggle(300)
+    })
+    $(document).ready(function() {
+        $('.account__settings').hide()
+        $('.account__settings:eq(1)').show()
+        $(".current_format").each(function() {
+            var text = $(this).text();
+            var formattedText = formatCurrencyVND(text);
+            $(this).text(formattedText);
+        });
+        function formatCurrencyVND(amount) {
+        return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(amount)
+        }
+    });
+</script>
+<script>
+    const displayTab = (tab) => {
+        $('.account__settings').hide()
+        $('.account__settings:eq('+tab+')').show()
+    }
 </script>
 <script src="../bootstrap-5.2.0-dist/js/bootstrap.min.js"></script>
 </body>

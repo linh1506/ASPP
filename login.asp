@@ -15,7 +15,7 @@
   </head>
   <body>
     <!--#include file="./UIcomponents/notification.asp"-->
-    <h1 class="store-title">ODGB</h1>
+    <h1 class="store-title"  onclick="location.href = '/'">ODGB</h1>
     <div class="change-mode">
         <p>Chưa có tài khoản ?</p>
         <button onclick="Reveal()" class="btn ">

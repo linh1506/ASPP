@@ -238,4 +238,14 @@
   border-radius: 5px;
   font-size: 1.2rem;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  transition: all .1s ease;
+}
+.loginbtn:hover{
+  color: var(--primary);
+  background-color: var(--accent);
+}
+.loginbtn i{
+  margin-right: .2rem;
 }

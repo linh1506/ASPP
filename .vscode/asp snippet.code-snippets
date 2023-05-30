@@ -10,6 +10,11 @@
 			"body": ["<!--#include file=\"$1\"-->",],
 			"description": "include file"
 		},
+		"Include Virtual":{
+			"prefix": "inv",
+			"body": ["<!--#include virtual=\"$1\"-->",],
+			"description": "include virtual"
+		},
 		"Reverse Open Script":{
 			"prefix": "ros",
 			"body": ["%>\n\t$1\n<%",],

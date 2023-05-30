@@ -56,6 +56,7 @@
                     <i class='lni lni-cart'></i>
                 </a>
                 <% if (IsNull(Session("Email")) or Trim(Session("Email"))="") then %>
+                <a href="/ShoppingFeature/TrackOrder.asp" class='loginbtn'><i class="lni lni-eye"></i>Track My Order</a>
                 <a href="../login.asp" class='loginbtn'>Đăng nhập</a>
                 <%
                         else 

@@ -13,6 +13,7 @@ End Sub
 Sub Session_OnEnd
   Application.Lock
   Application("visitors") = Application("visitors") - 1
+  Session("Id") = 1
   Application.UnLock
 End Sub
 
