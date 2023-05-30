@@ -301,7 +301,7 @@ end if
           }
         }
         var discouptPrice = Math.ceil(subTotal * <%=discountValue%>)
-        var discountPercent = Math.ceil(discouptPrice/subTotal);
+        var discountPercent = Math.ceil((discouptPrice/subTotal)*100);
         document.getElementById("Discount").innerText = "- " +  discouptPrice+"đ (- "+discountPercent+"%)";
       }
 
@@ -355,7 +355,7 @@ end if
           timeout: 600000,
           success: function (data) {
             console.log(data),
-            alert("Purchase was successfully")
+            alert("Purchase was successfully, your order id : " + data)
             window.location.href = localhostAddress;
           },
           error: function (e) {
