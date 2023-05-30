@@ -80,8 +80,10 @@
             <h1>Account Information:</h1>
             <form action="" method="POST">
                 Email: <%=cust.Email%><br>
-                Name: <input class="form-control"  type="text" value="<%=cust.Name%>" name="name">
-                Phone number: <input  class="form-control" type="text" value="<%=cust.Phone%>" name="phone"> 
+                Name: <input class="form-control" id="nameInput" type="text" value="<%=cust.Name%>" name="name">
+                <span class="error-message"></span><br>
+                Phone number: <input  class="form-control" id="phoneInput" type="text" value="<%=cust.Phone%>" name="phone"> 
+                <span class="error-message"></span><br>
                 Address: <input class="form-control"  type="text" value="<%=cust.Address%>" name="address">
                 <button class="btn btn-danger" type="submit">Submit</button>
             </form> 
@@ -151,6 +153,30 @@
         $('.account__settings').hide()
         $('.account__settings:eq('+tab+')').show()
     }
+</script>
+<script>
+    //script de validate change pass
+    $(document).ready(function() {
+        $("#nameInput, #phoneInput").on("input", function() {
+            var input = $(this);
+            var inputValue = input.val();
+
+            // Regular expression to match special characters
+            var specialCharRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+            if (inputValue.trim() === "") {
+            input.addClass("error");
+            input.next(".error-message").text("Please fill out all fields");
+            } else {
+                if (specialCharRegex.test(inputValue)) {
+                    input.addClass("error");
+                    input.next(".error-message").text("Invalid input. Special characters are not allowed.");
+                } else {
+                    input.removeClass("error");
+                    input.next(".error-message").text("");
+                }
+                }
+        });
+    })
 </script>
 <script src="../bootstrap-5.2.0-dist/js/bootstrap.min.js"></script>
 </body>

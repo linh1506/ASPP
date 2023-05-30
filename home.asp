@@ -37,7 +37,7 @@
       </div>
       <div class="container">
         <div class="category-display">
-          <div class="category-display-header">Bạn Đang Mua Sắm Cho Ai?</div>
+          <div class="category-display-header">Who are you shopping for?</div>
             <div class="category-display-list">
               <% for i = 1 to 3
                   %><a href="#" class='category-item'><%
@@ -46,10 +46,10 @@
                   next
               %>  
             </div>
-          <a class="category-display-footer">Xem tất cả các danh mục ></a>
+          <a class="category-display-footer">Check out all categories ></a>
         </div>
         <div class="new-product-display">
-          <h2 class='category-display-header'>Các Sản Phẩm Mới</h3>
+          <h2 class='category-display-header'>Featured products</h3>
           <div class="new-product-list">
               <%
                 Set featuredProduct = Server.CreateObject("Scripting.Dictionary")
@@ -85,8 +85,8 @@
           </div>
         </div>
         <div class="see-more">
-          <h3>vẫn còn nhiều thứ hay ho nữa</h3>
-          <a href="">KHÁM PHÁ THÊM</a>
+          <h3>There're still more going on</h3>
+          <a href="">EXPLORE !</a>
         </div>
       </div>
   <!-- Footer -->
@@ -102,6 +102,16 @@
           prevEl: ".swiper-button-prev",
         },
       });
+      $(document).ready(function() {
+        $(".current_format").each(function() {
+              var text = $(this).text();
+              var formattedText = formatCurrencyVND(text);
+              $(this).text(formattedText);
+          });
+          function formatCurrencyVND(amount) {
+          return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(amount)
+          }
+      })
   </script>
   </body>
 </html>

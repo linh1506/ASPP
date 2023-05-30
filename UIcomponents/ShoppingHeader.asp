@@ -8,38 +8,39 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active nav-custom" aria-current="page" href="../ShoppingFeature/listProducts.asp">SẢN PHẨM</a>
+                    <a class="nav-link active nav-custom" aria-current="page" href="../ShoppingFeature/listProducts.asp">PRODUCTS</a>
                 </li>
                 <li class="nav-item">
                     <div class="dropdown-custom">
-                        <a class="nav-link active nav-custom" aria-current="page" href="/">DANH MỤC</a>
+                        <a class="nav-link active nav-custom" aria-current="page" href="/">CATEGORIES</a>
                         <div class="dropdown-content">
                             <ul>
                                 <% for each item in listCategory %>
                                 <li>
                                     <div class="content-img" style="background-image:url('<%=listCategory(item).Image%>'); background-size:contain; background-repeat:no-repeat; background-position:right center"></div>
                                     <h2 class="drp-content-text" ><%=CStr(listCategory(item).Name)%></h2>
-                                    <a  class="drp-content-text" href="#">Xem danh sách sản phẩm ></a> 
+                                    <a  class="drp-content-text" href="#">Go to product list ></a> 
                                 </li>
                                 <% Next %>
                             </ul>
+                            <a class='showmore' href="/">Checkout all categories</a>
                         </div>
                     </div>
                 </li>
                 <li class="nav-item">
                     <div class="dropdown-custom">
-                        <a class="nav-link active nav-custom" aria-current="page" href="/"  >NHÃN HIỆU</a>
+                        <a class="nav-link active nav-custom" aria-current="page" href="/"  >BRANDS</a>
                         <div class="dropdown-content" id="dd2">
                             <ul>
                                 <% for item  = 1 To 3 %>
                                 <li>
                                     <div class="content-img" style="background-image:url('<%=allBrands(item).Image%>'); background-size:contain; background-repeat:no-repeat; background-position:right center"></div>
                                     <h2 class="drp-content-text" ><%=CStr(allBrands(item).Name)%></h2>
-                                    <a  class="drp-content-text" href="#">Xem danh sách sản phẩm ></a> 
+                                    <a  class="drp-content-text" href="#">Go to product list ></a> 
                                 </li>
                                 <% Next %>
                             </ul>
-                            <a class='showmore' href="/">Xem tất cả các nhãn hiệu</a>
+                            <a class='showmore' href="/">Checkout all brands</a>
                         </div>
                     </div>
                 </li>    
@@ -48,7 +49,7 @@
                 <% if (Trim(Session("Role")) = "ADMIN") then %>      
                         <a class="right-area" href="/management.asp">
                             <i class='lni lni-restaurant'></i>
-                            <h5>Quản Lý Cửa Hàng</h5>
+                            <h5>Store Management</h5>
                         </a>
                         
                 <% end if %>
@@ -57,11 +58,11 @@
                 </a>
                 <% if (IsNull(Session("Email")) or Trim(Session("Email"))="") then %>
                 <a href="/ShoppingFeature/TrackOrder.asp" class='loginbtn'><i class="lni lni-eye"></i>Track My Order</a>
-                <a href="../login.asp" class='loginbtn'>Đăng nhập</a>
+                <a href="../login.asp" class='loginbtn'>Login</a>
                 <%
                         else 
                 %>
-                <a href="../GeneralFeature/profile.asp" class="username">Xin chào, <%=Session("Name")%></a>
+                <a href="../GeneralFeature/profile.asp" class="username">Hello, <%=Session("Name")%></a>
                 <a href="../logout.asp" title = 'Đăng xuất' class='extbtn' ><i class = 'lni lni-enter '></i></a>
                 <%
                         End if
