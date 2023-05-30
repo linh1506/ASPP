@@ -244,7 +244,8 @@ end if
           var subtotal = parseFloat(document.getElementById("SubTotal").innerText.replace("đ", ""));
           var discount = Math.ceil(promoValue * subtotal);
           var total = subtotal - discount;
-          document.getElementById("Discount").innerText = "- " +  discount+"đ";
+          var discountPercent = Math.ceil(discount/subtotal);
+          document.getElementById("Discount").innerText = "- " +  discount+"đ (- "+discountPercent+"%)";
           document.getElementById("LastTotal").innerText = total+"đ";
       }
       
