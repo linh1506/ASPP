@@ -1,0 +1,130 @@
+@import url(/fonts.css);
+@import url(/palette.css);
+body,html {
+    margin: 0;
+    padding: 0;
+}
+html{
+    max-width: 100vw;
+}
+body{
+    width: 100%;
+    background-color: var(--secondary);
+}
+@media screen and (-webkit-device-pixel-ratio:1.25) {
+    .store-title{
+    font-size: 1.5rem;
+    padding: 1.6rem .6rem;
+    }
+    .form-component{
+        max-height: 60%;
+        font-size: 1rem;
+    }
+}
+@media screen and (-webkit-device-pixel-ratio:1.00) {
+    .store-title{
+    font-size: 3rem;
+    padding: 3rem 1rem;
+    }
+}
+.store-title{
+    font-family: Josefin;
+    color: var(--primary);
+    text-align: center;
+    margin: 0;
+    width: fit-content;
+    border: 7px solid var(--primary);
+    margin-left: auto;
+    margin-right: auto;
+    transform: translateY(0vh);
+    margin-bottom: 2.5rem;
+    margin-top: 1rem;
+    cursor: pointer;
+}
+.tracker{
+    display: flex;
+    justify-content: center;
+    font-family: quicksand;
+}
+.tracker-search{
+    background-color: var(--primary);
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input:focus{
+    outline: none;
+}
+@media screen and (min-width:992px) {
+    .tracker{
+        flex-direction: row;
+        width: 80%;
+        margin: auto
+    }
+    .tracker-search {
+        width: 40%;
+        padding: 2rem;
+        border-radius: 10px;
+        height: fit-content;
+    }
+    .order_wrapper{
+        width: 50%;
+       
+    }
+}
+.order_wrapper{
+    height: fit-content;
+    background-color: var(--primary);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 2rem auto;
+    margin-top: 0;
+    box-shadow: rgba(199, 199, 199, 0.171) 0px 22px 70px 3px;
+    /* animation: fadein 1s ease-out; */
+    animation: slidedown .3s ease-in;
+  }
+.orderList{
+    font-size: .7rem;
+    max-height: 80vh;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    padding: 2rem;
+    /* display: none; */
+  }
+  .orderList::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .orderList::-webkit-scrollbar-track {
+  
+    background-color: transparent;
+  }
+  
+  .orderList::-webkit-scrollbar-thumb {
+    background-color: #888888;
+    border-radius: 5px;
+    margin-right: 3rem;
+  }
+  
+  .orderList::-webkit-scrollbar-thumb:hover {
+    background-color: #555555;
+  }
+  .showbtn{
+    margin-left: auto;
+    height: fit-content;
+    font-size: 2em;
+    transition: all .1s linear;
+    transform: rotate(180);
+  }
+  .showbtn i{
+    vertical-align: middle;
+  }
+  .rotate {
+    transform: rotate(180deg);
+  }
+  @keyframes slidedown{
+    from{opacity: 0;transform: translateY(-3rem);}
+    to{opacity: 1;transform: translateY(0);}
+  }

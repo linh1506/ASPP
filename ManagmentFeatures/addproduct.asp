@@ -88,15 +88,15 @@
             <!-- Initial input fields -->
                 <div class="row size-quantity-inputs">
                     <div class="col-sm-4">
-                        <input type="number" class="form-control" name="shoe-size[]" placeholder="Size" />
+                        <input type="number" class="form-control" name="shoe-size[]" placeholder="Size"  min="0"/>
                     </div>
                     <div class="col-sm-4">
-                        <input type="number" class="form-control" name="shoe-quantity[]" placeholder="Quantity" />
+                        <input type="number" class="form-control" name="shoe-quantity[]" placeholder="Quantity" min="0" />
                     </div>
                     <div class="col-sm-4">
                         <button type="button" class="btn btn-danger" onclick="removeRow(this)">Delete</button>
                     </div>
-                </div>
+                </div>`
             </div>
             <!-- Add button -->
             <div class="form-group">
