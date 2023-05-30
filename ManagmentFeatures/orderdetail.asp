@@ -140,13 +140,13 @@
                     <div class="d-flex justify-content-between mb-2">
                         <h5>Price:</h5>
                         <div id="SubTotalElement" style="justify-content:center">
-                            <p class="current_format" id="SubTotal"><% Response.Write(Result("PROMOTION_VALUE") + Result("AMOUNT") )%></p>
+                            <p class="current_format" id="SubTotal"><% Response.Write(Result("AMOUNT") / (1-Result("PROMOTION_VALUE")))%></p>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
                         <h5>Discount:</h5>
-                        <div style="justify-content:center color:red">
-                            <p class="current_format" id="Discount"><%=Result("PROMOTION_VALUE")%></p>
+                        <div>
+                            <p class="current_format" id="Discount"><% Response.Write((Result("AMOUNT") / (1-Result("PROMOTION_VALUE")))- Result("AMOUNT"))%><p>
                         </div>
                     </div>
                     <hr class="my-4">
@@ -197,8 +197,6 @@
         });
         function formatCurrencyVND(amount) {
         return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(amount)
-
-
         }
     });
     function ToggleOrderStatus(id) {
