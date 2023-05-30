@@ -116,20 +116,20 @@
                     <div class="d-flex justify-content-between mb-2">
                         <h5>Price:</h5>
                         <div id="SubTotalElement" style="justify-content:center">
-                            <p id="SubTotal"><% Response.Write(Result("PROMOTION_VALUE") + Result("AMOUNT") )%> VND</p>
+                            <p class="current_format" id="SubTotal"><% Response.Write(Result("PROMOTION_VALUE") + Result("AMOUNT") )%></p>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
                         <h5>Discount:</h5>
                         <div style="justify-content:center color:red">
-                            <p id="Discount">- <%=Result("PROMOTION_VALUE")%> VND</p>
+                            <p class="current_format" id="Discount"><%=Result("PROMOTION_VALUE")%></p>
                         </div>
                     </div>
                     <hr class="my-4">
                     <div style="margin:0" class="d-flex justify-content-between mb-2">
                         <h5>Total price:</h5>
                         <div style="margin:0 ; justify-content:center">
-                            <p id="Amount"><%=Result("AMOUNT")%> VND</p>
+                            <p class="current_format" id="Amount"><%=Result("AMOUNT")%></p>
                         </div>
                     </div>
                     <%  
@@ -156,16 +156,27 @@
                                 <h6 class="text-black mb-0">X</h6>
                             </div>
                             <div class="col-2">
-                                <h6 class="text-black mb-0"><%=listOrderItems(item).UnitPrice%> VND</h6>
+                                <h6 class="text-black mb-0 current_format"><%=listOrderItems(item).UnitPrice%></h6>
                             </div>
-                            <div class="col-3">
-                                <h6 id="total" class="text-black mb-0"> = <%=listOrderItems(item).TotalPrice%> VND</h6>
+                            <div class="col">=</div>
+                            <div class="col-2">
+                                <h6 id="total" class="text-black mb-0 current_format"><%=listOrderItems(item).TotalPrice%></h6>
                             </div>
                         </div>
             <% next %>
         </div>
     </div>
     <script>
+            $(document).ready(function() {
+        $(".current_format").each(function() {
+            var text = $(this).text();
+            var formattedText = formatCurrencyVND(text);
+            $(this).text(formattedText);
+        });
+        function formatCurrencyVND(amount) {
+        return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(amount)
+        }
+    });
     </script>
 </body>
 </html>

@@ -775,7 +775,7 @@
                 if (this.readyState == 4 && this.status == 200) {
                     if (this.responseText == "3" ){
                         document.getElementById("OrderStatus" + id).className = "cancel";
-                        document.getElementById("OrderStatus" + id).innerHTML = "Đơn hàng đã huỷ";
+                        document.getElementById("OrderStatus" + id).innerHTML = "Order cancelled";
                         document.getElementById("ActionToggle" + id).disabled = true;
                         document.getElementById("ActionCancel" + id).disabled = true;
                     }
