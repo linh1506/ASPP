@@ -301,7 +301,7 @@ end if
           }
         }
         var discouptPrice = Math.ceil(subTotal * <%=discountValue%>)
-        var discountPercent = Math.ceil(discouptPrice/subTotal);
+        var discountPercent = Math.ceil((discouptPrice/subTotal)*100);
         document.getElementById("Discount").innerText = "- " +  discouptPrice+"đ (- "+discountPercent+"%)";
       }
 
