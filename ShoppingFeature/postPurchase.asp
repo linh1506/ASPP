@@ -77,7 +77,7 @@
 
     Session.Contents.Remove("Mycart")
 
-    Response.Write("OK")
+    ' Response.Write("OK")
     Response.Write(idOrder)
 
 %>
