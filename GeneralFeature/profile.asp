@@ -3,6 +3,7 @@
 <!--#include virtual="/ShoppingFeature/getOrderList.asp"-->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -135,15 +136,14 @@
     $(document).ready(function() {
         $('.account__settings').hide()
         $('.account__settings:eq(1)').show()
-      $(".current_format").each(function() {
-        var text = $(this).text();
-        var formattedText = formatCurrencyVND(text);
-        $(this).text(formattedText);
-      });
-
-      function formatCurrencyVND(amount) {
+        $(".current_format").each(function() {
+            var text = $(this).text();
+            var formattedText = formatCurrencyVND(text);
+            $(this).text(formattedText);
+        });
+        function formatCurrencyVND(amount) {
         return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(amount)
-      }
+        }
     });
 </script>
 <script>
