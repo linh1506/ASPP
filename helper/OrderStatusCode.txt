@@ -1,0 +1,4 @@
+0-> Đang nhận đơn
+1-> Đơn hàng đang giao
+2-> Đơn hàng đã giao
+3->Đơn hàng bị hủy

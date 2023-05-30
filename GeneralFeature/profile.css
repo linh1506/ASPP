@@ -1,46 +1,115 @@
 @import url(/palette.css);
 @import url(/fonts.css);
-html{
-    padding: 0;
-    margin: 0;
-    height: 100vh;
-    width: 100vw;
+html {
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
 }
-body{
-    padding: 0;
-    margin: 0;
-    height: 100%;
-    width: 100%;
-    background-color: var(--secondary);
-    font-family: quicksand;
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  background-color: var(--secondary);
+  font-family: quicksand;
 }
-.account__settings{
-    background-color: var(--primary);
-    width: 50%;
-    margin: 2rem auto;
-    border-radius:  10px;
-    padding: 2rem;
-    box-shadow: rgba(199, 199, 199, 0.336) 0px 22px 70px 4px;
-    animation: fadein 1s ease-out;
+.container-custom{
+    margin-left: 280px;
 }
-form{
-    padding: 0 .5rem;
+@media screen and (min-width:992px) and (max-width:1240px) {
+    .account__settings{
+        width: clamp(50%,80%,80%);
+    }
 }
-button[type=submit]{
-    margin-top: .5rem;
+@media screen and (min-width:1240px) {
+    .account__settings{
+        width: 50%;
+    }
+}
+.account__settings {
+  background-color: var(--primary);
+  margin: 2rem auto;
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: rgba(199, 199, 199, 0.336) 0px 22px 70px 4px;
+  animation: fadein 1s ease-out;
+}
+form {
+  padding: 0 0.5rem;
+}
+button[type="submit"] {
+  margin-top: 0.5rem;
 }
 .account__settings #show span i {
- vertical-align: middle;
+  vertical-align: middle;
 }
-#show{
-    background-color: none;
-    margin: 1.2rem 0;
-    font-size: 1.2rem;
+#show {
+  background-color: none;
+  margin: 1.2rem 0;
+  font-size: 1.2rem;
 }
-#change__password{
-    display: none;
+#change__password {
+  display: none;
+}
+
+.sidebar {
+  margin: 0;
+  position: fixed;
+  z-index: 99;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  height: 90vh;
+  background-color: var(--primary);
+  animation: slidein 0.5s ease;
+  width: 280px;
+}
+.sidebar ul {
+  width: 100%;
+}
+.sidebar-toggler {
+  position: fixed;
+  z-index: 98;
+  color: var(--primary);
+  padding: 0.5rem .5rem;
+  border-radius: 5px;
+  border: .5px solid var(--primary);
+  left:1rem;
+  display: grid;
+  place-items: center;
 }
 @keyframes fadein {
-    from{opacity: 0;}
-    to{opacity: 100%;}
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 100%;
+  }
+}
+@keyframes slidein {
+  from {
+    transform: translateX(-280px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+.backicon{
+    margin-left: auto;
+    font-size: 1.5rem;
+}
+.nav-link{
+  vertical-align: middle;
+  display: flex;
+  align-items: center;
+}
+.nav-link p{
+  margin: 0;
+}
+.nav-link i{
+  /* vertical-align: middle; */
+  margin-right: .5rem;
+}
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+  background-color: var(--accent);
 }

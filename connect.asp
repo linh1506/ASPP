@@ -1,6 +1,5 @@
 <%@LANGUAGE="VBSCRIPT" CODEPAGE="65001" %>
 <%
-'code here
 Dim connDB
 set connDB = Server.CreateObject("ADODB.Connection")
 Dim strConnection,ambatukam
