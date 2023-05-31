@@ -146,16 +146,16 @@ iframe{
 
 }
 .confirm{
-    color:var(--bs-primary)
+    color:var(--azure)
 }
 .transit{
-    color:var(--bs-warning)   
+    color:var(--orange)   
 }
 .delivered{
-    color:var(--bs-success)
+    color:var(--green)
 }
 .cancel{
-    color:var(--bs-danger)
+    color:var(--red)
 }
 .btnAction{
     background-color: transparent;

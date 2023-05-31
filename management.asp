@@ -170,7 +170,6 @@
         <script src="/bootstrap-5.2.0-dist/js/bootstrap.min.js                                                                                                              "></script>
         <link rel="stylesheet" href="/management.css">
         <link rel="stylesheet" href="/UIcomponents/ManagementHeader.css">
-        <link rel="stylesheet" href="./bootstrap-5.2.0-dist/css/bootstrap.min.css"/>
         <title>Quản lý cửa hàng</title>
     </head>
     <body>
