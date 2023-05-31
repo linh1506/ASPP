@@ -39,26 +39,34 @@
                     If (Request.ServerVariables("REQUEST_METHOD") = "POST") THEN
                         phone = Request.Form("phone")
                         order = Request.Form("orderNumber")
-                        Dim cmdPrep
-                        set cmdPrep = Server.CreateObject("ADODB.Command")
-                        cmdPrep.ActiveConnection = connDB
-                        cmdPrep.CommandType=1
-                        cmdPrep.Prepared=true
-                        cmdPrep.CommandText =  "select * from ORDERS where CREATED_BY = 1 and STATUS not in(2,3) and RECEIVER_PHONE = "&phone&" and ID ="& order
-                        set result = cmdPrep.execute
+                        if Trim(phone)<>"" and Trim(order)<>"" then
+                            Dim cmdPrep
+                            set cmdPrep = Server.CreateObject("ADODB.Command")
+                            cmdPrep.ActiveConnection = connDB
+                            cmdPrep.CommandType=1
+                            cmdPrep.Prepared=true
+                            cmdPrep.CommandText =  "select * from ORDERS where CREATED_BY = 1 and STATUS not in(2,3) and RECEIVER_PHONE = "&phone&" and ID ="& order
+                            set result = cmdPrep.execute
 
-                %>  
-                        <%if result.EOF then%>
-                            <div id='orders' class="orderList">
-                                <h1>Sorry, we couldn't find your shit</h1>
-                        <%else
-                            session("trackerId") = order
-                            session("trackerPhone") = phone
+                    %>  
+                            <%if result.EOF then%>
+                                <div id='orders' class="orderList">
+                                    <h1>Sorry, we couldn't find your shit</h1>
+                            <%else
+                                session("trackerId") = order
+                                session("trackerPhone") = phone
+                                %>
+                                <div id='orders' class="orderList">
+                                    <h1>My Orders</h1>
+                                    <!--#include virtual="/UIcomponents/displayTrackOrder.asp"-->
+                                <%
+                            end if
+                        else
                         %>
                             <div id='orders' class="orderList">
-                                <h1>My Orders</h1>
-                                <!--#include virtual="/UIcomponents/displayTrackOrder.asp"-->
-                        <%end if
+                                <h1>Sorry, we couldn't find your shit</h1>
+                        <%
+                        end if
                     end if
                 %>
             </div>

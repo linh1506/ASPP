@@ -23,7 +23,7 @@
             <div>
                 <!-- Name Product -->
                 <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" name="name">
+                <input type="text" class="form-control" id="name" name="name" required>
             </div>
             <div class="parent">
                 <div class='div1'>
@@ -74,7 +74,7 @@
 
                 <div class='div4'>
                     <label for="price" class="form-lable">Opening Price:</label>
-                    <input type="number" name="price" oninput="this.value|=0" id="price">
+                    <input type="number" name="price" oninput="this.value|=0" id="price" required>
                 </div>
             </div>
 
@@ -88,10 +88,10 @@
             <!-- Initial input fields -->
                 <div class="row size-quantity-inputs">
                     <div class="col-sm-4">
-                        <input type="number" class="form-control" name="shoe-size[]" placeholder="Size"  min="0"/>
+                        <input type="number" class="form-control input" name="shoe-size[]" placeholder="Size"  min="0" required/>
                     </div>
                     <div class="col-sm-4">
-                        <input type="number" class="form-control" name="shoe-quantity[]" placeholder="Quantity" min="0" />
+                        <input type="number" class="form-control input" name="shoe-quantity[]" placeholder="Quantity" min="0" required/>
                     </div>
                     <div class="col-sm-4">
                         <button type="button" class="btn btn-danger" onclick="removeRow(this)">Delete</button>
@@ -106,13 +106,13 @@
             <div id="inputContainer">
                 <label for="input1">Images:</label>
                 <div class="form-group">
-                    <input type="text" class="form-control image-input" id="input1" name="input[]" required>
+                    <input type="text" class="form-control input image-input" id="input1" name="input[]" required>
                     <button type="button" class="btn btn-danger removeButton">Remove</button>
                 </div>
             </div>
              <button type="button" class="btn btn-primary addButton">Add</button>
             <!-- SUBMIT -->
-            <button type="submit" class="btn btn-success submit-btn" style="display:block;">Submit</button>
+            <button type="submit" class="btn btn-success submit-btn" style="display:block;" id="submitbtn">Submit</button>
         </form>
         <script>
             window.onload = function() {
@@ -186,52 +186,74 @@
                     Else
                     checkbox = False
                 End If
-                Response.Write TypeName(checkbox) & " "
                 JSONstring = ArrayToJson()
-                Response.Write  JSONstring & " "
-                Response.Write TypeName(JSONstring) & " "
                 price = Request.Form("price")
                 price =CLng(price)
-                Response.Write TypeName(price) & " "
                 description = Request.Form("description")
-                Response.Write TypeName(description) & " "
                 shoeName = Request.Form("name")
-                Response.Write TypeName(shoeName) & " "
                 shoeCategory = Request.Form("category")
                 shoeCategory = Cint(shoeCategory)
-                Response.Write TypeName(shoeCategory) & " "
                 shoeBrand = Request.Form("brand")
                 shoeBrand = Cint(shoeBrand)
-                Response.Write TypeName(shoeBrand) & " "
-                cmdPrep.CommandText = "insert into PRODUCT(DESCRIPTION,IS_AVAILABLE,NAME,PRODUCT_IMAGE,PRICE,BRAND_ID,CATEGORY_ID) values(?,?,?,?,?,?,?)"
-                cmdPrep.parameters.Append cmdPrep.createParameter("description",202,1,-1,description)
-                cmdPrep.parameters.Append cmdPrep.createParameter("isAvailable",11,1, ,checkbox)
-                cmdPrep.parameters.Append cmdPrep.createParameter("ShoeName",202,1,-1,shoeName)
-                cmdPrep.parameters.Append cmdPrep.createParameter("productImage",202,1,-1,JSONstring)
-                cmdPrep.parameters.Append cmdPrep.createParameter("price",3,1, ,price)
-                cmdPrep.parameters.Append cmdPrep.createParameter("brandID",3,1, ,shoeBrand)
-                cmdPrep.parameters.Append cmdPrep.createParameter("categoryID",3,1, ,shoeCategory)
-                cmdPrep.Execute
-                Dim shoeSizes, shoeQuantities
-                shoeSizes = Split(Request.Form("shoe-size[]"), ", ")
-                shoeQuantities = Split(Request.Form("shoe-quantity[]"), ", ")
-                Dim i
-                sqlQuery = "Select Top 1 ID from PRODUCT ORDER BY ID DESC"
-                cmdPrep.CommandText = sqlQuery
-                Set Result = cmdPrep.execute 
-                Set IDforSize = Result("ID")
-                For i = 0 To UBound(shoeSizes)
-                    cmdPrep.commandText="insert into PRODUCT_SIZE values(" & IDforSize & "," & Cint(shoeSizes(i)) & "," & Cint(shoeQuantities(i)) & ")"
-                    cmdPrep.execute
-                Next
-                If Err.Number = 0 Then  
-                    connDB.CommitTrans
-                Else
-                    ConnDB.RollbackTrans
-                end if
-                Response.redirect("/management.asp")
+                    cmdPrep.CommandText = "insert into PRODUCT(DESCRIPTION,IS_AVAILABLE,NAME,PRODUCT_IMAGE,PRICE,BRAND_ID,CATEGORY_ID) values(?,?,?,?,?,?,?)"
+                    cmdPrep.parameters.Append cmdPrep.createParameter("description",202,1,-1,description)
+                    cmdPrep.parameters.Append cmdPrep.createParameter("isAvailable",11,1, ,checkbox)
+                    cmdPrep.parameters.Append cmdPrep.createParameter("ShoeName",202,1,-1,shoeName)
+                    cmdPrep.parameters.Append cmdPrep.createParameter("productImage",202,1,-1,JSONstring)
+                    cmdPrep.parameters.Append cmdPrep.createParameter("price",3,1, ,price)
+                    cmdPrep.parameters.Append cmdPrep.createParameter("brandID",3,1, ,shoeBrand)
+                    cmdPrep.parameters.Append cmdPrep.createParameter("categoryID",3,1, ,shoeCategory)
+                    cmdPrep.Execute
+                    Dim shoeSizes, shoeQuantities
+                    shoeSizes = Split(Request.Form("shoe-size[]"), ", ")
+                    shoeQuantities = Split(Request.Form("shoe-quantity[]"), ", ")
+                    Dim i
+                    sqlQuery = "Select Top 1 ID from PRODUCT ORDER BY ID DESC"
+                    cmdPrep.CommandText = sqlQuery
+                    Set Result = cmdPrep.execute 
+                    Set IDforSize = Result("ID")
+                    For i = 0 To UBound(shoeSizes)
+                        cmdPrep.commandText="insert into PRODUCT_SIZE values(" & IDforSize & "," & Cint(shoeSizes(i)) & "," & Cint(shoeQuantities(i)) & ")"
+                        cmdPrep.execute
+                    Next
+                    If Err.Number = 0 Then  
+                        connDB.CommitTrans
+                    Else
+                        ConnDB.RollbackTrans
+                    end if
+                    Response.redirect("/management.asp")
             End If 
         %>
     </div>
+    <script>
+        function CheckInputs() {
+            var name = $('#name').val()
+            var Imageinput = $('.input').val()
+            if (Imageinput.trim()===""|| name.trim()==="" ) {
+                $('#submitbtn').addClass("disabled")
+            }
+            else{
+                $('#submitbtn').removeClass("disabled")
+            }
+        }
+        $('form').on('submit', function(event) {
+            event.preventDefault(); 
+            var isValid = true;
+            $('input[type="text"], input[type="number"], textarea').each(function() {
+                var fieldValue = $(this).val().trim(); 
+                if (fieldValue === '') {
+                isValid = false;
+                $(this).addClass('invalid'); 
+                } else {
+                $(this).removeClass('invalid');
+                }
+            });
+            if (isValid) {
+                this.submit()
+            } else {
+                alert('Vui lòng điền đầy đủ thông tin.');
+            }
+            });
+    </script>
   </body>
 </html>

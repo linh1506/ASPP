@@ -8,7 +8,7 @@ body{
     font-family: quicksand;
 }
 .btn-active {
-    background-color: var(--accent);
+    background-color: var(--accent)!important;
     transition: all .2s ease;
 }
 

@@ -26,6 +26,9 @@ body {
     rgba(242, 205, 92, 1) 100%
   ), repeat;  */
 }
+.invalid{
+  outline: 1px solid var(--accent);
+}
 label{
     font-family: quicksand;
     font-weight: bold;
