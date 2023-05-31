@@ -510,12 +510,12 @@
                     <div class="tabcontent" id="gallery">
                         <div class="mx-5 mt-5">
                             <!--#include virtual="models/gallery.asp"-->
-                            <h2>Thư viện ảnh:</h2>
+                            <h2>Gallery:</h2>
                             <div class="goto_uploader">
                                 <%
                                     Response.Write "<h4 class='goto_uploader__header'>Banner Location: </h4>" & Banner & "<br>"
                                 %>
-                                <a class="btn --btn-hv-red" href='/Images/BannerUpload.asp'>Thay Đổi Ảnh Banner</a>
+                                <a class="btn --btn-hv-red" href='/Images/BannerUpload.asp'>Change Banner</a>
                             </div> 
                             <div class="goto_uploader">
                                 <h4 class='goto_uploader__header'>Store's carousel:</h4>
@@ -524,7 +524,7 @@
                                         Response.Write SlideImages(item)&"<br>"
                                     next
                                 %>
-                                <a class="btn --btn-hv-red" href='/Images/GalleryUpload.asp'>Quản lý Ảnh SlideShow</a>
+                                <a class="btn --btn-hv-red" href='/Images/GalleryUpload.asp'>Carousel</a>
                             </div>
                         </div>
                     </div>

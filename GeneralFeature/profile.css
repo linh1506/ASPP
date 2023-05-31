@@ -12,6 +12,22 @@ body {
   background-color: var(--secondary);
   font-family: quicksand;
 }
+.form-control:focus {
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border: 1px solid var(--green);
+}
+.error{
+  border: 1px solid var(--red);
+}
+.error:focus{
+  border: 1px solid var(--red);
+}
+.error-message{
+  color: var(--red);
+  font-size: 0.8rem;
+}
 .container-custom{
     margin-left: 280px;
     max-width: calc(108%-280px);
@@ -139,8 +155,9 @@ button[type="submit"] {
 .accinfo{
   display: none;
 }
-
-
+input:focus{
+  outline: none;
+}
 .orderList::-webkit-scrollbar {
   width: 8px;
 }

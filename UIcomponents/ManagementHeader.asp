@@ -21,12 +21,12 @@
                     <i class='lni lni-cart'></i>
                 </a>
                 <% if (IsNull(Session("Email")) or Trim(Session("Email"))="") then %>
-                <a href="../login.asp" class='loginbtn'>Đăng nhập</a>
+                <a href="../login.asp" class='loginbtn'>Login</a>
                 <%
                         else
                           response.codepage = 65001
                 %>
-                <a href="../GeneralFeature/profile.asp" class="nav-link username">Xin chào, <%=Session("Name")%></a>
+                <a href="../GeneralFeature/profile.asp" class="nav-link username">Hello, <%=Session("Name")%></a>
                 <a href="../logout.asp" title = 'Đăng xuất' class='extbtn' ><i class = 'lni lni-enter '></i></a>
                 <%
                         End if
