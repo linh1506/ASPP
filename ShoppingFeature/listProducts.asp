@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="../Jquery/jquery-3.6.1.min.js"></script>
-    <title>Chi tiết sản phẩm</title>
     <link rel="stylesheet" href="../bootstrap-5.2.0-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href='../UIcomponents/ShoppingHeader.css'>
     <link rel="stylesheet" href='../UIcomponents/notification.css'>
     <link rel="stylesheet" href="../Resources/web-font-files/lineicons.css">
     <link rel="stylesheet" href="listProducts.css">
+    <title>Product list</title>
 </head>
 <body>
     <!--#include file="../UIcomponents/ShoppingHeader.asp"-->
@@ -69,7 +69,12 @@
             </div>
         </div>
     </div>
+        <div id="pagination-container"></div>
 <script>
+    var currentPage = 1
+    var totalPage = 0
+    var brandId = 0 
+    var categoryId = 0
     function formatCurrencyVND(amount) {
         return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(amount)
     }
@@ -77,7 +82,7 @@
     function render(object) {
         let htmlResult = "";
             object.list.forEach(item => {
-                var price = formatCurrencyVND(item.price);
+                let price = formatCurrencyVND(item.price)
                 htmlResult += "\
                 <div class=\"itemProduct\">\
                     <div class=\"card-image\">\
@@ -91,30 +96,31 @@
                     </div>\
                 </div>";
             });
+        $('#prd').html("");
         $('#prd').append(htmlResult);
     }
 
     function getList() {
+        brandId = $('#filterBrand').val()
+        categoryId = $('#filterCategory').val()
         $.ajax({
             url: localhostAddress + "/ShoppingFeature/showAllProducts.asp",
+            data:{currentPage,brandId,categoryId},
             method: "GET",
             success: function (result) {
                 var obj = result
-                render(obj);
+                totalPage = result.totalPage
+                render(obj)
+                createPagination(totalPage)
+                setActivePage()
             }
         })
     }
     function filter(brandId, categoryId) {
-        $.ajax({
-            url: localhostAddress + "/ShoppingFeature/showAllProducts.asp?brandid=" + brandId + "&categoryid=" + categoryId,
-            method: "GET",
-            success: function (result) {
-                var obj = result
-                console.log(obj);
-                $(".itemProduct").remove();
-                render(obj);
-            }
-        })
+        brandId = $('#filterBrand').val()
+        categoryId = $('#filterCategory').val()
+        currentPage = 1
+        getList();
     }
     $(function () {
         getList();
@@ -137,6 +143,52 @@
             filter(brandSelected, categorySelected);
         });
     });
+        function createPagination(totalPage) {
+        var previousPage = currentPage - 1;
+        var nextPage = currentPage + 1;
+        var paginationHTML = `<nav aria-label="Page navigation example" class="mt-5">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+                                      <a class="page-link" href="#" ${currentPage !== 1 ? `onclick="setPage(${previousPage})"` : ''}>Previous</a>
+                                    </li>`;
+        for (var i = 1; i <= totalPage; i++) {
+            if (i === currentPage) {
+                paginationHTML += `<li class="page-item active">
+                                    <a class="page-link" href="#" onclick="setPage(${i})">${i}</a>
+                                   </li>`;
+            } else {
+                paginationHTML += `<li class="page-item">
+                                    <a class="page-link" href="#" onclick="setPage(${i})">${i}</a>
+                                   </li>`;
+            }
+        }
+        paginationHTML += `<li class="page-item ${currentPage === totalPage ? 'disabled' : ''}">
+                              <a class="page-link" href="#" ${currentPage !== totalPage ? `onclick="setPage(${nextPage})"` : ''}>Next</a>
+                           </li>
+                         </ul>
+                        </nav>`;
+        $("#pagination-container").html(paginationHTML)
+    }
+
+    function setActivePage() {
+        let paginationItems = $('.page-item');
+        $('.page-item').each(function (item) {
+            item.removeClass('active');
+        });
+        var currentPageItem = $(`.page-item:nth-child(${currentPage + 1})`);
+        currentPageItem.allClass('active');
+    }
+
+    function setPage(page) {
+        if (page < 1) {
+            currentPage = 1;
+        } else if (page > totalPage) {
+            currentPage = totalPage;
+        } else {
+            currentPage = page;
+        }
+        getList();
+    }
 </script>
 </body>
 </html>
