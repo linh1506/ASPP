@@ -80,7 +80,7 @@
                         </a>\
                     </div>\
                     <div class=\"cd\">\
-                        <h3>"+item.name+"</h3>\
+                        <h3 class='text-name'>"+item.name+"</h3>\
                         <h5 class='cs'>"+item.price+"</h5>\
                     </div>\
                 </div>";
