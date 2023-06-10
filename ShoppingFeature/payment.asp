@@ -121,7 +121,7 @@ end if
         font-weight: bold;
         }
 
-      input[type="text"] {
+      input[type="text"],input[type="number"] {
         width: 100%;
         padding: 10px;
         border-radius: 5px;
@@ -160,7 +160,7 @@ end if
                 </tr>
                 <tr>
                     <td><label for="phone">Phone:</label></td>
-                    <td><input type="text" id="phone" requied value="<%=trim(phone)%>"></td>
+                    <td><input type="number" id="phone" requied value="<%=trim(phone)%>"></td>
                 </tr>
             </table>
         </div>
