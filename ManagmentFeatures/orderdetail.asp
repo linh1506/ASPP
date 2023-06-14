@@ -87,7 +87,7 @@
                     %>
                     <div>
                         <div class="row">
-                            <div class="col-12 d-flex justify-content-center"><h2># <%=Result("ID")%></h2></div>    
+                            <div class="col-12"><h2># <%=Result("ID")%></h2></div>    
                         </div>
                         <div><h6 class="text-primary">Created at <%=FormatDateTime(Result("CREATED_AT"),2)%></h6></div>
                             <div>
@@ -165,7 +165,7 @@
             </div>
             <hr class="my-4">
             <% for each item in listOrderItems %>
-                        <div class="row mb-4 d-flex justify-content-between align-items-center">
+                        <!--<div class="row mb-4 d-flex justify-content-between align-items-center">
                             <div class="col">
                                 <h6 class="mb-0">X<%=listOrderItems(item).Quantity%></h6>
                             </div>
@@ -183,7 +183,29 @@
                             <div class="col-2">
                                 <h6 id="total" class="text-black mb-0 current_format"><%=listOrderItems(item).TotalPrice%></h6>
                             </div>
-                        </div>
+                        </div> -->
+            <div class="text-center">
+                <table class="table table-hover table-bordered">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Product name</th>
+                            <th scope="col">Size</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Unit price</th>
+                            <th scope="col">Total price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a style="color:black ; text-decoration:none" href="../ShoppingFeature/productDetail.asp?id=<%=listOrderItems(item).ProductID%>"><%=listOrderItems(item).ProductName%></a></td>  
+                            <td><%=listOrderItems(item).Size%></td>
+                            <td><%=listOrderItems(item).Quantity%></td>
+                            <td class="current_format"><%=listOrderItems(item).UnitPrice%></td>
+                            <td class="current_format"><%=listOrderItems(item).TotalPrice%></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <% next %>
         </div>
     </div>

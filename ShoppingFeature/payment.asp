@@ -86,6 +86,8 @@ end if
     <link rel="stylesheet" href='../UIcomponents/notification.css'>
     <link rel="stylesheet" href="../Resources/web-font-files/lineicons.css">
     <script src="../Jquery/jquery-3.6.1.min.js"></script>
+    <script src="../bootstrap-5.2.0-dist/js/bootstrap.min.js"></script>
+
     <style>
         .col-8 {
           width: 100%;
@@ -119,7 +121,7 @@ end if
         font-weight: bold;
         }
 
-      input[type="text"] {
+      input[type="text"],input[type="number"] {
         width: 100%;
         padding: 10px;
         border-radius: 5px;
@@ -158,7 +160,7 @@ end if
                 </tr>
                 <tr>
                     <td><label for="phone">Phone:</label></td>
-                    <td><input type="text" id="phone" requied value="<%=trim(phone)%>"></td>
+                    <td><input type="number" id="phone" requied value="<%=trim(phone)%>"></td>
                 </tr>
             </table>
         </div>
@@ -196,8 +198,8 @@ end if
                     data-mdb-ripple-color="dark">Purchase</button>
             </div>
         </div>
-
       </div>
+
 
       <div class="row mt-3">
         <div class="col-12">
@@ -232,7 +234,31 @@ end if
           <% next %>
         </div>
       </div>
+ 
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="paymentModalLabel">Payment Notification</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Your payment has been successfully processed. Thank you for shopping with us! 
+        <p>Your order id is: <span id="orderid"></span></p>
+      </div>
+      <div class="modal-footer">
+        <button id="modal-ok" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
     </div>
+  </div>
+</div>
+
+      
+    </div>
+
+
+
     <script>
       var localhostAddress = window.location.origin
 
@@ -355,11 +381,14 @@ end if
           timeout: 600000,
           success: function (data) {
             console.log(data),
-            alert("Purchase was successfully, your order id : " + data)
-            window.location.href = localhostAddress;
+            $('#orderid').html(data)
+            $('#myModal').modal('show');
+            $('#modal-ok').click(function(){
+              $('#myModal').modal('hide');
+              window.location.href = localhostAddress;
+            });
           },
           error: function (e) {
-            
           }
         });
       }
