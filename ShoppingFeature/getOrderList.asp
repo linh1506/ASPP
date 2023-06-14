@@ -9,7 +9,7 @@
         cmdPrep.ActiveConnection = connDB
         cmdPrep.CommandType = 1
         cmdPrep.Prepared = True
-        cmdPrep.commandText = "select count(ID) as list from ORDERS where CREATED_BY = "&userId&" and STATUS not in(2,3)"
+        cmdPrep.commandText = "select count(ID) as list from ORDERS where STATUS = 0"
         Set result = cmdPrep.execute
         if not result.EOF then
             count = result("list")
@@ -78,6 +78,39 @@
         Loop
         set result = nothing
         set getOrderHistory = OrderList
+    End Function
+
+    Public Function getNewestOrders
+        If getOrdersCount = 0 Then
+            getNewestOrders = false
+            exit function
+        End if
+        dim seq,sql
+        sql = "select * from ORDERS where STATUS = 0"
+        set OrderList = Server.CreateObject("Scripting.Dictionary")
+        Set cmdPrep = Server.CreateObject("ADODB.Command")
+        cmdPrep.ActiveConnection = connDB
+        cmdPrep.CommandType = 1
+        cmdPrep.Prepared = True
+        cmdPrep.commandText = sql
+        Set result = cmdPrep.execute
+        seq = 0 
+        do While not result.EOF
+            seq=seq+1
+            set order = new orders
+            order.Id = result("ID")
+            order.Amount = result("AMOUNT")
+            order.CreateAt = result("CREATED_AT")
+            order.Address =result("RECEIVER_ADDRESS")
+            order.Phone = result("RECEIVER_PHONE")
+            order.Name = result("RECEIVER_NAME")
+            order.Status = result("STATUS")
+            order.PromoValue = result("PROMOTION_VALUE")
+            OrderList.add seq,order
+            result.MoveNext
+        Loop
+        set result = nothing
+        set getNewestOrders = OrderList
     End Function
 
     Public Function getOrderItems(orderId)

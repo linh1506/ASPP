@@ -29,19 +29,9 @@
                 <a href="../GeneralFeature/profile.asp" class="nav-link username">Hello, <%=Session("Name")%></a>
                 <a href="../logout.asp" title = 'Đăng xuất' class='extbtn' ><i class = 'lni lni-enter '></i></a>
                 <%
-                        End if
-                        Response.codepage = 1252      
+                        End if     
                 %>
             </div>
           </div>
         </div>
     </nav>
-
-
-<script>
-  var localhostAddress = window.location.origin;
-  var loginLink = document.getElementById("login_link");
-  loginLink.href = localhostAddress + "/login.asp";
-  var logout_link = document.getElementById("logout_link");
-  logout_link.href = localhostAddress + "/logout.asp";
-</script>

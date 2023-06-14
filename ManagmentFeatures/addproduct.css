@@ -19,12 +19,6 @@ body {
   position: relative;
 
   background: var(--primary);
-  /* background: linear-gradient(
-    180deg,
-    rgba(151, 84, 203, 1) 0%,
-    rgba(187, 132, 159, 1) 50%,
-    rgba(242, 205, 92, 1) 100%
-  ), repeat;  */
 }
 .invalid{
   outline: 1px solid var(--accent);

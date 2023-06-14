@@ -5,9 +5,9 @@
         <div class="page-address">
             <a href="<%=ParentUrl%>" class = "nav-link address"><%=Parent%></a>
             <span class='address-small'>></span>
-            <a href="#" class='nav-link address'><%=CurrentPage%></a>
+            <a class='nav-link address'><%=CurrentPage%></a>
         </div>
-        <a href="#" class="navbar-brand brand-custom">ODBG</a>
+        <a class="navbar-brand brand-custom">ODBG</a>
     </div>
 </nav>
 <script>

@@ -4,7 +4,8 @@
 <!--#include file="./models/customersDTO.asp" -->
 <!--#include file="./models/promotions.asp" -->
 <!--#include file="./models/brands.asp" -->
-<!--#include file="./models/orders.asp" -->
+<!--#include virtual="/ShoppingFeature/getOrderList.asp"-->
+<!--#include virtual="/UIcomponents/product_card.asp"-->
 <%
     ' ham lam tron so nguyen
     function Ceil(Number)
@@ -165,11 +166,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="/Resources/AdminLTE/dist/css/adminlte.min.css">
         <link rel="stylesheet" href="./Resources/web-font-files/lineicons.css">
-        <script src="./Jquery/jquery-3.6.1.min.js"></script>
-        <script src="/Resources/AdminLTE/dist/js/adminlte.min.js"></script>
-        <script src="/bootstrap-5.2.0-dist/js/bootstrap.min.js                                                                                                              "></script>
-        <link rel="stylesheet" href="/management.css">
         <link rel="stylesheet" href="/UIcomponents/ManagementHeader.css">
+        <link rel="stylesheet" href="/css/getOrderList.css">
+        <link rel="stylesheet" href="/UIcomponents/product_card.css">
+        <link rel="stylesheet" href="/management.css">
         <title>Quản lý cửa hàng</title>
     </head>
     <body>
@@ -183,6 +183,7 @@
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
                 <div class="nav nav-pills nav-sidebar flex-column">
+                    <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'statistic')" id="OpenManageStatistic">Statistics</button>
                     <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'products')" id="OpenManageProduct">Manage Products</button>
                     <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'customers')" id="OpenManageCustomer">Manage Customers</button>
                     <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'promotions')" id="OpenManagePromotion">Manage Promotions</button>
@@ -643,12 +644,64 @@
                             </div>
                         <%end if%> 
                     </div>
+                    <div class="tabcontent" id="statistic">
+                            <div class="top-products-wrapper">
+                                <h4>Top product past 5 months</h4>
+                                <div class="top-products">
+                                    <%
+                                        Set featuredProduct = Server.CreateObject("Scripting.Dictionary")
+                                        Set cmdPrep = Server.CreateObject("ADODB.Command")
+                                        cmdPrep.ActiveConnection = connDB
+                                        cmdPrep.CommandType = 1
+                                        cmdPrep.Prepared = True
+                                        'select 5 sản phẩm mới nhất theo ID và ảnh đầu tiên của nó
+                                        cmdPrep.commandText = "select * from topProducts"
+                                        set Result = cmdPrep.execute
+                                        seq = 0
+                                        do while not Result.EOF
+                                            seq = seq + 1
+                                            set product = New Products
+                                            product.Id = seq
+                                            product.Name = Result("NAME")
+                                            product.Price = Result("Frequency")
+                                            product.Image = Result("img")
+                                            featuredProduct.add seq,product
+                                            Result.MoveNext
+                                        Loop
+                                        Result.Close
+                                        set Result = nothing
+                                    for each item in featuredProduct
+                                    %> 
+                                        <a class="new-product" href="/Security/productPageHandler.asp?id=<%=featuredProduct(item).Id%>">
+                                            <%displaytopProduct featuredProduct(item)%>
+                                        </a>
+                                    <%next
+                                    %>
+                                </div>
+                                <a class='ml-4 my-3 text-black' href="/ManagmentFeatures/productStatistics.asp">See more ></a>
+                            </div>
+                            <div id='orders' class="order_wrapper account__settings">
+                                <div class="orderList">
+                                    <h4>You have <%=getOrdersCount%> new order(s)</span></h4>
+                                    <!--#include virtual="/UIcomponents/displayNewestOrders.asp"-->
+                                </div>
+                            </div>
+                            <div class="chart">
+                                <h4>Sales statistics for the last 5 months</h4>
+                                <canvas id="chart"></canvas>
+                                <a class='ml-3 my-3 text-black' href="/ManagmentFeatures/statistics.asp">See more ></a>
+                            </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <script src="./Jquery/jquery-3.6.1.min.js"></script>
+    <script src="/Resources/AdminLTE/dist/js/adminlte.min.js"></script>
+    <script src="/Resources/chart.js-4.3.0/package/dist/chart.umd.js"></script>
     <script>
         function openCity(evt, cityName) {
+            // window.history.pushState("object or string", "Title", "/"+window.location.href.substring(window.location.href.lastIndexOf('/') + 1).split("?")[0]);
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tabcontent");
             for (i = 0; i < tabcontent.length; i++) {
@@ -686,6 +739,10 @@
                 case 6
                 %>
                   document.getElementById("OpenManageOrder").click();
+                <%
+                case 7
+                %>
+                  document.getElementById("OpenManageStatistic").click();
                 <%
                 case else
                 %>
@@ -783,6 +840,10 @@
             xmlhttp.open("GET", localhostAddress + "/ManagmentFeatures/cancelOrder.asp?id=" + id, true);
             xmlhttp.send();
         }
+        $(".showbtn").click(function () {
+            $(this).toggleClass('rotate');
+            $(this).closest(".order__header").next().next().slideToggle(300)
+        })  
         $(document).ready(function() {
         $(".current_format").each(function() {
             var text = $(this).text();
@@ -792,7 +853,49 @@
         function formatCurrencyVND(amount) {
         return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(amount)
         }
-    });
+        });
+    </script>
+    <script>
+        <%  Dim rowCount
+            Set cmdPrep = Server.CreateObject("ADODB.Command")
+            cmdPrep.ActiveConnection = connDB
+            cmdPrep.CommandType = 1
+            cmdPrep.Prepared = True
+            'select 5 sản phẩm mới nhất theo ID và ảnh đầu tiên của nó
+            cmdPrep.commandText = "select count(*) as rowcs from monthlySales"
+            set Result = cmdPrep.execute
+            if not Result.EOF then
+                rowCount = Result("rowcs")
+            end if
+            set Result = nothing
+            if rowCount > 0 then
+        %>
+            const chartdata = [
+                <%
+                    Set cmdPrep = Server.CreateObject("ADODB.Command")
+                    cmdPrep.ActiveConnection = connDB
+                    cmdPrep.CommandType = 1
+                    cmdPrep.Prepared = True
+                    'select 5 sản phẩm mới nhất theo ID và ảnh đầu tiên của nó
+                    cmdPrep.commandText = "select top(5) * from monthlySales"
+                    set Result = cmdPrep.execute
+                    do while not Result.EOF
+                        %> {months: <%=Result("Month")%> ,sales: <%=Result("TotalEarnings")%> }, <%
+                        Result.MoveNext
+                    loop
+                    set Result = nothing
+                %>
+            ];
+            new Chart(
+                document.getElementById("chart"),{
+                    type:'bar',
+                    data:{  labels: chartdata.map(data=>data.months),
+                            datasets: [{    label:"sales number",
+                                            data: chartdata.map(data => data.sales),
+                                            backgroundColor:'#a3000085', 
+                                        }]}})
+                                            
+        <%end if%>
     </script>
   </body>
 </html>
