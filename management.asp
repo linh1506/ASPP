@@ -661,7 +661,7 @@
                                         do while not Result.EOF
                                             seq = seq + 1
                                             set product = New Products
-                                            product.Id = seq
+                                            product.Id = Result("PRODUCT_ID")
                                             product.Name = Result("NAME")
                                             product.Price = Result("Frequency")
                                             product.Image = Result("img")
