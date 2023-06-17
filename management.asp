@@ -267,7 +267,7 @@
                                                         </a>
                                                     </td>
                                                     <td>
-                                                        <a href="./Errors/404.asp" class="redirect-product-page">
+                                                        <a href="/ShoppingFeature/productDetail.asp?id=<%=listProducts(item).Id%>" class="redirect-product-page">
                                                             <i class = "lni lni-chevron-right-circle" style="margin:0;padding:0;color:#f3f3f3;font-size:1.5em"></i>
                                                         </a>
                                                     </td>

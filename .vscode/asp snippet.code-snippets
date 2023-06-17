@@ -30,5 +30,28 @@
 			"body": ["%>$1<%",],
 			"description": "exit out of current script batch and resume"
 		},
-
+		"query":{
+			"prefix": "qr",
+			"body": ["Set cmdPrep = Server.CreateObject(\"ADODB.Command\")\ncmdPrep.ActiveConnection = connDB\ncmdPrep.CommandType = 1\ncmdPrep.CommandText = \"${1:sql}\"\nSet Result = cmdPrep.execute",],
+			"description": "do a query"
+		},
+		"while result":{
+			"prefix": "wres",
+			"body": ["do while not Result.EOF\n'code here\n$0\nResult.MoveNext\nLoop\nResult.Close\nset Result = nothing"],
+			"description": "while result.eof"
+		},
+		"if result":{
+			"prefix": "ifres",
+			"body": ["if ${0:not} Result.EOF then\n\t$1\n\rend if "],
+			"description": "if result.eof"
+		},
+		"ifpost":{
+			"prefix": "ifp",
+			"body": ["If Request.ServerVariables(\"REQUEST_METHOD\") = \"POST\" Then\n\t${1:code here}\n\rEnd If"],
+			"description": "if post method"
+		},
+		"genCon":{
+			"prefix": "genCon",
+			"body": ["Dim connDB\nset connDB = Server.CreateObject(\"ADODB.Connection\")\nDim strConnection\nstrConnection =\"Provider=SQLOLEDB.1;Data Source=${1:FIRELINKSHRINE\\SQLEXPRESS};Database=${2:DB};User Id=${3:sa};Password=${4:123}\"\nconnDB.ConnectionString = strConnection\nconnDB.Open"]
+		}
 }
