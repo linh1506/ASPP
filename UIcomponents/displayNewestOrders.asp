@@ -13,7 +13,18 @@ Else
             <p class="order__statusText <%=getOrderStatus(userOrder(item).Status)%>"><%=getOrderStatusText(userOrder(item).Status)%></p>
             <div class="order__detail">
                 <div class="order__pricing">
-                        <h6>Order Subtotal: <span class="current_format"><%=userOrder(item).Amount / userOrder(item).PromoValue%></span></h6>
+                        <h6>Order Subtotal: <span class="current_format" <%
+                            if userOrder(item).PromoValue = 1  then
+                        %> style="display: none;" 
+                        <%end if%> >
+                        <%
+                            If userOrder(item).PromoValue = 0 Then
+                                Response.Write userOrder(item).Amount
+                            Else
+                                Response.Write userOrder(item).Amount / userOrder(item).PromoValue
+                            End if
+                        %>
+                        </span></h6>
                         <h6><p class="badge badge--green">Discount: -<%=CLng(CDbl(userOrder(item).PromoValue)*100)%>%</p></h6>
                         <h5>Order Total: <span class="current_format"><%=userOrder(item).Amount%></span></h5>
                 </div>
