@@ -190,6 +190,7 @@
                     <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'brands')" id="OpenManageBrand">Manage Brands</button>
                     <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'gallery')" id="OpenManageGallery">Store's Gallery</button>
                     <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'order')" id="OpenManageOrder">Orders Management</button>  
+                    <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'categories')" id="OpenManageOrder">Manage Categories</button>  
                 </div>
             </nav>
         </aside>
@@ -691,6 +692,42 @@
                                 <canvas id="chart"></canvas>
                                 <a class='ml-3 my-3 text-black' href="/ManagmentFeatures/statistics.asp">See more ></a>
                             </div>
+                    </div>
+                    <div class="tabcontent" id="categories">
+                        <h1 class='content-header'>Manage Categories</h1>
+                        <div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%
+                                        Set cmdPrep = Server.CreateObject("ADODB.Command")
+                                        cmdPrep.ActiveConnection = connDB
+                                        cmdPrep.CommandType = 1
+                                        cmdPrep.Prepared = True
+                                        cmdPrep.commandText = "SELECT * from CATEGORY"
+                                        set Result = cmdPrep.execute
+                                        do while not Result.EOF 
+                                    %>  
+                                            <tr>
+                                                <td><%=Result("ID")%></td>
+                                                <td><%=Result("NAME")%></td>
+                                                <td><a class="btn btn-info" href="./ManagmentFeatures/editCategory.asp?id=<%=Result("ID")%>">Edit</a></td>
+                                            </tr>
+                                    <%
+                                            Result.MoveNext
+                                        loop
+                                        Result.Close
+                                        set Result = nothing
+                                    %>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
