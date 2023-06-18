@@ -170,10 +170,12 @@
         <link rel="stylesheet" href="/css/getOrderList.css">
         <link rel="stylesheet" href="/UIcomponents/product_card.css">
         <link rel="stylesheet" href="/management.css">
+        <link rel="stylesheet" href='/UIcomponents/notification.css'>
         <title>Quản lý cửa hàng</title>
     </head>
     <body>
     <!--#include file="./UIcomponents/pageLoader.asp"-->
+    <!--#include file="./UIcomponents/notification.asp"-->
     <div class="wrapper">
         <!--#include file="./UIcomponents/ManagementHeader.asp"-->
         <aside class='main-sidebar sidebar-dark-primary elevation-4'>
@@ -450,10 +452,13 @@
                     </div>
                     <div id="brands" class="tabcontent">
                         <h1 class='content-header'>Manage Brands</h1>
-                        <!-- <form action="./ManagmentFeatures/addBrand.asp" method="POST">
-                            <input type="text" name="nameBrand">
-                            <button type="submit" class="btn btn-outline-primary">Add Brand</button>
-                        </form> -->
+                        <form action="./ManagmentFeatures/addBrand.asp" method="POST">
+                            <label for="nameBrand">Name Brand:</label>
+                            <input type="text" name="nameBrand" id="nameBrand">
+                            <label for="imgBrand">Link Image:</label>
+                            <input type="text" name="imgBrand" id="imgBrand">
+                            <button type="button" onClick="addOrEditBrand()" class="btn btn-outline-primary">Submit</button>
+                        </form>
                         <%if (totalRowsBrands = 0) then%>
                             <h5>THERE'S NO ONE AT ALL</h5>
                         <%else%>
@@ -463,6 +468,7 @@
                                         <tr>
                                             <th scope="col">#</th>
                                             <th scope="col">Name</th>
+                                            <th scope="col">Preview</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -480,6 +486,7 @@
                                                 set brand = new brands
                                                 brand.Id = Result("ID")
                                                 brand.Name = Result("NAME")
+                                                brand.Image = Result("IMG")
                                                 listBrands.add seq,brand
                                                 Result.MoveNext
                                             loop
@@ -490,6 +497,7 @@
                                         <tr>
                                             <td><%=listBrands(item).Id%></td>
                                             <td><%=listBrands(item).Name%></td>
+                                            <td><a href="<%=listBrands(item).Image%>" ><%=listBrands(item).Image%></a></td>
                                         </tr>
                                         <% Next %>
                                     </tbody>
@@ -736,6 +744,36 @@
     <script src="./Jquery/jquery-3.6.1.min.js"></script>
     <script src="/Resources/AdminLTE/dist/js/adminlte.min.js"></script>
     <script src="/Resources/chart.js-4.3.0/package/dist/chart.umd.js"></script>
+    <script>
+        function addOrEditBrand(){
+            let nameBrand = document.getElementById('nameBrand').value;
+            let imgBrand = document.getElementById('imgBrand').value;
+            // if(!nameBrand){
+            //     notification('empty brand name',"var(--bs-orange)")
+            //     return;
+            // }else{
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        if(this.responseText == "Insert"){
+                            notification('Insert Success',"var(--bs-green)")
+                        }else{
+                            if(this.responseText == "Update"){
+                                notification('Update Success',"var(--bs-green)")
+                            }else
+                            notification('Submit Error, Brand name is not empty',"var(--bs-orange)")
+                        }
+                        setTimeout(() => {
+                            window.location.href = "/management.asp?type=4";
+                        }, 2000);
+                    }
+                };
+                xmlhttp.open("POST", "/ManagmentFeatures/addOrEditBrand.asp?nameBrand="+nameBrand+"&imgBrand="+imgBrand, true);
+                xmlhttp.send();
+            // }
+
+        }
+    </script>
     <script>
         function openCity(evt, cityName) {
             // window.history.pushState("object or string", "Title", "/"+window.location.href.substring(window.location.href.lastIndexOf('/') + 1).split("?")[0]);
