@@ -497,7 +497,7 @@
                                         <tr>
                                             <td><%=listBrands(item).Id%></td>
                                             <td><%=listBrands(item).Name%></td>
-                                            <td><a href="<%=listBrands(item).Image%>" ><%=listBrands(item).Image%></a></td>
+                                            <td><a href="<%=listBrands(item).Image%>" target="_blank"><%=listBrands(item).Image%></a></td>
                                         </tr>
                                         <% Next %>
                                     </tbody>
