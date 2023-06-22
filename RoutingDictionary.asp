@@ -31,6 +31,10 @@
             Parent = "Management"
             CurrentPage = "Product Sales"
             ParentUrl = "/management.asp?type=7"
+        case "addoreditbrand"
+            Parent = "Management"
+            CurrentPage = "Action to Brand"
+            ParentUrl = "/management.asp?type=4"
     end select
 
         'Readable version

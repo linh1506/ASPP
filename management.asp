@@ -165,6 +165,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="/Resources/AdminLTE/dist/css/adminlte.min.css">
+        <link rel="stylesheet" href="/Resources/AdminLTE/plugins/toastr/toastr.min.css">
         <link rel="stylesheet" href="./Resources/web-font-files/lineicons.css">
         <link rel="stylesheet" href="/UIcomponents/ManagementHeader.css">
         <link rel="stylesheet" href="/css/getOrderList.css">
@@ -452,13 +453,7 @@
                     </div>
                     <div id="brands" class="tabcontent">
                         <h1 class='content-header'>Manage Brands</h1>
-                        <form action="./ManagmentFeatures/addBrand.asp" method="POST">
-                            <label for="nameBrand">Name Brand:</label>
-                            <input type="text" name="nameBrand" id="nameBrand">
-                            <label for="imgBrand">Link Image:</label>
-                            <input type="text" name="imgBrand" id="imgBrand">
-                            <button type="button" onClick="addOrEditBrand()" class="btn btn-outline-primary">Submit</button>
-                        </form>
+                        <a href="/ManagmentFeatures/addOrEditBrand.asp" class="btn btn-success">Create A Brand</a>
                         <%if (totalRowsBrands = 0) then%>
                             <h5>THERE'S NO ONE AT ALL</h5>
                         <%else%>
@@ -469,6 +464,7 @@
                                             <th scope="col">#</th>
                                             <th scope="col">Name</th>
                                             <th scope="col">Preview</th>
+                                            <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -498,6 +494,7 @@
                                             <td><%=listBrands(item).Id%></td>
                                             <td><%=listBrands(item).Name%></td>
                                             <td><a href="<%=listBrands(item).Image%>" target="_blank"><%=listBrands(item).Image%></a></td>
+                                            <td><a href="/ManagmentFeatures/addOrEditBrand.asp?id=<%=listBrands(item).Id%>" class="btn btn-success">Edit</a></td>
                                         </tr>
                                         <% Next %>
                                     </tbody>
@@ -744,7 +741,23 @@
     <script src="./Jquery/jquery-3.6.1.min.js"></script>
     <script src="/Resources/AdminLTE/dist/js/adminlte.min.js"></script>
     <script src="/Resources/chart.js-4.3.0/package/dist/chart.umd.js"></script>
+    <script src="/Resources/AdminLTE/plugins/toastr/toastr.min.js"></script>
     <script>
+        <%
+            if  not isempty(Session("Success")) then
+            %>
+                toastr.success("<%=Session("Success")%>")
+            <%
+                Session.Contents.remove("Success")
+            else
+                if not isempty(Session("Error")) then
+                %>
+                    toastr.error("<%=Session("Error")%>")
+                <%
+                    Session.Contents.remove("Error")
+                end if
+            end if
+        %>
         function addOrEditBrand(){
             let nameBrand = document.getElementById('nameBrand').value;
             let imgBrand = document.getElementById('imgBrand').value;
@@ -756,12 +769,12 @@
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         if(this.responseText == "Insert"){
-                            notification('Insert Success',"var(--bs-green)")
+                            toastr.success('Insert Success')
                         }else{
                             if(this.responseText == "Update"){
-                                notification('Update Success',"var(--bs-green)")
+                                toastr.success('Update Success')
                             }else
-                            notification('Submit Error, Brand name is not empty',"var(--bs-orange)")
+                            toastr.error('Submit Error, Brand name is not empty')
                         }
                         setTimeout(() => {
                             window.location.href = "/management.asp?type=4";
