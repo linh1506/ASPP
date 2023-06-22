@@ -23,7 +23,7 @@ End Sub
             connDB.Open()
             cmdPrep.ActiveConnection = connDB
             cmdPrep.CommandType = 1
-            cmdPrep.CommandText = "SELECT * FROM brand WHERE id="&id
+            cmdPrep.CommandText = "SELECT * FROM category WHERE id="&id
             Set Result = cmdPrep.execute 
 
             If not Result.EOF then
@@ -36,23 +36,23 @@ End Sub
         End If
     Else
         id = Request.QueryString("id")
-        name = Request.form("name")
-        url = request.form("url")
+        name = trim(Request.form("name"))
+        url = trim(request.form("url"))
 
         if (isnull (id) OR trim(id) = "") then id=0 end if
 
         if (cint(id)=0) then
-            if name<>"" and not isnull(name) then
+            if not isempty(name) then
                 Set cmdPrep = Server.CreateObject("ADODB.Command")
                 cmdPrep.ActiveConnection = connDB
                 cmdPrep.CommandType = 1
                 cmdPrep.Prepared = True
-                cmdPrep.CommandText = "INSERT INTO brand(name,img) VALUES('"&name&"','"&url&"')"
+                cmdPrep.CommandText = "INSERT INTO category(name,img) VALUES('"&name&"','"&url&"')"
                 cmdPrep.execute               
                 
                 If Err.Number = 0 Then 
-                    Session("Success") = "Add Brand Successfully!"  
-                    Response.redirect("/management.asp?type=4")
+                    Session("Success") = "Add Category Successfully!"  
+                    Response.redirect("/management.asp?type=8")
                 Else  
                     handleError(Err.Description)
                 End If
@@ -62,16 +62,16 @@ End Sub
             end if
         else
             'update
-            if name<>"" and not isnull(name) then
+            if name<>"" and not isnull(name)  then
                 Set cmdPrep = Server.CreateObject("ADODB.Command")
                 cmdPrep.ActiveConnection = connDB
                 cmdPrep.CommandType = 1
                 cmdPrep.Prepared = True
-                cmdPrep.CommandText = "UPDATE brand SET name='"&name&"',img='"&url&"' where id="&id
+                cmdPrep.CommandText = "UPDATE category SET name='"&name&"',img='"&url&"' where id="&id
                 cmdPrep.execute
                 If Err.Number=0 Then
-                    Session("Success") = "Update Brand Successfully!"
-                    Response.redirect("/management.asp?type=4")
+                    Session("Success") = "Update Category Successfully!"
+                    Response.redirect("/management.asp?type=8")
                 Else
                     handleError(Err.Description)
                 End If
@@ -90,8 +90,8 @@ End Sub
     <meta charset='utf-8' /> <meta HTTP-EQUIV="Pragma" CONTENT="no-cache"> <meta HTTP-EQUIV="Expires" CONTENT="-1"> <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <link rel="stylesheet" href="../bootstrap-5.2.0-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../Resources/web-font-files/lineicons.css">
-    <link rel="stylesheet" href="../UIcomponents/header.css">
     <link rel="stylesheet" href="/Resources/AdminLTE/plugins/toastr/toastr.min.css">
+    <link rel="stylesheet" href="../UIcomponents/header.css">
     <title>Giỏ hàng</title>
     <script src="../Jquery/jquery-3.6.1.min.js"></script>
     </head>
@@ -117,7 +117,7 @@ End Sub
                     end if
                 %>
                 </button>
-                <a href="/management.asp?type=4" class="btn btn-info">Cancel</a>    
+                <a href="/management.asp?type=8" class="btn btn-info">Cancel</a>    
             </form>
         </div>
     <script src="/Resources/AdminLTE/plugins/toastr/toastr.min.js"></script>

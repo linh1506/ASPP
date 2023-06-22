@@ -193,7 +193,7 @@
                     <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'brands')" id="OpenManageBrand">Manage Brands</button>
                     <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'gallery')" id="OpenManageGallery">Store's Gallery</button>
                     <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'order')" id="OpenManageOrder">Orders Management</button>  
-                    <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'categories')" id="OpenManageOrder">Manage Categories</button>  
+                    <button class='nav-item btn text-white btn-block btn-lg-active tablinks py-3' onclick="openCity(event, 'categories')" id="OpenManageCategory">Manage Categories</button>  
                 </div>
             </nav>
         </aside>
@@ -700,13 +700,15 @@
                     </div>
                     <div class="tabcontent" id="categories">
                         <h1 class='content-header'>Manage Categories</h1>
+                        <a href="/ManagmentFeatures/addOrEditCategory.asp" class="btn btn-success">Create A Category</a>
                         <div>
                             <table class="table">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Name</th>
-                                        <th scope="col"></th>
+                                        <th scope="col">Preview</th>
+                                        <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -722,7 +724,8 @@
                                             <tr>
                                                 <td><%=Result("ID")%></td>
                                                 <td><%=Result("NAME")%></td>
-                                                <td><a class="btn btn-info" href="./ManagmentFeatures/editCategory.asp?id=<%=Result("ID")%>">Edit</a></td>
+                                                <td><a href="<%=Result("img")%>"><%=Result("img")%></a></td>
+                                                <td><a class="btn btn-info" href="./ManagmentFeatures/addOrEditCategory.asp?id=<%=Result("ID")%>">Edit</a></td>
                                             </tr>
                                     <%
                                             Result.MoveNext
@@ -758,34 +761,6 @@
                 end if
             end if
         %>
-        function addOrEditBrand(){
-            let nameBrand = document.getElementById('nameBrand').value;
-            let imgBrand = document.getElementById('imgBrand').value;
-            // if(!nameBrand){
-            //     notification('empty brand name',"var(--bs-orange)")
-            //     return;
-            // }else{
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                        if(this.responseText == "Insert"){
-                            toastr.success('Insert Success')
-                        }else{
-                            if(this.responseText == "Update"){
-                                toastr.success('Update Success')
-                            }else
-                            toastr.error('Submit Error, Brand name is not empty')
-                        }
-                        setTimeout(() => {
-                            window.location.href = "/management.asp?type=4";
-                        }, 2000);
-                    }
-                };
-                xmlhttp.open("POST", "/ManagmentFeatures/addOrEditBrand.asp?nameBrand="+nameBrand+"&imgBrand="+imgBrand, true);
-                xmlhttp.send();
-            // }
-
-        }
     </script>
     <script>
         function openCity(evt, cityName) {
@@ -831,6 +806,10 @@
                 case 7
                 %>
                   document.getElementById("OpenManageStatistic").click();
+                <%
+                case 8
+                %>
+                  document.getElementById("OpenManageCategory").click();
                 <%
                 case else
                 %>
