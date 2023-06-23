@@ -108,6 +108,7 @@ End Sub
                        <label for="url" class="form-label">Url:</label>
                        <input type="text" class="form-control" id="url" name="url" value="<%=url%>">
                 </div>
+                <button type="button" class="btn btn-success" onClick="checkUrl()">Check</button>
                 <button type="submit" class="btn btn-primary">
                 <%
                     if (id=0) then
@@ -119,7 +120,27 @@ End Sub
                 </button>
                 <a href="/management.asp?type=8" class="btn btn-info">Cancel</a>    
             </form>
+            <img src="" hidden id="hienanh" alt="anh loi" width="50%" />
         </div>
+        <script>
+            function checkUrl() {
+                // Lấy giá trị của input url
+                let url = document.getElementById("url").value.trim();
+                let checkimg = document.getElementById("hienanh");
+                if(url != null && url != ""){
+                    checkimg.removeAttribute("hidden");
+                    checkimg.src = url;
+                    checkimg.onerror = function() {
+                        toastr.error("URL is error, please try input a new URL")
+                        checkimg.src = "https://zhost.vn/wp-content/uploads/2020/08/failed-to-load-resource-the-server-responded-with-a-status-of-404-not-found-la-gi-1-1.jpg";
+                        checkimg.alt = "Anh loi";
+                        return;
+                    }
+                }else{
+                    toastr.warning("Please input your url")
+                }
+            }
+        </script>
     <script src="/Resources/AdminLTE/plugins/toastr/toastr.min.js"></script>
     <script>
         <%
