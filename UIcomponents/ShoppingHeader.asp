@@ -23,7 +23,7 @@
                                 </li>
                                 <% Next %>
                             </ul>
-                            <a class='showmore' href="/">Checkout all categories</a>
+                            <a class='showmore' href="/ShoppingFeature/listProducts.asp">Checkout all categories</a>
                         </div>
                     </div>
                 </li>
@@ -40,7 +40,7 @@
                                 </li>
                                 <% Next %>
                             </ul>
-                            <a class='showmore' href="/">Checkout all brands</a>
+                            <a class='showmore' href="/ShoppingFeature/listProducts.asp">Checkout all brands</a>
                         </div>
                     </div>
                 </li>    
