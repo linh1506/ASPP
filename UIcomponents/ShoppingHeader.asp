@@ -19,7 +19,7 @@
                                 <li>
                                     <div class="content-img" style="background-image:url('<%=listCategory(item).Image%>'); background-size:contain; background-repeat:no-repeat; background-position:right center"></div>
                                     <h2 class="drp-content-text" ><%=CStr(listCategory(item).Name)%></h2>
-                                    <a  class="drp-content-text" href="#">Go to product list ></a> 
+                                    <a  class="drp-content-text" href="/ShoppingFeature/listProducts.asp?sendCategory=<%=trim(CStr(listCategory(item).Name))%>">Go to product list ></a> 
                                 </li>
                                 <% Next %>
                             </ul>
@@ -36,7 +36,7 @@
                                 <li>
                                     <div class="content-img" style="background-image:url('<%=allBrands(item).Image%>'); background-size:contain; background-repeat:no-repeat; background-position:right center"></div>
                                     <h2 class="drp-content-text" ><%=CStr(allBrands(item).Name)%></h2>
-                                    <a  class="drp-content-text" href="#">Go to product list ></a> 
+                                    <a  class="drp-content-text" href="/ShoppingFeature/listProducts.asp?sendBrand=<%=trim(CStr(allBrands(item).Name))%>">Go to product list ></a> 
                                 </li>
                                 <% Next %>
                             </ul>
