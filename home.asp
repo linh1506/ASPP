@@ -86,7 +86,7 @@
         </div>
         <div class="see-more">
           <h3>There're still more going on</h3>
-          <a href="">EXPLORE !</a>
+          <a href="/ShoppingFeature/listProducts.asp">EXPLORE !</a>
         </div>
       </div>
   <!-- Footer -->
