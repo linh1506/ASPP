@@ -53,7 +53,6 @@
     <link rel="stylesheet" href="../ShoppingFeature/myCart.css">
     <link rel="stylesheet" href="../management.css">
     <link rel="stylesheet" href="../fonts.css">
-    <link rel="stylesheet" href="../Resources/web-font-files/lineicons.css">
     <script src="../Jquery/jquery-3.6.1.min.js"></script>
     <title>Chi tiết hoá đơn</title>
     <style>
