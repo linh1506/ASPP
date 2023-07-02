@@ -53,16 +53,16 @@
   line-height: 1em;
 }
 .order__status--blue {
-  color: var(--azure);
+  color: var(--azure)!important;
 }
 .order__status--orange {
-  color: var(--orange);
+  color: var(--orange)!important;
 }
 .order__status--green {
-  color: var(--green);
+  color: var(--green)!important;
 }
 .order__status--red {
-  color: var(--red);
+  color: var(--red)!important;
 }
 .order__pricing p {
   width: fit-content;

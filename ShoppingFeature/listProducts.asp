@@ -35,7 +35,7 @@
                             Set Result = cmdPrep.execute 
                             do while not Result.EOF
                         %>
-                                <option value="<%=Result("ID")%>"><%=Result("NAME")%></option>
+                                <option value="<%=Result("ID")%>" <%if(trim(Result("NAME")) = Request.querystring("sendBrand")) then %> selected <%end if%>><%=Result("NAME")%></option>
                         <%
                                 Result.MoveNext
                             loop
@@ -54,7 +54,7 @@
                             Set Result = cmdPrep.execute 
                             do while not Result.EOF
                         %>
-                                <option value="<%=Result("ID")%>"><%=Result("NAME")%></option>
+                                <option value="<%=Result("ID")%>" <%if(trim(Result("NAME")) = Request.querystring("sendCategory")) then %> selected <%end if%>><%=Result("NAME")%></option>
                         <%
                                 Result.MoveNext
                             loop

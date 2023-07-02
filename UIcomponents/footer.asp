@@ -68,7 +68,7 @@
             <a href="https://www.facebook.com/profile.php?id=100008553451184" class="text-white me-4">
               <i class="lni lni-facebook"></i>
             </a>
-            <a href="google.com" class="text-white me-4">
+            <a href="https://www.google.com.vn/" class="text-white me-4">
               <i class="lni lni-google"></i>
             </a>
             <a href="https://steamcommunity.com/id/d1agn0ze/" class="text-white me-4">
