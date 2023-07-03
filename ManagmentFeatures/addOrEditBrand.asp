@@ -36,13 +36,13 @@ End Sub
         End If
     Else
         id = Request.QueryString("id")
-        name = Request.form("name")
-        url = request.form("url")
+        name = trim(Request.form("name"))
+        url = trim(request.form("url"))
 
         if (isnull (id) OR trim(id) = "") then id=0 end if
 
         if (cint(id)=0) then
-            if name<>"" and not isnull(name) then
+            if name<>"" and not isnull(name) and url <> "" and not isnull(url) then
                 Set cmdPrep = Server.CreateObject("ADODB.Command")
                 cmdPrep.ActiveConnection = connDB
                 cmdPrep.CommandType = 1
@@ -58,11 +58,11 @@ End Sub
                 End If
                 On Error GoTo 0
             else
-                Session("Error") = "You have to input Name"                
+                Session("Error") = "You have to input enough info"                
             end if
         else
             'update
-            if name<>"" and not isnull(name) then
+            if name<>"" and not isnull(name) and url <> "" and not isnull(url) then
                 Set cmdPrep = Server.CreateObject("ADODB.Command")
                 cmdPrep.ActiveConnection = connDB
                 cmdPrep.CommandType = 1
@@ -77,7 +77,7 @@ End Sub
                 End If
                 On Error Goto 0
             else
-                Session("Error") = "You have to input Name"
+                Session("Error") = "You have to input enough info"
             end if
         end if
     End If    
@@ -102,14 +102,14 @@ End Sub
             <form method="post">
                 <div class="mb-3">
                        <label for="name" class="form-label">Name:</label>
-                       <input type="text" class="form-control" id="name" name="name" value="<%=name%>">
+                       <input type="text" class="form-control" id="name" name="name" value="<%=trim(name)%>">
                 </div>
                 <div class="mb-3">
                        <label for="url" class="form-label">Url:</label>
-                       <input type="text" class="form-control" id="url" name="url" value="<%=url%>">
+                       <input type="text" class="form-control" id="url" name="url" value="<%=trim(url)%>">
                 </div>
-                <button type="button" class="btn btn-success" onClick="checkUrl()">Check</button>
-                <button type="submit" class="btn btn-primary">
+                <button type="button" class="btn btn-success" onClick="checkUrl()">Check Url</button>
+                <button type="submit" disabled id="send" class="btn btn-primary">
                 <%
                     if (id=0) then
                         Response.write("Add")
@@ -124,20 +124,28 @@ End Sub
         </div>
     <script>
         function checkUrl() {
+            let send = document.getElementById("send");
             // Lấy giá trị của input url
             let url = document.getElementById("url").value.trim();
+            let btnurl = document.getElementById("url")
             let checkimg = document.getElementById("hienanh");
+            send.disabled = false;
             if(url != null && url != ""){
                 checkimg.removeAttribute("hidden");
                 checkimg.src = url;
+                btnurl.readOnly  = true
                 checkimg.onerror = function() {
                     toastr.error("URL is error, please try input a new URL")
                     checkimg.src = "https://zhost.vn/wp-content/uploads/2020/08/failed-to-load-resource-the-server-responded-with-a-status-of-404-not-found-la-gi-1-1.jpg";
-                    checkimg.alt = "Anh loi";
+                    checkimg.alt = "error img!";
+                    send.disabled = true
+                    btnurl.readOnly = false
                     return;
                 }
+
             }else{
                 toastr.warning("Please input your url")
+                send.disabled = true
             }
         }
     </script>
