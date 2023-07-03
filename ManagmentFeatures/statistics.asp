@@ -1,5 +1,17 @@
 <!--#include virtual="connect.asp"-->
 <%  Dim limit, totalRowsProducts, pagesProducts, strSQL, page
+    function Ceil(Number)
+
+        Ceil = Int(Number)
+
+        if Ceil <> Number then
+
+            Ceil = Ceil + 1
+
+        end if
+
+    end function
+
     function checkPage(cond, ret) 
         if cond=true then
             Response.write ret
@@ -15,7 +27,7 @@
     totalRowsProducts = CLng(CountResult("count"))
     Set CountResult = Nothing
     pagesProducts = totalRowsProducts/limit
-
+    pagesProducts = Ceil(pagesProducts)
     page = Request.QueryString("page")
     if (trim(page) = "") or (isnull(page)) then
         page = 1
