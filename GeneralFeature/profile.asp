@@ -1,6 +1,7 @@
 <!--#include file="../connect.asp"-->
 <!--#include file="../models/customers.asp"-->
 <!--#include virtual="/ShoppingFeature/getOrderList.asp"-->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -54,14 +55,18 @@
         cmdPrep.CommandType = 1
         cmdPrep.Prepared = True
         id = Session("Id")
-        name = Request.Form("name")
-        phone = Request.Form("phone")
-        address = Request.Form("address")
+        name = Trim(Request.Form("name"))
+        phone = Trim(Request.Form("phone"))
+        address = Trim(Request.Form("address"))
         if (Request.ServerVariables("REQUEST_METHOD") = "POST") then 
-            cmdPrep.commandText = "UPDATE USERS SET NAME=N'" & name & "', PHONE='" & phone & "',ADDRESS=N'" & address & "' WHERE ID = '" & id & "'"
-            cmdPrep.execute
-            Session("Name") = name 
-            Session("Success") = "Change Successfully"
+            if(name <> "" and Not IsNull(name)  and phone <> "" and Not IsNull(phone) and address <> "" and Not IsNull(name)) then
+                cmdPrep.commandText = "UPDATE USERS SET NAME=N'" & name & "', PHONE='" & phone & "',ADDRESS=N'" & address & "' WHERE ID = '" & id & "'"
+                cmdPrep.execute
+                Session("Name") = name 
+                Session("Success") = "Change Successfully"
+            else 
+                Session("Error") = "Input is null, pls enter all infomation"
+            end if
         end if
         cmdPrep.commandText = "select * from USERS WHERE ID = '" & id & "'"
         set Result = cmdPrep.execute
@@ -78,23 +83,23 @@
     <div class="container-custom">
         <div id='account' class="accinfo account__settings">
             <h1>Account Information:</h1>
-            <form action="" method="POST">
+            <form action="" method="POST" >
                 Email: <%=cust.Email%><br>
-                Name: <input class="form-control" id="nameInput" type="text" value="<%=cust.Name%>" name="name">
+                Name: <input class="form-control" id="nameInput" type="text" value="<%=cust.Name%>" name="name" onchange="CheckInputInfo()">
                 <span class="error-message"></span><br>
-                Phone number: <input  class="form-control" id="phoneInput" type="text" value="<%=cust.Phone%>" name="phone"> 
+                Phone number: <input  class="form-control" id="phoneInput" type="text" value="<%=cust.Phone%>" name="phone" onchange="CheckInputInfo()"> 
                 <span class="error-message"></span><br>
-                Address: <input class="form-control"  type="text" value="<%=cust.Address%>" name="address">
-                <button class="btn btn-danger" type="submit">Submit</button>
+                Address: <input class="form-control"  id="addrInput" type="text" value="<%=cust.Address%>" name="address" onchange="CheckInputInfo()">
+                <button class="btn btn-danger" id="submitInfo" disabled type="submit">Submit</button>
             </form> 
 
             <button class="btn" id="show" >Change Password <span><i class="lni lni-chevron-down"></i></span></button>
             <div id="change__password">
                 <form action="changepassword.asp?id=<%=Session("Id")%>" method="POST">
-                    old password: <input class="form-control"  type="text" name="password">
-                    new password: <input class="form-control" type="text" name="passwordchange">
-                    confirm password: <input class="form-control" type="text" name="passwordreenter"> 
-                    <button class="btn btn-danger" type="submit">change password</button>
+                    old password: <input id="oldpass" class="form-control"  type="text" name="password" onchange="CheckInputPassword()">
+                    new password: <input id="newpass" class="form-control" type="text" name="passwordchange" onchange="CheckInputPassword()">
+                    confirm password: <input id="repass" class="form-control" type="text" name="passwordreenter" onchange="CheckInputPassword()"> 
+                    <button id="submitPass" disabled class="btn btn-danger" type="submit">change password</button>
                 </form>
             </div>
         </div>
@@ -177,6 +182,26 @@
                 }
         });
     })
+    function CheckInputInfo(){
+        let name = document.getElementById("nameInput").value;
+        let phone = document.getElementById("phoneInput").value;
+        let address = document.getElementById("addrInput").value;
+        let submitInfo = document.getElementById("submitInfo");
+        if(name.trim() != "" && phone.trim()!= "" && address.trim() != "" )
+        {
+            submitInfo.disabled=false;
+        }
+    }
+    function CheckInputPassword(){
+        let oldpassword = document.getElementById("oldpass").value;
+        let newpassword = document.getElementById("newpass").value;
+        let repassword = document.getElementById("repass").value;
+        let submitPassword = document.getElementById("submitPass");
+        if(oldpassword.trim() != "" && newpassword.trim()!= "" && repassword.trim() != "" )
+        {
+            submitPassword.disabled=false;
+        }
+    }
 </script>
 <script src="../bootstrap-5.2.0-dist/js/bootstrap.min.js"></script>
 </body>
